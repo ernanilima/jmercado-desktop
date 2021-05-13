@@ -13,18 +13,26 @@ import java.io.IOException;
 @Controller
 public class MenuController {
 
-    @Autowired private ACadastros menuACadastro;
+    @Autowired private ACadastros menuACadastros;
 
     @Value("classpath:/css/menu.css")
     private Resource R_CSS;
 
+    // Scroll para box de menu, caso possua muitos menus abertos
+    // permite que seja possivel usar o scroll
     private ScrollPane scroll = new ScrollPane();
+
+    // Box dos menus principais
     private VBox box0Menu = new VBox();
 
+    // largura do botao de menu
     public int getLarguraX() {return 250;}
+
+    // altura do botao de menu
     public int getAlturaY() {return 40;}
 
-    //CONSTRUTOR
+    /** Constroi o menu lateral
+     * @return ScrollPane - menu lateral */
     protected ScrollPane menuLateral() {
         try {
             scroll.getStyleClass().add("scroll");
@@ -38,9 +46,15 @@ public class MenuController {
         return scroll;
     }
 
+    /** Adiciona os menus principais ao menu lateral */
     private void menuPrincipal() {
         box0Menu.getChildren().add(
-                menuACadastro.obterMenuA()
+                menuACadastros.getMenuA()
         );
+    }
+
+    /** Minimiza todos os menus */
+    public void minimizaTodos() {
+        menuACadastros.minimizarBox();
     }
 }
