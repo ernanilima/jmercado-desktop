@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 public class InicioController implements Initializable {
 
     @Autowired private ApplicationContext springContext;
+    @Autowired private MenuController cMenu;
 
     @Value("classpath:/fxml/inicio.fxml")
     private Resource R_FXML;
@@ -41,6 +42,7 @@ public class InicioController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         campoLegendaAlerta.setVisible(false);
+        borderPane.setLeft(cMenu.getMenu());
     }
 
     public void adcionaTitulo(Label tituloModal, String tituloSistema) {
