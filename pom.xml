@@ -14,6 +14,7 @@
     <artifactId>JMercado</artifactId>
     <version>0.0.1</version>
     <name>JMercado</name>
+    <packaging>jar</packaging>
     <description>Aplicacao basica de cadastros</description>
 
     <properties>
