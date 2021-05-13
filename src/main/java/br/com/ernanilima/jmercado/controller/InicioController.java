@@ -28,6 +28,8 @@ public class InicioController implements Initializable {
 
     @Value("classpath:/fxml/inicio.fxml")
     private Resource R_FXML;
+    @Value("classpath:/css/style.css")
+    private Resource R_CSS;
 
     @FXML private BorderPane borderPane;
     @FXML private BorderPane borderPaneCentral;
@@ -42,7 +44,7 @@ public class InicioController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         campoLegendaAlerta.setVisible(false);
-        borderPane.setLeft(cMenu.getMenu());
+        borderPane.setLeft(cMenu.menuLateral());
     }
 
     public void adcionaTitulo(Label tituloModal, String tituloSistema) {
@@ -66,6 +68,7 @@ public class InicioController implements Initializable {
             Scene scene = new Scene(ROOT);
             STAGE.setScene(scene);
             LOADER.setControllerFactory(x -> springContext.getBean(x));
+            ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
             STAGE.setResizable(true);
             /* MAXIMIZADO INICIO */
             Screen screen = Screen.getPrimary();
