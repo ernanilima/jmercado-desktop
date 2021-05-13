@@ -1,0 +1,80 @@
+package br.com.ernanilima.jmercado.controller;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Controller;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+@Controller
+public class InicioController implements Initializable {
+
+    @Autowired private ApplicationContext springContext;
+
+    @Value("classpath:/fxml/inicio.fxml")
+    private Resource R_FXML;
+
+    @FXML private BorderPane borderPane;
+    @FXML private BorderPane borderPaneCentral;
+    @FXML private Label campoLegenda;
+    @FXML private Label campoLegendaAlerta;
+    @FXML private Label titulo;
+
+    private Stage STAGE;
+    private FXMLLoader LOADER;
+    private Parent ROOT;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        campoLegendaAlerta.setVisible(false);
+    }
+
+    public void adcionaTitulo(Label tituloModal, String tituloSistema) {
+        if (tituloModal.isVisible()) {
+            tituloModal.setText(tituloSistema);
+        } else {
+            titulo.setText(tituloSistema);
+        }
+    }
+
+    public void definirLegenda(String legenda) {
+        campoLegenda.setText(legenda);
+    }
+
+    public void exibir(Stage stage) {
+        try {
+            STAGE = stage;
+            LOADER = new FXMLLoader(R_FXML.getURL());
+            LOADER.setController(this);
+            ROOT = LOADER.load();
+            Scene scene = new Scene(ROOT);
+            STAGE.setScene(scene);
+            LOADER.setControllerFactory(x -> springContext.getBean(x));
+            STAGE.setResizable(true);
+            /* MAXIMIZADO INICIO */
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+            STAGE.setX(bounds.getMinX());
+            STAGE.setY(bounds.getMinY());
+            STAGE.setWidth(bounds.getWidth());
+            STAGE.setHeight(bounds.getHeight());
+            STAGE.setMaximized(true);
+            /* MAXIMIZADO FIM */
+            STAGE.show();
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+}
