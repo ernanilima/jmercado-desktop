@@ -12,6 +12,7 @@ public class ACadastros {
 
     @Autowired private MenuController cMenu;
     @Autowired private BCadProdutos bCadProdutos;
+    @Autowired private BCadUsuarios bCadUsuarios;
 
     // botao principal do cadastro, abre outros botoes relacionados a cadastros
     private Button btnACadastros = new Button();
@@ -64,7 +65,8 @@ public class ACadastros {
         boxBCadastros.setPrefHeight(0);
         boxBCadastros.setVisible(false);
         boxBCadastros.getChildren().removeAll(
-                bCadProdutos.getMenuB()
+                bCadProdutos.getMenuB(),
+                bCadUsuarios.getMenuB()
         );
     }
 
@@ -73,7 +75,8 @@ public class ACadastros {
         boxBCadastros.setPrefHeight(Control.USE_COMPUTED_SIZE);
         boxBCadastros.setVisible(true);
         boxBCadastros.getChildren().addAll(
-                bCadProdutos.getMenuB()
+                bCadProdutos.getMenuB(),
+                bCadUsuarios.getMenuB()
         );
     }
 }
