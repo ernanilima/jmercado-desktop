@@ -37,6 +37,8 @@ public class BCadUsuarios {
 
     /** Constroi o botao */
     private void configurarBotao() {
+        btnBCadUsuarios.getStyleClass().add("btnB");
+        btnBCadUsuarios.setId("btn_mais");
         btnBCadUsuarios.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnBCadUsuarios.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnBCadUsuarios.setText("Cadastro De Usuários");

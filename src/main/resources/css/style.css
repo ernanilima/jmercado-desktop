@@ -1,3 +1,17 @@
 .root {
+    /* COR DO PAINEL LATERAL DE BOTOES */
     cor-painel-menu: darkblue;
+
+    /* COR DE BOTOES */
+    cor-btn-nA: darkblue;
+    cor-btn-nA-hover: rgba(255,255,255,0.2);
+    cor-btn-nA-focused: rgba(255,255,255,0.2);
+
+    cor-btn-nB: rgba(255,255,255,0.1);
+    cor-btn-nB-hover: rgba(255,255,255,0.3);
+    cor-btn-nB-focused: rgba(255,255,255,0.3);
+
+    cor-btn-nC: rgba(255,255,255,0.2);
+    cor-btn-nC-hover: rgba(255,255,255,0.4);
+    cor-btn-nC-focused: rgba(255,255,255,0.4);
 }

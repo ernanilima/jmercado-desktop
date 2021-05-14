@@ -25,6 +25,7 @@ public class CCadProdutos {
 
     /** Constroi o botao */
     private void configurarBotao() {
+        btnCCadProdutos.getStyleClass().add("btnC");
         btnCCadProdutos.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadProdutos.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadProdutos.setText("Cadastrar Produtos");

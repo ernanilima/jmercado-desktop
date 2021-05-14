@@ -4,3 +4,51 @@
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
+#btn_mais {
+    -fx-background-image: url("/imagem/icone/mais_16x16.png");
+    -fx-background-size: auto 10;
+    -fx-background-position: right;
+    -fx-background-repeat: no-repeat;
+}
+.btnA {
+    -fx-background-color: cor-btn-nA;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}
+.btnB {
+    -fx-background-color: cor-btn-nB;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 0 5;
+    -fx-text-fill: white;
+}
+.btnC {
+    -fx-background-color: cor-btn-nC;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 0 10;
+    -fx-text-fill: white;
+}
+
+.btnA:focused {
+    -fx-background-color: cor-btn-nA-focused;
+}
+.btnB:focused {
+    -fx-background-color: cor-btn-nB-focused;
+}
+.btnC:focused {
+    -fx-background-color: cor-btn-nC-focused;
+}
+
+.btnA:hover {
+    -fx-background-color: cor-btn-nA-hover;
+}
+.btnB:hover {
+    -fx-background-color: cor-btn-nB-hover;
+}
+.btnC:hover {
+    -fx-background-color: cor-btn-nC-hover;
+}

@@ -19,7 +19,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <javafx.version>11</javafx.version>
+        <javafx.version>11.0.1</javafx.version>
     </properties>
 
     <dependencies>

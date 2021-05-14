@@ -39,6 +39,8 @@ public class BCadProdutos {
 
     /** Constroi o botao */
     private void configurarBotao() {
+        btnBCadProdutos.getStyleClass().add("btnB");
+        btnBCadProdutos.setId("btn_mais");
         btnBCadProdutos.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnBCadProdutos.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnBCadProdutos.setText("Cadastro De Produtos");

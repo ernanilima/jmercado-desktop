@@ -25,6 +25,7 @@ public class CCadSubGrupos {
 
     /** Constroi o botao */
     private void configurarBotao() {
+        btnCCadSubGrupos.getStyleClass().add("btnC");
         btnCCadSubGrupos.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadSubGrupos.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadSubGrupos.setText("Cadastrar SubGrupos");

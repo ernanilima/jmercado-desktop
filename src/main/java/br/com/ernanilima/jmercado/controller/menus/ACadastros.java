@@ -37,6 +37,8 @@ public class ACadastros {
 
     /** Constroi o botao principal */
     private void configurarBotao() {
+        btnACadastros.getStyleClass().add("btnA");
+        btnACadastros.setId("btn_mais");
         btnACadastros.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnACadastros.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnACadastros.setText("Cadastros");

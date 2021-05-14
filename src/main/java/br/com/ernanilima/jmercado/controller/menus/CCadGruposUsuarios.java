@@ -25,6 +25,7 @@ public class CCadGruposUsuarios {
 
     /** Constroi o botao */
     private void configurarBotao() {
+        btnCCadDepartamentos.getStyleClass().add("btnC");
         btnCCadDepartamentos.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadDepartamentos.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadDepartamentos.setText("Cadastrar Grupos De Usuários");
