@@ -12,6 +12,9 @@ public class BCadProdutos {
 
     @Autowired private MenuController cMenu;
     @Autowired private CCadDepartamentos cCadDepartamentos;
+    @Autowired private CCadGrupos cCadGrupos;
+    @Autowired private CCadSubGrupos cCadSubGrupos;
+    @Autowired private CCadProdutos cCadProdutos;
 
     // botao que abre o box com outros botoes relacionados
     private Button btnBCadProdutos = new Button();
@@ -60,17 +63,24 @@ public class BCadProdutos {
     public void minimizarBox() {
         boxCCadProdutos.setPrefHeight(0);
         boxCCadProdutos.setVisible(false);
-        boxCCadProdutos.getChildren().removeAll(
-                cCadDepartamentos.getMenuC()
-        );
+        boxCCadProdutos.getChildren().removeAll(botoesDeMenuC());
     }
 
     /** Adiciona todos os botoes relacionados ao box */
     private void maximizarBox() {
         boxCCadProdutos.setPrefHeight(Control.USE_COMPUTED_SIZE);
         boxCCadProdutos.setVisible(true);
-        boxCCadProdutos.getChildren().addAll(
-                cCadDepartamentos.getMenuC()
-        );
+        boxCCadProdutos.getChildren().addAll(botoesDeMenuC());
+    }
+
+    /** Todos os botoes secundarios
+     * @return Button[] - botoes de menu c */
+    private Button[] botoesDeMenuC() {
+        return new Button[] {
+                cCadDepartamentos.getMenuC(),
+                cCadGrupos.getMenuC(),
+                cCadSubGrupos.getMenuC(),
+                cCadProdutos.getMenuC()
+        };
     }
 }

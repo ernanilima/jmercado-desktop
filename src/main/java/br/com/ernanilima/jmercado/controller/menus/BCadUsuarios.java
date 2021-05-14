@@ -12,6 +12,7 @@ public class BCadUsuarios {
 
     @Autowired private MenuController cMenu;
     @Autowired private CCadGruposUsuarios cCadGruposUsuarios;
+    @Autowired private CCadUsuarios cCadUsuarios;
 
     // botao que abre o box com outros botoes relacionados
     private Button btnBCadUsuarios = new Button();
@@ -60,17 +61,22 @@ public class BCadUsuarios {
     public void minimizarBox() {
         boxCCadUsuarios.setPrefHeight(0);
         boxCCadUsuarios.setVisible(false);
-        boxCCadUsuarios.getChildren().removeAll(
-                cCadGruposUsuarios.getMenuC()
-        );
+        boxCCadUsuarios.getChildren().removeAll(botoesDeMenuC());
     }
 
     /** Adiciona todos os botoes relacionados ao box */
     private void maximizarBox() {
         boxCCadUsuarios.setPrefHeight(Control.USE_COMPUTED_SIZE);
         boxCCadUsuarios.setVisible(true);
-        boxCCadUsuarios.getChildren().addAll(
-                cCadGruposUsuarios.getMenuC()
-        );
+        boxCCadUsuarios.getChildren().addAll(botoesDeMenuC());
+    }
+
+    /** Todos os botoes secundarios
+     * @return Button[] - botoes de menu c */
+    private Button[] botoesDeMenuC() {
+        return new Button[] {
+                cCadGruposUsuarios.getMenuC(),
+                cCadUsuarios.getMenuC()
+        };
     }
 }
