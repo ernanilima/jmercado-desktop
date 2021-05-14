@@ -13,14 +13,14 @@ public class BCadUsuarios {
     @Autowired private MenuController cMenu;
     @Autowired private CCadGruposUsuarios cCadGruposUsuarios;
 
-    // botao que abre outros botoes relacionados a cadastro de usuarios
+    // botao que abre o box com outros botoes relacionados
     private Button btnBCadUsuarios = new Button();
 
-    // box onde estao os botoes relacionados a cadastro de usuarios
+    // box com botoes relacionados
     private VBox boxCCadUsuarios = new VBox();
 
-    /** Configura o botao de cadastro de usuarios,
-     * @return VBox - botao de cadastro de usuarios */
+    /** Configura o botao,
+     * @return VBox - botao, box com botoes relacionados */
     public VBox getMenuB() {
         listener();
         configurarBotao();
@@ -34,21 +34,20 @@ public class BCadUsuarios {
         btnBCadUsuarios.setOnAction(e -> minimizaMaximiza());
     }
 
-    /** Constroi o botao de cadastro de produtos */
+    /** Constroi o botao */
     private void configurarBotao() {
         btnBCadUsuarios.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnBCadUsuarios.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnBCadUsuarios.setText("Cadastro De Usuários");
     }
 
-    /** Configura o box onde estao os botoes relacionados a cadastro de produtos */
+    /** Configura o box com os botoes relacionados */
     private void configurarBox() {
         boxCCadUsuarios.setPrefHeight(0);
         boxCCadUsuarios.setVisible(false);
     }
 
-    /** Verifica se o box com botos secundarios esta visivil ou nao
-     * Executa uma acao de acordo com o estado do box */
+    /** Verifica se o box com botoes relacionados esta visivil ou nao */
     private void minimizaMaximiza() {
         if (boxCCadUsuarios.isVisible()) {
             minimizarBox();
@@ -57,7 +56,7 @@ public class BCadUsuarios {
         }
     }
 
-    /** Apaga tudo do box */
+    /** Apaga tudo do box com botoes relacionados */
     public void minimizarBox() {
         boxCCadUsuarios.setPrefHeight(0);
         boxCCadUsuarios.setVisible(false);
@@ -66,7 +65,7 @@ public class BCadUsuarios {
         );
     }
 
-    /** Adiciona todos os botoes de cadastro de produto ao box */
+    /** Adiciona todos os botoes relacionados ao box */
     private void maximizarBox() {
         boxCCadUsuarios.setPrefHeight(Control.USE_COMPUTED_SIZE);
         boxCCadUsuarios.setVisible(true);

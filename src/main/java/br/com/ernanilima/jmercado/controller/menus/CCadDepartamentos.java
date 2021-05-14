@@ -12,18 +12,18 @@ public class CCadDepartamentos {
     @Autowired private InicioController cInicio;
     @Autowired private MenuController cMenu;
 
-    // botao que abre o cadastro de departamentos
+    // botao que abre o controller referente ao cadastro
     private Button btnCCadDepartamentos = new Button();
 
-    /** Configura o botao de cadastro de departamentos,
-     * @return VBox - botao de cadastro de departamentos */
+    /** Configura o botao,
+     * @return Button - botao */
     public Button getMenuC() {
         configurarBotao();
 
         return btnCCadDepartamentos;
     }
 
-    /** Constroi o botao de cadastro de departamentos */
+    /** Constroi o botao */
     private void configurarBotao() {
         btnCCadDepartamentos.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadDepartamentos.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());

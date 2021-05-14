@@ -23,16 +23,15 @@ public class MenuController {
     private Resource R_CSS;
 
     // Scroll para box de menu, caso possua muitos menus abertos
-    // permite que seja possivel usar o scroll
     private ScrollPane scroll = new ScrollPane();
 
-    // Box dos menus principais
+    // Box para menus principais
     private VBox box0Menu = new VBox();
 
-    // largura do botao de menu
+    // largura de botoes de menu
     public int getLarguraX() {return 250;}
 
-    // altura do botao de menu
+    // altura de botoes de menu
     public int getAlturaY() {return 40;}
 
     /** Constroi o menu lateral
@@ -50,7 +49,8 @@ public class MenuController {
         return scroll;
     }
 
-    /** Adiciona os menus principais ao menu lateral */
+    /** Adiciona o box dos menus principais ao menu lateral
+     * OBS: projeto basico tem apenas a opcao de cadastros */
     private void menuPrincipal() {
         box0Menu.getChildren().add(
                 aCadastros.getMenuA()

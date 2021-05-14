@@ -14,15 +14,14 @@ public class ACadastros {
     @Autowired private BCadProdutos bCadProdutos;
     @Autowired private BCadUsuarios bCadUsuarios;
 
-    // botao principal do cadastro, abre outros botoes relacionados a cadastros
+    // botao principal, abre o box com outros botoes relacionados
     private Button btnACadastros = new Button();
 
-    // box onde estao os botoes relacionados a cadastros
+    // box com botoes relacionados
     private VBox boxBCadastros = new VBox();
 
-    /** Configura o botao principal de cadastros,
-     * atribui acao ao botao principal e configura o box dos botoes secundarios
-     * @return VBox - botao principal de cadastros, box com botoes secundarios */
+    /** Configura o botao principal,
+     * @return VBox - botao principal, box com botoes relacionados */
     public VBox getMenuA() {
         listener();
         configurarBotao();
@@ -36,22 +35,20 @@ public class ACadastros {
         btnACadastros.setOnAction(e -> minimizaMaximiza());
     }
 
-    /** Constroi o botao principal do cadastro */
+    /** Constroi o botao principal */
     private void configurarBotao() {
-        // BOTAO CADASTROS
         btnACadastros.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnACadastros.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnACadastros.setText("Cadastros");
     }
 
-    /** Configura o box onde estao os botoes relacionados a cadastros */
+    /** Configura o box com os botoes relacionados */
     private void configurarBox() {
         boxBCadastros.setPrefHeight(0);
         boxBCadastros.setVisible(false);
     }
 
-    /** Verifica se o box com botos secundarios esta visivil ou nao
-     * Executa uma acao de acordo com o estado do box */
+    /** Verifica se o box com botoes relacionados esta visivil ou nao */
     private void minimizaMaximiza() {
         if (boxBCadastros.isVisible()) {
             cMenu.minimizaTodos();
@@ -60,7 +57,7 @@ public class ACadastros {
         }
     }
 
-    /** Apaga tudo do box */
+    /** Apaga tudo do box com botoes relacionados */
     public void minimizarBox() {
         boxBCadastros.setPrefHeight(0);
         boxBCadastros.setVisible(false);
@@ -70,7 +67,7 @@ public class ACadastros {
         );
     }
 
-    /** Adiciona todos os botoes de cadastros ao box */
+    /** Adiciona todos os botoes relacionados ao box */
     private void maximizarBox() {
         boxBCadastros.setPrefHeight(Control.USE_COMPUTED_SIZE);
         boxBCadastros.setVisible(true);
