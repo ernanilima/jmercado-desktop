@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 public class BCadUsuarios {
 
     @Autowired private MenuController cMenu;
-    //@Autowired private CCadDepartamentos cCadDepartamentos;
+    @Autowired private CCadGruposUsuarios cCadGruposUsuarios;
 
     // botao que abre outros botoes relacionados a cadastro de usuarios
     private Button btnBCadUsuarios = new Button();
@@ -62,7 +62,7 @@ public class BCadUsuarios {
         boxCCadUsuarios.setPrefHeight(0);
         boxCCadUsuarios.setVisible(false);
         boxCCadUsuarios.getChildren().removeAll(
-
+                cCadGruposUsuarios.getMenuC()
         );
     }
 
@@ -71,7 +71,7 @@ public class BCadUsuarios {
         boxCCadUsuarios.setPrefHeight(Control.USE_COMPUTED_SIZE);
         boxCCadUsuarios.setVisible(true);
         boxCCadUsuarios.getChildren().addAll(
-
+                cCadGruposUsuarios.getMenuC()
         );
     }
 }

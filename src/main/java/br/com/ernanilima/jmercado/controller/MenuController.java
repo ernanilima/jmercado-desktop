@@ -1,6 +1,8 @@
 package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.controller.menus.ACadastros;
+import br.com.ernanilima.jmercado.controller.menus.BCadProdutos;
+import br.com.ernanilima.jmercado.controller.menus.BCadUsuarios;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,9 @@ import java.io.IOException;
 @Controller
 public class MenuController {
 
-    @Autowired private ACadastros menuACadastros;
+    @Autowired private ACadastros aCadastros;
+    @Autowired private BCadProdutos bCadProdutos;
+    @Autowired private BCadUsuarios bCadUsuarios;
 
     @Value("classpath:/css/menu.css")
     private Resource R_CSS;
@@ -49,12 +53,14 @@ public class MenuController {
     /** Adiciona os menus principais ao menu lateral */
     private void menuPrincipal() {
         box0Menu.getChildren().add(
-                menuACadastros.getMenuA()
+                aCadastros.getMenuA()
         );
     }
 
     /** Minimiza todos os menus */
     public void minimizaTodos() {
-        menuACadastros.minimizarBox();
+        aCadastros.minimizarBox();
+        bCadProdutos.minimizarBox();
+        bCadUsuarios.minimizarBox();
     }
 }
