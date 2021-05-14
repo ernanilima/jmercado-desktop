@@ -49,7 +49,7 @@ public class ACadastros {
         boxBCadastros.setVisible(false);
     }
 
-    /** Verifica se o box esta minimizado ou nao
+    /** Verifica se o box com botos secundarios esta visivil ou nao
      * Executa uma acao de acordo com o estado do box */
     private void minimizaMaximiza() {
         if (boxBCadastros.isVisible()) {

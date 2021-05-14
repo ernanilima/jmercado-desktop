@@ -15,6 +15,8 @@ public class BCadProdutos {
 
     // botao que abre outros botoes relacionados a cadastro de produto
     private Button btnBCadProdutos = new Button();
+
+    // box onde estao os botoes relacionados a cadastro de produto
     private VBox boxCCadProdutos = new VBox();
 
     /** Configura o botao de cadastro de produtos,
@@ -27,6 +29,7 @@ public class BCadProdutos {
         return new VBox(btnBCadProdutos, boxCCadProdutos);
     }
 
+    /** Acao ao pressionar botao */
     private void listener() {
         btnBCadProdutos.setOnAction(e -> minimizaMaximiza());
     }
@@ -38,11 +41,14 @@ public class BCadProdutos {
         btnBCadProdutos.setText("Cadastro De Produtos");
     }
 
+    /** Configura o box onde estao os botoes relacionados a cadastro de produtos */
     private void configurarBox() {
         boxCCadProdutos.setPrefHeight(0);
         boxCCadProdutos.setVisible(false);
     }
 
+    /** Verifica se o box com botos secundarios esta visivil ou nao
+     * Executa uma acao de acordo com o estado do box */
     private void minimizaMaximiza() {
         if (boxCCadProdutos.isVisible()) {
             minimizarBox();
@@ -51,6 +57,7 @@ public class BCadProdutos {
         }
     }
 
+    /** Apaga tudo do box */
     public void minimizarBox() {
         boxCCadProdutos.setPrefHeight(0);
         boxCCadProdutos.setVisible(false);
@@ -58,6 +65,8 @@ public class BCadProdutos {
                 cCadDepartamentos.getMenuC()
         );
     }
+
+    /** Adiciona todos os botoes de cadastro de produto ao box */
     private void maximizarBox() {
         boxCCadProdutos.setPrefHeight(Control.USE_COMPUTED_SIZE);
         boxCCadProdutos.setVisible(true);
