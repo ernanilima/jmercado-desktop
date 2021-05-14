@@ -1,8 +1,10 @@
 package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.model.Departamento;
+import br.com.ernanilima.jmercado.repository.DepartamentoRepository;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +30,8 @@ public class DepartamentoController implements Initializable {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+
+    @Autowired private DepartamentoRepository rDepartamento;
 
     @Autowired private Utils utils;
 
@@ -56,6 +60,8 @@ public class DepartamentoController implements Initializable {
     @FXML private Label textoCampoDescricao;
     @FXML private TextField campoDescricao;
 
+    private ObservableList<Departamento> oListDepartamento;
+    private List<Departamento> lsDepartamento;
     private TableColumn<Departamento, Integer> colunaCodigo;
     private TableColumn<Departamento, String> colunaDescricao;
 
@@ -66,6 +72,7 @@ public class DepartamentoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         STAGE = new Stage();
+        oListDepartamento = FXCollections.observableArrayList();
 
         //ACOES EM BOTOES
         btnCadastrar.setOnAction(e -> cadastrar());
@@ -102,6 +109,15 @@ public class DepartamentoController implements Initializable {
         colunaCodigo.setCellValueFactory(model -> new SimpleObjectProperty<>(model.getValue().getCodigo()));
         colunaDescricao.setCellValueFactory(model -> new SimpleObjectProperty<>(model.getValue().getDescricao()));
 
+    }
+
+    private void carregarConteudoTabela() {
+        oListDepartamento.clear();
+        lsDepartamento = rDepartamento.findAll();
+
+        tabela.getSortOrder().clear();
+        oListDepartamento.addAll(lsDepartamento);
+        tabela.getItems().setAll(oListDepartamento);
     }
 
     /** Cadastrar novo */
@@ -150,6 +166,7 @@ public class DepartamentoController implements Initializable {
                 ROOT = LOADER.load();
                 STAGE.initModality(Modality.APPLICATION_MODAL);
                 LOADER.setControllerFactory(aClass -> springContext.getBean(aClass));
+                carregarConteudoTabela();
             }
         } catch (IOException e) { e.printStackTrace(); }
     }
