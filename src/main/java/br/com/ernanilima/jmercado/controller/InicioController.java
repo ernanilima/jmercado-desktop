@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -53,6 +54,10 @@ public class InicioController implements Initializable {
         } else {
             titulo.setText(tituloSistema);
         }
+    }
+
+    public void setPainelCentral(Node painel) {
+        borderPaneCentral.setCenter(painel);
     }
 
     public void definirLegenda(String legenda) {
