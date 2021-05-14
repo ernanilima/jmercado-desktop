@@ -7,3 +7,7 @@
 
 target/
 out/
+.DS_Store
+
+### Banco Local ###
+jmercado.mv.db
