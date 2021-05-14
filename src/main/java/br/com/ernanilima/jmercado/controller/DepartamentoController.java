@@ -1,5 +1,6 @@
 package br.com.ernanilima.jmercado.controller;
 
+import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +24,8 @@ public class DepartamentoController implements Initializable {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+
+    @Autowired private Utils utils;
 
     @Value("classpath:/fxml/cad_departamento.fxml")
     private Resource R_FXML;
@@ -56,6 +59,39 @@ public class DepartamentoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         STAGE = new Stage();
+
+        //ACOES EM BOTOES
+        btnCadastrar.setOnAction(e -> cadastrar());
+        btnEditar.setOnAction(e -> editar());
+        btnExcluir.setOnAction(e -> excluir());
+        btnGravar.setOnAction(e -> gravar());
+        btnCancelar.setOnAction(e -> cancelar());
+    }
+
+    /** Cadastrar novo */
+    public void cadastrar() {
+        cInicio.setTitulo(campoTitulo, "Cadastrar Departamento");
+        utils.exibirAba(tab, tpCadastrar, tpListar);
+        campoCodigo.requestFocus();
+    }
+
+    private void editar() {
+        System.out.println("EDITAR");
+    }
+
+    private void excluir() {
+        System.out.println("EXCLUIR");
+    }
+
+    private void gravar() {
+        System.out.println("GRAVAR");
+        cInicio.setTitulo(campoTitulo, "Lista De Departamentos");
+        utils.exibirAba(tab, tpListar, tpCadastrar);
+    }
+
+    private void cancelar() {
+        cInicio.setTitulo(campoTitulo, "Lista De Departamentos");
+        utils.exibirAba(tab, tpListar, tpCadastrar);
     }
 
     /** Obtem o painel para ser usado internamente.
@@ -65,7 +101,7 @@ public class DepartamentoController implements Initializable {
         btnSelecionar.setVisible(false);
         campoTitulo.setVisible(false);
         campoTitulo.setPrefHeight(0);
-        cInicio.adcionaTitulo(campoTitulo, "Lista De Departamentos");
+        cInicio.setTitulo(campoTitulo, "Lista De Departamentos");
         return painel;
     }
 

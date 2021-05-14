@@ -48,7 +48,7 @@ public class InicioController implements Initializable {
         borderPane.setLeft(cMenu.menuLateral());
     }
 
-    public void adcionaTitulo(Label tituloModal, String tituloSistema) {
+    public void setTitulo(Label tituloModal, String tituloSistema) {
         if (tituloModal.isVisible()) {
             tituloModal.setText(tituloSistema);
         } else {
