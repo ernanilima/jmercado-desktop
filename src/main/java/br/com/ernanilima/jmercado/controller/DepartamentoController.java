@@ -1,6 +1,9 @@
 package br.com.ernanilima.jmercado.controller;
 
+import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.utils.Utils;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Controller
@@ -42,7 +46,7 @@ public class DepartamentoController implements Initializable {
     @FXML private Button btnEditar;
     @FXML private Button btnExcluir;
     @FXML private AnchorPane boxLista;
-    @FXML private TableView<?> tabela;
+    @FXML private TableView<Departamento> tabela;
     @FXML private Tab tpCadastrar;
     @FXML private AnchorPane box;
     @FXML private Label textoCampoCodigo;
@@ -51,6 +55,9 @@ public class DepartamentoController implements Initializable {
     @FXML private Button btnCancelar;
     @FXML private Label textoCampoDescricao;
     @FXML private TextField campoDescricao;
+
+    private TableColumn<Departamento, Integer> colunaCodigo;
+    private TableColumn<Departamento, String> colunaDescricao;
 
     private Stage STAGE;
     private FXMLLoader LOADER;
@@ -66,6 +73,35 @@ public class DepartamentoController implements Initializable {
         btnExcluir.setOnAction(e -> excluir());
         btnGravar.setOnAction(e -> gravar());
         btnCancelar.setOnAction(e -> cancelar());
+
+        carregarEstruturaTabela();
+    }
+
+    private void carregarEstruturaTabela() {
+
+        //Exibi texto na tabela caso ela esteja vazia
+        tabela.setPlaceholder(new Label(""));
+
+        colunaCodigo = new TableColumn<>("CÓDIGO");
+        colunaDescricao = new TableColumn<>("DESCRIÇÃO");
+
+        colunaCodigo.setMinWidth(85);
+        colunaCodigo.setMaxWidth(colunaCodigo.getMinWidth());
+
+        // permite selecionar celular ou linha inteira
+        tabela.getSelectionModel().setCellSelectionEnabled(true);
+        // adiciona botao que permite escolher colunas
+        tabela.setTableMenuButtonVisible(true);
+
+        // ajusta descricao
+        tabela.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        tabela.getColumns().add(colunaCodigo);
+        tabela.getColumns().add(colunaDescricao);
+
+        colunaCodigo.setCellValueFactory(model -> new SimpleObjectProperty<>(model.getValue().getCodigo()));
+        colunaDescricao.setCellValueFactory(model -> new SimpleObjectProperty<>(model.getValue().getDescricao()));
+
     }
 
     /** Cadastrar novo */
