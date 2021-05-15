@@ -64,6 +64,12 @@ public class InicioController implements Initializable {
         campoLegenda.setText(legenda);
     }
 
+    /** Campo de alerta de erro, sobrepoe a legenda
+     * @return Label - campo de alerta de erro */
+    public Label getCampoAlerta() {
+        return campoLegendaAlerta;
+    }
+
     public void exibir(Stage stage) {
         try {
             STAGE = stage;

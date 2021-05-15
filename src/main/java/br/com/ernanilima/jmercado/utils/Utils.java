@@ -43,20 +43,4 @@ public class Utils {
             }
         }
     }
-
-    /** Valida o campo passado no parametro
-     * @param campo - campo a ser validado
-     * @param tituloCampo - titulo do campo a ser validado
-     * @return boolean - true se tudo ok com o campo passado no parametro */
-    public boolean vCampos(Node campo, Label tituloCampo) {
-        String s = "";
-        if (campo instanceof TextField) {
-            s = ((TextField) campo).getText();
-        }
-        if (campo instanceof ComboBox<?>) {
-            ComboBox<?> cbbx = (ComboBox) campo;
-            s = String.valueOf(cbbx.getSelectionModel().getSelectedIndex());
-        }
-        return !s.equals("") && !s.equals("0");
-    }
 }
