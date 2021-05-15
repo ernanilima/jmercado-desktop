@@ -1,13 +1,16 @@
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
 
-
-target/
-out/
+### Local ###
+target/**
+out/**
 .DS_Store
+
+### .Jar da aplicacao ###
+!target/JMercado-*.jar
 
 ### Banco Local ###
 jmercado.mv.db

@@ -61,8 +61,10 @@ public class ConfigTestPersist {
     }
 
     private String[] getModelsParaEscanear() {
+        // importante para a geracao do .jar
+        // evita o uso da anotacao @ComponentScan(...)
         ArrayList<String> packages = new ArrayList<>();
-        packages.add("br.com.ernanilima.jmercado.Model");
+        packages.add("br.com.ernanilima.jmercado.model");
         return packages.toArray(new String[packages.size()]);
     }
 
