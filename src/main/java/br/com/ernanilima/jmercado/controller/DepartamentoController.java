@@ -1,9 +1,9 @@
 package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.model.Departamento;
-import br.com.ernanilima.jmercado.repository.DepartamentoRepository;
 import br.com.ernanilima.jmercado.service.DepartamentoService;
 import br.com.ernanilima.jmercado.utils.Utils;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -114,11 +114,13 @@ public class DepartamentoController implements Initializable {
 
     private void carregarConteudoTabela() {
         oListDepartamento.clear();
-        lsDepartamento = sDepartamento.listarTudo();
-
-        tabela.getSortOrder().clear();
-        oListDepartamento.addAll(lsDepartamento);
-        tabela.getItems().setAll(oListDepartamento);
+        sDepartamento.listarTudoAsinc().thenAccept(list -> Platform.runLater(()-> {
+            lsDepartamento = list;
+            tabela.getSortOrder().clear();
+            oListDepartamento.addAll(lsDepartamento);
+            tabela.getItems().setAll(oListDepartamento);
+            tabela.requestFocus();
+        }));
     }
 
     /** Cadastrar novo */
@@ -129,22 +131,55 @@ public class DepartamentoController implements Initializable {
     }
 
     private void editar() {
-        System.out.println("EDITAR");
+        int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
+        if (linhaSelecionada != -1) {
+            Departamento mDepartamento = tabela.getItems().get(linhaSelecionada);
+            campoCodigo.setDisable(true);
+            campoCodigo.setText(String.valueOf(mDepartamento.getCodigo()));
+            campoDescricao.setText(mDepartamento.getDescricao());
+
+            cInicio.setTitulo(campoTitulo, "Editar Departamento");
+            utils.exibirAba(tab, tpCadastrar, tpListar);
+            campoDescricao.requestFocus();
+        }
     }
 
     private void excluir() {
-        System.out.println("EXCLUIR");
+        int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
+        if (linhaSelecionada != -1) {
+            sDepartamento.remover(tabela.getItems().get(linhaSelecionada));
+            carregarConteudoTabela();
+            tabela.getSelectionModel().select(linhaSelecionada > 0 ? linhaSelecionada - 1 : 0);
+        }
     }
 
     private void gravar() {
-        System.out.println("GRAVAR");
-        cInicio.setTitulo(campoTitulo, "Lista De Departamentos");
-        utils.exibirAba(tab, tpListar, tpCadastrar);
+        if (validarCampos()) {
+            Departamento mDepartamento = new Departamento(
+                    Integer.parseInt(campoCodigo.getText()),
+                    campoDescricao.getText()
+            );
+
+            sDepartamento.gravar(mDepartamento);
+            limpar();
+            carregarConteudoTabela();
+            cInicio.setTitulo(campoTitulo, "Lista De Departamentos");
+            utils.exibirAba(tab, tpListar, tpCadastrar);
+        }
     }
 
     private void cancelar() {
         cInicio.setTitulo(campoTitulo, "Lista De Departamentos");
         utils.exibirAba(tab, tpListar, tpCadastrar);
+    }
+
+    private void limpar() {
+        utils.limparCampos(campoPesquisar, campoCodigo, campoDescricao);
+    }
+
+    private boolean validarCampos() {
+        return utils.vCampos(campoCodigo, textoCampoCodigo) &&
+                utils.vCampos(campoDescricao, textoCampoDescricao);
     }
 
     /** Obtem o painel para ser usado internamente.
