@@ -2,6 +2,7 @@ package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.repository.DepartamentoRepository;
+import br.com.ernanilima.jmercado.service.DepartamentoService;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -31,7 +32,7 @@ public class DepartamentoController implements Initializable {
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
 
-    @Autowired private DepartamentoRepository rDepartamento;
+    @Autowired private DepartamentoService sDepartamento;
 
     @Autowired private Utils utils;
 
@@ -113,7 +114,7 @@ public class DepartamentoController implements Initializable {
 
     private void carregarConteudoTabela() {
         oListDepartamento.clear();
-        lsDepartamento = rDepartamento.findAll();
+        lsDepartamento = sDepartamento.listarTudo();
 
         tabela.getSortOrder().clear();
         oListDepartamento.addAll(lsDepartamento);
