@@ -2,6 +2,7 @@ package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.service.DepartamentoService;
+import br.com.ernanilima.jmercado.service.validacao.ValidarCodigo;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -35,6 +36,7 @@ public class DepartamentoController implements Initializable {
     @Autowired private DepartamentoService sDepartamento;
 
     @Autowired private Utils utils;
+    @Autowired private ValidarCodigo vCodigo;
 
     @Value("classpath:/fxml/cad_departamento.fxml")
     private Resource R_FXML;
@@ -179,7 +181,8 @@ public class DepartamentoController implements Initializable {
 
     private boolean validarCampos() {
         return utils.vCampos(campoCodigo, textoCampoCodigo) &&
-                utils.vCampos(campoDescricao, textoCampoDescricao);
+                utils.vCampos(campoDescricao, textoCampoDescricao) &&
+                !vCodigo.novo(campoCodigo, sDepartamento);
     }
 
     /** Obtem o painel para ser usado internamente.

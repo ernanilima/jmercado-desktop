@@ -14,7 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "proddepart")
-public class Departamento implements Serializable {
+public class Departamento implements Serializable, IModel {
     private static final long serialVersionUID = 1L;
 
     @Id
