@@ -102,6 +102,7 @@ public class DepartamentoController implements Initializable, ICadastro {
 
         // ACOES AO PRESSIONAR TECLAS
         campoPesquisar.setOnKeyPressed(lKey.campoPesquisaKeyPressed(tabela, this));
+        painel.setOnKeyReleased(lKey.atalhoKeyReleased(this));
 
         carregarEstruturaTabela();
     }
@@ -150,13 +151,15 @@ public class DepartamentoController implements Initializable, ICadastro {
     }
 
     /** Cadastrar novo */
+    @Override
     public void cadastrar() {
         cInicio.setTitulo(campoTitulo, "Cadastrar Departamento");
         utils.exibirAba(tab, tpCadastrar, tpListar);
         campoCodigo.requestFocus();
     }
 
-    private void editar() {
+    @Override
+    public void editar() {
         int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
         if (linhaSelecionada != -1) {
             Departamento mDepartamento = tabela.getItems().get(linhaSelecionada);
@@ -170,7 +173,8 @@ public class DepartamentoController implements Initializable, ICadastro {
         }
     }
 
-    private void excluir() {
+    @Override
+    public void excluir() {
         int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
         if (linhaSelecionada != -1) {
             sDepartamento.remover(tabela.getItems().get(linhaSelecionada));
@@ -179,7 +183,8 @@ public class DepartamentoController implements Initializable, ICadastro {
         }
     }
 
-    private void gravar() {
+    @Override
+    public void gravar() {
         if (validarCampos()) {
             Departamento mDepartamento = new Departamento(
                     Integer.parseInt(campoCodigo.getText()),
@@ -194,7 +199,8 @@ public class DepartamentoController implements Initializable, ICadastro {
         }
     }
 
-    private void cancelar() {
+    @Override
+    public void cancelar() {
         cInicio.setTitulo(campoTitulo, "Lista De Departamentos");
         utils.exibirAba(tab, tpListar, tpCadastrar);
     }
