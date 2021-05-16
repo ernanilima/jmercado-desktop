@@ -4,6 +4,7 @@ import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.service.DepartamentoService;
+import br.com.ernanilima.jmercado.service.componente.Mascara;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
@@ -103,6 +104,11 @@ public class DepartamentoController implements Initializable, ICadastro {
         // ACOES AO PRESSIONAR TECLAS
         campoPesquisar.setOnKeyPressed(lKey.campoPesquisaKeyPressed(tabela, this));
         painel.setOnKeyReleased(lKey.atalhoKeyReleased(this));
+
+        // MASCARAS EM CAMPOS
+        Mascara.textoNumeroMaiusculo(campoPesquisar, 50);
+        Mascara.numeroInteiro(campoCodigo, 3);
+        Mascara.textoNumeroMaiusculo(campoDescricao, 50);
 
         carregarEstruturaTabela();
     }
