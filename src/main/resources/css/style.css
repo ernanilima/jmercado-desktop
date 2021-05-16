@@ -15,8 +15,14 @@
     cor-btn-nC-hover: rgba(255,255,255,0.4);
     cor-btn-nC-focused: rgba(255,255,255,0.4);
 }
+#campoLegenda {
+    -fx-background-color: #EBEFF3;
+    -fx-border-color: silver;
+    -fx-border-width: 1 0 0 0;
+    -fx-text-fill: #2e578b;
+}
 #campoLegendaAlerta {
-    -fx-background-color: red;
+    -fx-background-color: RED;
     -fx-border-color: silver;
     -fx-border-width: 1 0 0 0;
     -fx-text-fill: white;

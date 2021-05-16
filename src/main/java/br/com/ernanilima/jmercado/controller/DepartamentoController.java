@@ -1,7 +1,9 @@
 package br.com.ernanilima.jmercado.controller;
 
+import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.service.DepartamentoService;
+import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCodigo;
 import br.com.ernanilima.jmercado.utils.Utils;
@@ -33,6 +35,8 @@ public class DepartamentoController implements Initializable {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+
+    @Autowired private FocusListener lFocus;
 
     @Autowired private DepartamentoService sDepartamento;
 
@@ -85,6 +89,10 @@ public class DepartamentoController implements Initializable {
         btnExcluir.setOnAction(e -> excluir());
         btnGravar.setOnAction(e -> gravar());
         btnCancelar.setOnAction(e -> cancelar());
+
+        // ACOES DE FOCO
+        campoCodigo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdDepartamento.CODIGO));
+        campoDescricao.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdDepartamento.DESCRICAO));
 
         carregarEstruturaTabela();
     }

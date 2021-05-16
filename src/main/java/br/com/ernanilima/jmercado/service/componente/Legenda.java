@@ -13,10 +13,16 @@ public class Legenda {
 
     private Thread threadCampoLegenda;
 
+    /** Exibe legenda no fxml inicial
+     * @param legenda String - legenda que deve ser exibida */
+    public void exibirLegenda(String legenda) {
+        cInicio.setLegenda(legenda);
+    }
+
     /** Define mensagem de erro
      * @param legendaErro String - mensagem de erro
      * @param campoRetornoErro Node - campo do erro */
-    public void exibeAlerta(String legendaErro, Node campoRetornoErro) {
+    public void exibirAlerta(String legendaErro, Node campoRetornoErro) {
         final int TEMPO_EXECUCAO = 3000;
         campoRetornoErro.requestFocus();
 

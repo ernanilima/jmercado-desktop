@@ -60,7 +60,10 @@ public class InicioController implements Initializable {
         borderPaneCentral.setCenter(painel);
     }
 
-    public void definirLegenda(String legenda) {
+    /** Exibe legenda no fxml inicial
+     * Usado apenas em {@link br.com.ernanilima.jmercado.service.componente.Legenda}
+     * @param legenda String - legenda que deve ser exibida */
+    public void setLegenda(String legenda) {
         campoLegenda.setText(legenda);
     }
 

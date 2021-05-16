@@ -24,12 +24,12 @@ public class ValidarCodigo {
                 service.getPorId(Integer.parseInt(campoCodigo.getText())) != null // codigo ja cadastrado
         ) {
             // codigo existe no banco de dados
-            legenda.exibeAlerta(MensagemErro.CODIGO_EXISTENTE, campoCodigo);
+            legenda.exibirAlerta(MensagemErro.CODIGO_EXISTENTE, campoCodigo);
             return true;
 
         } else if (!campoCodigo.getText().equals("") && Integer.parseInt(campoCodigo.getText()) <= 0) {
             // codigo nao informado ou igual a zero(0)
-            legenda.exibeAlerta(MensagemErro.CODIGOZERO, campoCodigo);
+            legenda.exibirAlerta(MensagemErro.CODIGOZERO, campoCodigo);
             return true;
 
         } else {

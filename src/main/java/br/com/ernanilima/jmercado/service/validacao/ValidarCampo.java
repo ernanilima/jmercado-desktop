@@ -23,8 +23,8 @@ public class ValidarCampo {
         if (campo instanceof TextField) {
             s = ((TextField) campo).getText();
         }
-        if (s.equals("") || s.equals("0")) {
-            legenda.exibeAlerta(MensagemErro.campoObrigatorio(tituloCampo.getText()), campo);
+        if (s.trim().equals("")) {
+            legenda.exibirAlerta(MensagemErro.campoObrigatorio(tituloCampo.getText()), campo);
             return false;
         }
         return true;
