@@ -1,6 +1,7 @@
 package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.controller.listener.FocusListener;
+import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.service.DepartamentoService;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
@@ -32,12 +33,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 @Controller
-public class DepartamentoController implements Initializable {
+public class DepartamentoController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
 
     @Autowired private FocusListener lFocus;
+    @Autowired private KeyListener lKey;
 
     @Autowired private DepartamentoService sDepartamento;
 
@@ -85,6 +87,7 @@ public class DepartamentoController implements Initializable {
         oListDepartamento = FXCollections.observableArrayList();
 
         //ACOES EM BOTOES
+        btnPesquisar.setOnAction(e -> pesquisar());
         btnCadastrar.setOnAction(e -> cadastrar());
         btnEditar.setOnAction(e -> editar());
         btnExcluir.setOnAction(e -> excluir());
@@ -96,6 +99,9 @@ public class DepartamentoController implements Initializable {
         tabela.getFocusModel().focusedCellProperty().addListener(lFocus.tabelaActionListener(tabela, Coluna.ProdDepartamento.getColunasLegendas()));
         campoCodigo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdDepartamento.CODIGO));
         campoDescricao.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdDepartamento.DESCRICAO));
+
+        // ACOES AO PRESSIONAR TECLAS
+        campoPesquisar.setOnKeyPressed(lKey.campoPesquisaKeyPressed(tabela, this));
 
         carregarEstruturaTabela();
     }
@@ -136,6 +142,11 @@ public class DepartamentoController implements Initializable {
             tabela.getItems().setAll(oListDepartamento);
             tabela.requestFocus();
         }));
+    }
+
+    @Override
+    public void pesquisar() {
+        System.out.println("pesquisar");
     }
 
     /** Cadastrar novo */
