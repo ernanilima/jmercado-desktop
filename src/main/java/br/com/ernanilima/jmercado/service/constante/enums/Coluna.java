@@ -23,6 +23,7 @@ public class Coluna {
             COLUNAS = new String[2][2];
             int i = 0;
             for (ProdDepartamento coluna : ProdDepartamento.values()) {
+                // [numero da linha][numero do conteudo] = conteudo recebido
                 COLUNAS[i][0] = coluna.getColuna();
                 COLUNAS[i][1] = coluna.getLegenda();
                 i++;
