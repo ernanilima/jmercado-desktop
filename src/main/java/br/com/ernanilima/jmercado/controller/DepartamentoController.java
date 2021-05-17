@@ -2,6 +2,7 @@ package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
+import br.com.ernanilima.jmercado.controller.popup.CorPopUp;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.service.DepartamentoService;
@@ -53,6 +54,8 @@ public class DepartamentoController implements Initializable, ICadastro {
 
     @Value("classpath:/fxml/cad_departamento.fxml")
     private Resource R_FXML;
+    @Value("classpath:/css/modal.css")
+    private Resource R_CSS;
 
     @FXML private AnchorPane painel;
     @FXML private Label campoTitulo;
@@ -210,7 +213,8 @@ public class DepartamentoController implements Initializable, ICadastro {
     public void excluir() {
         int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
         if (linhaSelecionada != -1) {
-            ppConfirmacao.exibirPopUp(MensagemAlerta.excluir(tabela.getItems().get(linhaSelecionada).getDescricao()));
+            ppConfirmacao.exibirPopUp(CorPopUp.VERMELHO_VERDE,
+                    MensagemAlerta.excluir(tabela.getItems().get(linhaSelecionada).getDescricao()));
             if (ppConfirmacao.getRsultado()) {
                 sDepartamento.remover(tabela.getItems().get(linhaSelecionada));
                 carregarConteudoTabela();
@@ -237,6 +241,7 @@ public class DepartamentoController implements Initializable, ICadastro {
 
     @Override
     public void cancelar() {
+        limpar();
         cInicio.setTitulo(campoTitulo, "Lista De Departamentos");
         utils.exibirAba(tab, tpListar, tpCadastrar);
     }
@@ -271,6 +276,7 @@ public class DepartamentoController implements Initializable, ICadastro {
                 ROOT = LOADER.load();
                 STAGE.initModality(Modality.APPLICATION_MODAL);
                 LOADER.setControllerFactory(aClass -> springContext.getBean(aClass));
+                ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
                 carregarConteudoTabela();
             }
         } catch (IOException e) { e.printStackTrace(); }

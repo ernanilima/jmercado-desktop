@@ -1,0 +1,283 @@
+#campoTitulo {
+    -fx-font-size: 24;
+    -fx-text-fill: #2e578b;
+    -fx-font-weight: bold;
+
+}
+/*TABPANE*/
+#tab .tab-header-area {
+    visibility: hidden;
+}
+#tab {
+    -fx-background-color: white;
+}
+#tabInterna .tab-header-area {
+    visibility: true;
+}
+#tabInterna {
+    -fx-background-color: white;
+}
+/*PAINEL CONTAINER*/
+.boxDados {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 0);
+}
+/*SOMBRA*/
+#titulo_lista,
+#titulo_cadastro,
+#btnSelecionar,
+#btnCadastrar,
+#btnEditar,
+#btnExcluir,
+#btnRemoverSenha,
+#btnIgualar,
+#btnGravar,
+#btnCancelar {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 2, 5);
+}
+/*BOTOES*/
+#btnSelecionar {
+    -fx-background-color: #551A8B;
+    -fx-text-fill: white;
+}
+#btnCadastrar {
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+#btnEditar {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+#btnExcluir {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+#btnPesquisar {
+    -fx-background-color: white;
+    -fx-background-image: url("/imagem/icone/busca_32x32.png");
+    -fx-background-size: 30 30;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-border-color: silver;
+
+    -fx-background-radius: 0 3 3 0;
+    -fx-border-width: 1 1 1 0;
+    -fx-border-radius: 0 3 3 0;
+}
+#btnRemoverSenha {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+#btnIgualar {
+    -fx-background-color: #551A8B;
+    -fx-text-fill: white;
+}
+#btnGravar {
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+#btnCancelar {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+#btnBuscar {
+    -fx-background-color: linear-gradient(to bottom, #707070 5%, #050504 100%);;
+    -fx-background-insets: 0;
+    -fx-background-image: url("/static/icone/ico_busca_branco.png");
+    -fx-background-size: 25 25;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-radius: 0 3 3 0;
+    -fx-border-width: 1 1 1 0;
+    -fx-border-color: silver;
+    -fx-border-radius: 0 3 3 0;
+}
+/*CAMPOS*/
+.text-field {
+    -fx-background-color: silver, white;
+}
+#campoPesquisar {
+    /*-fx-background-color: white;
+    -fx-border-color: silver;*/
+
+    -fx-background-radius: 5 0 0 0;
+    -fx-border-width: 1;
+    -fx-border-radius: 5 0 0 0;
+}
+#cbbxPesquisar {
+    -fx-background-color: white;
+    -fx-border-color: silver;
+
+    -fx-background-radius: 0;
+    -fx-border-width: 1 0 1 0;
+    -fx-border-radius: 0;
+}
+.campoBtnBuscar {
+    -fx-background-radius: 3 0 0 3;
+}
+/*=== TABLEVIEW ===*/
+.table-view,
+.table-view:focused { /* BORDA DA TABELA */
+    -fx-background-color: silver, white;
+    -fx-background-insets: 0, 1;
+}
+.table-row-cell {/* LINHA 1 */
+      -fx-background-insets: 0;
+      -fx-padding: 0.0em;
+      -fx-background-color: rgb(255,255,255);
+      -fx-table-cell-border-color: transparent;
+      -fx-table-header-border-color: transparent;
+}
+.table-row-cell:odd { /* LINHA 2 */
+      -fx-background-insets: 0;
+      -fx-padding: 0.0em;
+      -fx-background-color: rgb(245,245,245);
+      -fx-table-cell-border-color: transparent;
+      -fx-table-header-border-color: transparent;
+}
+.table-view .table-row-cell:filled:focused:hover { /* PASSAR O MOUSE EM LINHA JA SELECIONADA SEM FOCO NA TABELA */
+    -fx-border-color: blue;
+    -fx-padding: -1;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+.table-view:focused .table-row-cell:filled:focused:hover { /* PASSAR O MOUSE EM LINHA JA SELECIONADA COM FOCO NA TABELA */
+    -fx-border-color: rgb(100,149,237);
+    -fx-padding: -1;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+.table-view .table-row-cell:filled:focused:hover .text { /* TEXTO AO PASSAR O MOUSE EM LINHA JA SELECIONADA */
+    -fx-text-fill: white;
+}
+.table-view .table-row-cell:filled:focused { /* LINHA SELECIONADA SEM FOCO NA TABELA */
+    -fx-background-color: rgb(100,149,237);
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+.table-view .table-row-cell:filled:focused .table-cell .text { /* TEXTO DA LINHA SELECIONADA SEM FOCO NA TABELA */
+    -fx-fill: white;
+}
+.table-view:focused .table-row-cell:filled:focused  { /* LINHA SELECIONADA COM FOCO NA TABELA */
+    -fx-background-color: blue;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+.table-view:focused .table-row-cell:filled:focused .table-cell .text { /* TEXTO DA LINHA SELECIONADA COM FOCO NA TABELA */
+    -fx-fill: white;
+}
+.table-view .table-row-cell:hover { /* LINHA AO PASSAR O MOUSE */
+    -fx-background-color: rgb(100,149,237);
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+.table-view .table-row-cell:hover .text { /* TEXTO DA LINHA AO PASSAR O MOUSE */
+    -fx-fill: white;
+}
+.table-view .table-row-cell:filled:focused .table-cell { /* USADO PARA NAO SUMIR A MERDA DA ULTIMA COLUNA */
+    -fx-background-color: transparent;
+}
+.table-view .filler,
+.table-view .show-hide-columns-button,
+.table-view .column-header,
+.table-view .column-header-background .filler { /* CABECALHO DA TABELA + PARTE LATERAL DE QUANDO EXISTIR SCROLL NA TABELA */
+    -fx-background-color: white;
+    -fx-border-color: silver;
+}
+.table-view .filler,
+.table-view .show-hide-columns-button,
+.table-view .column-header { /* CABECALHO DA TABELA */
+    -fx-border-width: 0 0 2 1;
+}
+.table-view .column-header-background .filler { /* PARTE LATERAL DE QUANDO EXISTIR SCROLL NA TABELA */
+    -fx-border-width: 0 0 2 0;
+}
+.table-view .column-header .label { /* TEXTO DO CABECALHO DA TABELA */
+   -fx-text-fill: black;
+   -fx-font-weight: bold;
+}
+.table-view .column-header .arrow { /* SETA DO CABECALHO DA TABELA */
+    -fx-background-color: red;
+}
+/*=== TABLEVIEW - HABILITADO CELULA UNICA ===*/
+.table-view .table-cell:filled:selected { /* LINHA SELECIONADA SEM FOCO NA TABELA */
+    -fx-background-color: red;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+.table-view .table-cell:filled:focused:hover { /* PASSAR O MOUSE EM LINHA JA SELECIONADA SEM FOCO NA TABELA */
+    -fx-border-color: blue;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+.table-view:focused .table-cell:filled:focused:hover { /* PASSAR O MOUSE EM LINHA JA SELECIONADA COM FOCO NA TABELA*/
+    -fx-border-color: rgb(100,149,237);
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+.table-view .table-cell:filled:focused:hover .text { /* TEXTO AO PASSAR O MOUSE EM LINHA JA SELECIONADA */
+    -fx-text-fill: white;
+}
+.table-view .table-cell:filled:focused { /* LINHA SELECIONADA SEM FOCO NA TABELA */
+    -fx-background-color: rgb(100,149,237);
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+.table-view .table-cell:filled:focused .text { /* TEXTO DA LINHA SELECIONADA SEM FOCO NA TABELA */
+    -fx-fill: white;
+}
+.table-view:focused .table-cell:filled:focused  { /* LINHA SELECIONADA COM FOCO NA TABELA */
+    -fx-background-color: blue;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+.table-view:focused .table-cell:filled:focused .text { /* TEXTO DA LINHA SELECIONADA COM FOCO NA TABELA */
+    -fx-fill: white;
+}
+.table-view .table-row-cell:hover { /* LINHA AO PASSAR O MOUSE */
+    -fx-background-color: rgb(100,149,237);
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+.table-view .table-row-cell:hover .text { /* TEXTO DA LINHA AO PASSAR O MOUSE */
+    -fx-fill: white;
+}
+/*=== COMBOBOX ===*/
+.combo-box .arrow { /* SETA PARA ABRIR LISTA EM COMBOBOX */
+    -fx-background-color: silver;
+}
+.combo-box-popup .list-view .list-cell:filled:selected { /* LINHA SELECIONADA NO POPUP DO COMBOBOX */
+    -fx-background-color: blue;
+}
+.combo-box-popup .list-view .list-cell:hover { /* LINHA AO PASSAR O MOUSE NO POPUP DO COMBOBOX */
+    -fx-background-color: rgb(100,149,237);
+}
+/*=== SCROLL ATUALMENTE PARA TABLEVIEW E COMBOBOX ===*/
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track { /* GRANDE BARRA SCROLL */
+    -fx-background-color: transparent;
+    -fx-border-color: silver /*derive( #6622CC,80%)*/;
+
+    -fx-background-radius: 2em;
+    -fx-border-radius: 2em;
+}
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb { /* PEQUENA BARRA SCROLL */
+    -fx-background-color: white /*derive( #6622CC,90%)*/;
+    -fx-border-color: silver /*derive( #6622CC,80%)*/;
+
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+    -fx-border-radius: 2em;
+}
+.increment-button,
+.decrement-button { /* BOTAO DA SETAS DO SCROLL EXTERNO */
+    -fx-background-color: transparent;
+	-fx-background-radius: 2em;
+
+}
+.increment-arrow,
+.decrement-arrow { /* SETA DO SCROLL */
+    -fx-background-color: black;
+}

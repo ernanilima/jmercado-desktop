@@ -1,0 +1,26 @@
+#painel {
+    -fx-background-color: white;
+}
+#btnSim,
+#btnNao {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 2, 5);
+}
+.btnVermelho {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+.btnVerde {
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+/* BOTAO SELECIONADO */
+.btnVerde:focused,
+.btnVermelho:focused {
+    -fx-border-width: 0 0 3 0;
+    -fx-border-radius: 0 0 3 3;
+    -fx-border-color: darkblue;
+}
+.btnVerde:hover,
+.btnVermelho:hover {
+    -fx-opacity: 0.7;
+}
