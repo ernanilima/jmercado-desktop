@@ -5,6 +5,7 @@ import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.service.DepartamentoService;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
+import br.com.ernanilima.jmercado.service.componente.Pesquisa;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
@@ -48,6 +49,8 @@ public class DepartamentoController implements Initializable, ICadastro {
     @Autowired private ValidarCodigo vCodigo;
     @Autowired private ValidarCampo vCampo;
 
+    @Autowired private Pesquisa pesquisa;
+
     @Value("classpath:/fxml/cad_departamento.fxml")
     private Resource R_FXML;
 
@@ -56,7 +59,7 @@ public class DepartamentoController implements Initializable, ICadastro {
     @FXML private TabPane tab;
     @FXML private Tab tpListar;
     @FXML private TextField campoPesquisar;
-    @FXML private ComboBox<?> cbbxPesquisar;
+    @FXML private ComboBox<String> cbbxPesquisar;
     @FXML private Button btnPesquisar;
     @FXML private Button btnSelecionar;
     @FXML private Button btnCadastrar;
@@ -110,7 +113,11 @@ public class DepartamentoController implements Initializable, ICadastro {
         Mascara.numeroInteiro(campoCodigo, 3);
         Mascara.textoNumeroMaiusculo(campoDescricao, 50);
 
+        // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
+        utils.exibirAba(tab, tpListar, tpCadastrar);
+
         carregarEstruturaTabela();
+        carregarOpcoesPesquisa();
     }
 
     private void carregarEstruturaTabela() {
@@ -118,8 +125,8 @@ public class DepartamentoController implements Initializable, ICadastro {
         //Exibi texto na tabela caso ela esteja vazia
         tabela.setPlaceholder(new Label(""));
 
-        colunaCodigo = new TableColumn<>("CÓDIGO");
-        colunaDescricao = new TableColumn<>("DESCRIÇÃO");
+        colunaCodigo = new TableColumn<>(Coluna.ProdDepartamento.CODIGO.getColuna());
+        colunaDescricao = new TableColumn<>(Coluna.ProdDepartamento.DESCRICAO.getColuna());
 
         colunaCodigo.setMinWidth(85);
         colunaCodigo.setMaxWidth(colunaCodigo.getMinWidth());
@@ -151,9 +158,29 @@ public class DepartamentoController implements Initializable, ICadastro {
         }));
     }
 
+    /** Carrega as opcoes para pesquisa no combobox */
+    private void carregarOpcoesPesquisa() {
+        ObservableList<String> oList = FXCollections.observableArrayList();
+        List<String> list = Coluna.ProdDepartamento.getColunas();
+        oList.clear();
+
+        oList.add(Coluna.GERAL);
+        oList.addAll(list);
+
+        cbbxPesquisar.setItems(oList);
+        cbbxPesquisar.getSelectionModel().selectFirst();
+        cbbxPesquisar.setVisibleRowCount(9);
+    }
+
     @Override
     public void pesquisar() {
-        System.out.println("pesquisar");
+        // atualiza a taleba com todos os itens ja carregados
+        // antes de realizar pesquisa
+        // OBS: nao realiza nova consulta no banco
+        tabela.getItems().setAll(oListDepartamento);
+
+        // realiza pesquisa
+        pesquisa.pesquisaDepartamento(cbbxPesquisar, tabela, campoPesquisar);
     }
 
     /** Cadastrar novo */

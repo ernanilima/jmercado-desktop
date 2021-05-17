@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Coluna {
 
+    public static final String GERAL = "GERAL";
+
     /** DEPARTAMENTO */
     public enum ProdDepartamento {
 
