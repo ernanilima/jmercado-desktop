@@ -1,4 +1,4 @@
-package br.com.ernanilima.jmercado.Config;
+package br.com.ernanilima.jmercado.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
