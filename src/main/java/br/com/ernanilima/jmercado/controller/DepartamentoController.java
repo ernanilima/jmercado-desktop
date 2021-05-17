@@ -2,11 +2,13 @@ package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
+import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.service.DepartamentoService;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
 import br.com.ernanilima.jmercado.service.componente.Pesquisa;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
+import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCodigo;
@@ -39,12 +41,10 @@ public class DepartamentoController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
-
+    @Autowired private PopUpConfirmacaoController ppConfirmacao;
     @Autowired private FocusListener lFocus;
     @Autowired private KeyListener lKey;
-
     @Autowired private DepartamentoService sDepartamento;
-
     @Autowired private Utils utils;
     @Autowired private ValidarCodigo vCodigo;
     @Autowired private ValidarCampo vCampo;
@@ -210,9 +210,12 @@ public class DepartamentoController implements Initializable, ICadastro {
     public void excluir() {
         int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
         if (linhaSelecionada != -1) {
-            sDepartamento.remover(tabela.getItems().get(linhaSelecionada));
-            carregarConteudoTabela();
-            tabela.getSelectionModel().select(linhaSelecionada > 0 ? linhaSelecionada - 1 : 0);
+            ppConfirmacao.exibirPopUp(MensagemAlerta.excluir(tabela.getItems().get(linhaSelecionada).getDescricao()));
+            if (ppConfirmacao.getRsultado()) {
+                sDepartamento.remover(tabela.getItems().get(linhaSelecionada));
+                carregarConteudoTabela();
+                tabela.getSelectionModel().select(linhaSelecionada > 0 ? linhaSelecionada - 1 : 0);
+            }
         }
     }
 

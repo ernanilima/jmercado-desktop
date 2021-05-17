@@ -1,7 +1,7 @@
 package br.com.ernanilima.jmercado.service.validacao;
 
 import br.com.ernanilima.jmercado.service.componente.Legenda;
-import br.com.ernanilima.jmercado.service.constante.MensagemErro;
+import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -24,7 +24,7 @@ public class ValidarCampo {
             s = ((TextField) campo).getText();
         }
         if (s.trim().equals("")) {
-            legenda.exibirAlerta(MensagemErro.campoObrigatorio(tituloCampo.getText()), campo);
+            legenda.exibirAlerta(MensagemAlerta.campoObrigatorio(tituloCampo.getText()), campo);
             return false;
         }
         return true;

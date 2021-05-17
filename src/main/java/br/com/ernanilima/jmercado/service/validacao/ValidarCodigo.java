@@ -3,7 +3,7 @@ package br.com.ernanilima.jmercado.service.validacao;
 import br.com.ernanilima.jmercado.service.IService;
 
 import br.com.ernanilima.jmercado.service.componente.Legenda;
-import br.com.ernanilima.jmercado.service.constante.MensagemErro;
+import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,12 +24,12 @@ public class ValidarCodigo {
                 service.getPorId(Integer.parseInt(campoCodigo.getText())) != null // codigo ja cadastrado
         ) {
             // codigo existe no banco de dados
-            legenda.exibirAlerta(MensagemErro.CODIGO_EXISTENTE, campoCodigo);
+            legenda.exibirAlerta(MensagemAlerta.CODIGO_EXISTENTE, campoCodigo);
             return true;
 
         } else if (!campoCodigo.getText().equals("") && Integer.parseInt(campoCodigo.getText()) <= 0) {
             // codigo nao informado ou igual a zero(0)
-            legenda.exibirAlerta(MensagemErro.CODIGOZERO, campoCodigo);
+            legenda.exibirAlerta(MensagemAlerta.CODIGOZERO, campoCodigo);
             return true;
 
         } else {
