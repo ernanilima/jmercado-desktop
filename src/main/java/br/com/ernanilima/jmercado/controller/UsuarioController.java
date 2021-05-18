@@ -1,11 +1,15 @@
 package br.com.ernanilima.jmercado.controller;
 
+import br.com.ernanilima.jmercado.controller.listener.FocusListener;
+import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.MontarLiberacoes;
 import br.com.ernanilima.jmercado.liberacao.TipoLiberacao;
 import br.com.ernanilima.jmercado.model.Usuario;
 import br.com.ernanilima.jmercado.service.GrupoUsuarioService;
 import br.com.ernanilima.jmercado.service.UsuarioService;
+import br.com.ernanilima.jmercado.service.componente.Mascara;
+import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
 import br.com.ernanilima.jmercado.utils.Filtro;
@@ -38,6 +42,8 @@ public class UsuarioController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private FocusListener lFocus;
+    @Autowired private KeyListener lKey;
     @Autowired private UsuarioService sUsuario;
     @Autowired private GrupoUsuarioService sGrupoUsuario;
     @Autowired private Utils utils;
@@ -107,6 +113,33 @@ public class UsuarioController implements Initializable, ICadastro {
         btnPesquisar.setOnAction(e -> pesquisar());
         btnGravar.setOnAction(e -> gravar());
         btnCancelar.setOnAction(e -> cancelar());
+
+        // ACAO EM BOTAO RADIO
+        grupoTipoLiberacao.selectedToggleProperty().addListener((ob, to, t1) -> tipoLiberacao());
+
+        // ACOES DE FOCO
+        campoPesquisar.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.PESQUISA));
+        tabela.getFocusModel().focusedCellProperty().addListener(lFocus.tabelaActionListener(tabela, Coluna.Usuario.getColunasLegendas()));
+        campoCodigo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Usuario.CODIGO));
+        campoNomeCompleto.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Usuario.NOME_COMPLETO));
+        campoNomeSistema.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Usuario.NOME_SISTEMA));
+        campoCodGrupoUsuario.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.GrupoUsuario.CODIGO));
+        campoDescricaoGrupoUsuario.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.GrupoUsuario.DESCRICAO));
+        treeLiberacao.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.LIBERACAO_GRUPUSUA));
+
+        // ACOES AO PRESSIONAR TECLAS
+        campoPesquisar.setOnKeyPressed(lKey.campoPesquisaKeyPressed(tabela, this));
+        painel.setOnKeyReleased(lKey.atalhoKeyReleased(this));
+
+        // MASCARAS EM CAMPOS
+        Mascara.textoNumeroMaiusculo(campoPesquisar, 50);
+        Mascara.numeroInteiro(campoCodigo, 3);
+        Mascara.textoNumeroMaiusculo(campoNomeCompleto, 50);
+        Mascara.textoNumeroMaiusculo(campoNomeSistema, 10);
+        Mascara.numeroInteiro(campoCodGrupoUsuario, 3);
+
+        // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
+        utils.exibirAba(tab, tpListar, tpCadastrar);
 
         carregarEstruturaTabela();
         carregarOpcoesPesquisa();
@@ -254,6 +287,14 @@ public class UsuarioController implements Initializable, ICadastro {
         return vCampo.campoVazio(campoNomeCompleto, textoCampoNomeCompleto) &&
                 vCampo.campoVazio(campoNomeSistema, textoCampoNomeSistema) &&
                 vCampo.campoVazio(campoCodGrupoUsuario, textoCampoGrupoUsuario);
+    }
+
+    /** Oculta as permicoes caso o tipo de liberacao seja por grupo de usuario */
+    private void tipoLiberacao() {
+        if (grupoTipoLiberacao.getSelectedToggle() == btnRLiberacaoUsuario)
+            treeLiberacao.setDisable(false);
+        else if (grupoTipoLiberacao.getSelectedToggle() == btnRLiberacaoGrupo)
+            treeLiberacao.setDisable(true);
     }
 
     /** Obtem o painel para ser usado internamente.
