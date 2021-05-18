@@ -7,6 +7,7 @@ import br.com.ernanilima.jmercado.liberacao.MontarLiberacoes;
 import br.com.ernanilima.jmercado.model.GrupoUsuario;
 import br.com.ernanilima.jmercado.service.GrupoUsuarioService;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
+import br.com.ernanilima.jmercado.service.componente.Pesquisa;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.utils.Utils;
@@ -46,6 +47,8 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     @Autowired private GrupoUsuarioService sGrupoUsuario;
     @Autowired private Utils utils;
 
+    @Autowired private Pesquisa pesquisa;
+
     @Value("classpath:/fxml/cad_grupousuario.fxml")
     private Resource R_FXML;
 
@@ -73,8 +76,8 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     @FXML private TextField campoDescricao;
     @FXML private TreeView<Liberacoes> treeLiberacao;
 
-    private ObservableList<GrupoUsuario> oListGrupoUsu;
-    private List<GrupoUsuario> lsGrupoUsu;
+    private ObservableList<GrupoUsuario> oListGrupoUsuario;
+    private List<GrupoUsuario> lsGrupoUsuario;
     private TableColumn<GrupoUsuario, Integer> colunaCodigo;
     private TableColumn<GrupoUsuario, String> colunaDescricao;
 
@@ -86,7 +89,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         STAGE = new Stage();
-        oListGrupoUsu = FXCollections.observableArrayList();
+        oListGrupoUsuario = FXCollections.observableArrayList();
         TREE_SELECIONADO = new HashSet<>();
 
         // ACOES EM BOTOES
@@ -146,12 +149,12 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     }
 
     private void carregarConteudoTabela() {
-        oListGrupoUsu.clear();
+        oListGrupoUsuario.clear();
         sGrupoUsuario.listarTudoAsinc().thenAccept(list -> Platform.runLater(()-> {
-            lsGrupoUsu = list;
+            lsGrupoUsuario = list;
             tabela.getSortOrder().clear();
-            oListGrupoUsu.addAll(lsGrupoUsu);
-            tabela.getItems().setAll(oListGrupoUsu);
+            oListGrupoUsuario.addAll(lsGrupoUsuario);
+            tabela.getItems().setAll(oListGrupoUsuario);
             tabela.requestFocus();
         }));
     }
@@ -177,7 +180,13 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
 
     @Override
     public void pesquisar() {
+        // atualiza a taleba com todos os itens ja carregados
+        // antes de realizar pesquisa
+        // OBS: nao realiza nova consulta no banco
+        tabela.getItems().setAll(oListGrupoUsuario);
 
+        // realiza pesquisa
+        pesquisa.pesquisaGrupoUsuario(cbbxPesquisar, tabela, campoPesquisar);
     }
 
     @Override
