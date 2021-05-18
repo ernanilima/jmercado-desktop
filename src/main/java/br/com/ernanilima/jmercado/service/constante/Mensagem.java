@@ -4,6 +4,7 @@ package br.com.ernanilima.jmercado.service.constante;
 public class Mensagem {
 
     public static final String PESQUISA = "INFORME SUA PESQUISA E PRESSIONE ENTER.";
+    public static final String LIBERACAO_GRUPUSUA  = "LIBERAÇÕES DE GRUPO/USUÁRIO";
 
     /** Mensagens para cadastro de departamento
      * {@link br.com.ernanilima.jmercado.controller.DepartamentoController} */

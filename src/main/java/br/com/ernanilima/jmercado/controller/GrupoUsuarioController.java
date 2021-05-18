@@ -1,9 +1,13 @@
 package br.com.ernanilima.jmercado.controller;
 
+import br.com.ernanilima.jmercado.controller.listener.FocusListener;
+import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.MontarLiberacoes;
 import br.com.ernanilima.jmercado.model.GrupoUsuario;
 import br.com.ernanilima.jmercado.service.GrupoUsuarioService;
+import br.com.ernanilima.jmercado.service.componente.Mascara;
+import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
@@ -37,6 +41,8 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private FocusListener lFocus;
+    @Autowired private KeyListener lKey;
     @Autowired private GrupoUsuarioService sGrupoUsuario;
     @Autowired private Utils utils;
 
@@ -90,6 +96,25 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
         btnPesquisar.setOnAction(e -> pesquisar());
         btnGravar.setOnAction(e -> gravar());
         btnCancelar.setOnAction(e -> cancelar());
+
+        // ACOES DE FOCO
+        campoPesquisar.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.PESQUISA));
+        tabela.getFocusModel().focusedCellProperty().addListener(lFocus.tabelaActionListener(tabela, Coluna.GrupoUsuario.getColunasLegendas()));
+        campoCodigo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.GrupoUsuario.CODIGO));
+        campoDescricao.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.GrupoUsuario.DESCRICAO));
+        treeLiberacao.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.LIBERACAO_GRUPUSUA));
+
+        // ACOES AO PRESSIONAR TECLAS
+        campoPesquisar.setOnKeyPressed(lKey.campoPesquisaKeyPressed(tabela, this));
+        painel.setOnKeyReleased(lKey.atalhoKeyReleased(this));
+
+        // MASCARAS EM CAMPOS
+        Mascara.textoNumeroMaiusculo(campoPesquisar, 50);
+        Mascara.numeroInteiro(campoCodigo, 3);
+        Mascara.textoNumeroMaiusculo(campoDescricao, 50);
+
+        // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
+        utils.exibirAba(tab, tpListar, tpCadastrar);
 
         carregarEstruturaTabela();
         carregarOpcoesPesquisa();
