@@ -199,7 +199,22 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
 
     @Override
     public void editar() {
+        int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
+        if (linhaSelecionada != -1) {
+            GrupoUsuario mGrupoUsuario = tabela.getItems().get(linhaSelecionada);
+            campoCodigo.setText(String.valueOf(mGrupoUsuario.getCodigo()));
+            campoDescricao.setText(mGrupoUsuario.getDescricao());
 
+            TREE_SELECIONADO = new HashSet<>();
+            for (Liberacoes liberacao : mGrupoUsuario.getLiberacoes()) {
+                CheckBoxTreeItem<Liberacoes> checkBoxTreeItem = new CheckBoxTreeItem<>(liberacao);
+                TREE_SELECIONADO.add(checkBoxTreeItem);
+            }
+            carregarEstruturaTreeLiberacao();
+
+            cInicio.setTitulo(campoTitulo, "Editar Grupo De Usuário");
+            utils.exibirAba(tab, tpCadastrar, tpListar);
+        }
     }
 
     @Override

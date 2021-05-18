@@ -1,12 +1,13 @@
 package br.com.ernanilima.jmercado.model;
 
+import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -25,4 +26,11 @@ public class GrupoUsuario implements Serializable, IModel {
     @Column(length = 50, nullable = false)
     private String descricao;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "libgruusua")
+    private Set<Integer> liberacoes = new HashSet<>();
+
+    public Set<Liberacoes> getLiberacoes() {
+        return liberacoes.stream().map(Liberacoes::toEnum).collect(Collectors.toSet());
+    }
 }
