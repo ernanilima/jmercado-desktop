@@ -38,7 +38,6 @@ public class Pesquisa {
                 } else if (Coluna.GERAL.equals(colunaParaPesquisar)) {
                     return String.valueOf(model.getCodigo()).contains(pesquisa) ||
                             model.getDescricao().contains(pesquisa);
-
                 } return false;
             });
         }
@@ -74,9 +73,7 @@ public class Pesquisa {
                 } else if (Coluna.GERAL.equals(colunaParaPesquisar)) {
                     return String.valueOf(model.getCodigo()).contains(pesquisa) ||
                             model.getDescricao().contains(pesquisa);
-
-                }
-                return false;
+                } return false;
             });
         }
 

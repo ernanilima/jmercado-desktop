@@ -16,7 +16,6 @@ public class Mascara {
             // verifica se o novo texto tem a quantidade de caracteres
             if (novoTexto.length() <= qtdCaracteres) {
                 campo.setText(novoTexto);
-
             }
 
             // se tiver uma quantidade maior que a quantidade de caracteres
@@ -40,7 +39,6 @@ public class Mascara {
             // verifica se o novo texto tem a quantidade de caracteres
             if (novoTexto.length() <= qtdCaracteres) {
                 campo.setText(novoTexto);
-
             }
 
             // se tiver uma quantidade maior que a quantidade de caracteres

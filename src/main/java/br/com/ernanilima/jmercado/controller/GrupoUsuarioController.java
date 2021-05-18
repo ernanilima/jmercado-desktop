@@ -16,6 +16,7 @@ import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
+import br.com.ernanilima.jmercado.utils.Filtro;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -245,7 +246,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     private void igualarGrupo() {
         ppBusca.exibirPopUp("CÓDIGO DO GRUPO QUE DESEJA OBTER AS PERMISSÕES.");
         if (ppBusca.getRsultado() != null) {
-            GrupoUsuario mGrupoUsuario = sGrupoUsuario.getPorId(Integer.parseInt(ppBusca.getRsultado()));
+            GrupoUsuario mGrupoUsuario = sGrupoUsuario.getPorId(Filtro.pInt(ppBusca.getRsultado()));
             if (mGrupoUsuario == null) {
                 legenda.exibirAlerta(MensagemAlerta.naoLocalizado("GRUPO DE USUÁRIO"));
 
@@ -261,7 +262,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     public void gravar() {
         if (validarCampos()) {
             GrupoUsuario mGrupoUsuario = new GrupoUsuario(
-                    (campoCodigo.getText().equals("")) ? -1 : Integer.parseInt(campoCodigo.getText()),
+                    Filtro.pInt(campoCodigo.getText()),
                     campoDescricao.getText()
             );
 

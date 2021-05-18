@@ -13,6 +13,7 @@ import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCodigo;
+import br.com.ernanilima.jmercado.utils.Filtro;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -227,7 +228,7 @@ public class DepartamentoController implements Initializable, ICadastro {
     public void gravar() {
         if (validarCampos()) {
             Departamento mDepartamento = new Departamento(
-                    Integer.parseInt(campoCodigo.getText()),
+                    Filtro.pInt(campoCodigo.getText()),
                     campoDescricao.getText()
             );
 
