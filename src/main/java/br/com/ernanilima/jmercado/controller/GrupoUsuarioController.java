@@ -196,6 +196,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     public void cadastrar() {
         TREE_SELECIONADO = new HashSet<>();
         carregarEstruturaTreeLiberacao();
+        campoCodigo.setDisable(true);
         cInicio.setTitulo(campoTitulo, "Cadastrar Grupo De Usuário");
         utils.exibirAba(tab, tpCadastrar, tpListar);
     }
@@ -215,6 +216,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
             }
             carregarEstruturaTreeLiberacao();
 
+            campoCodigo.setDisable(true);
             cInicio.setTitulo(campoTitulo, "Editar Grupo De Usuário");
             utils.exibirAba(tab, tpCadastrar, tpListar);
         }
