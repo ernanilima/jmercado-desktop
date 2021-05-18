@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FocusListener {
 
-    @Autowired Legenda legenda;
+    @Autowired private Legenda legenda;
 
     /** Exibe legenda da coluna selecionada
      * @param tabela TableView - tabela selecionada

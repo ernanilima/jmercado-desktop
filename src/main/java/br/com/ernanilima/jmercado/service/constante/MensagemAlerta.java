@@ -15,4 +15,11 @@ public class MensagemAlerta {
     public static String campoObrigatorio(String textoCampoObrigatorio) {
         return "É OBRIGATÓRIO INFORMAR O CAMPO: " + textoCampoObrigatorio.replace(":", "").toUpperCase();
     }
+
+    /** Mensagem personalizada
+     * @param naoLocalizado String - tipo nao localizado
+     * @return String - XXX NÃO LOCALIZADO! */
+    public static String naoLocalizado(String naoLocalizado) {
+        return naoLocalizado.toUpperCase() + " NÃO LOCALIZADO";
+    }
 }

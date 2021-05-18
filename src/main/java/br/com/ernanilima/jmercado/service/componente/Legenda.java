@@ -3,6 +3,8 @@ package br.com.ernanilima.jmercado.service.componente;
 import br.com.ernanilima.jmercado.controller.InicioController;
 import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +19,13 @@ public class Legenda {
      * @param legenda String - legenda que deve ser exibida */
     public void exibirLegenda(String legenda) {
         cInicio.setLegenda(legenda);
+    }
+
+    /** Define mensagem de erro sem parametro do campo
+     * usado para exibir apenas a mensagem de alerta
+     * @param legendaErro String - mensagem de erro */
+    public void exibirAlerta(String legendaErro) {
+        this.exibirAlerta(legendaErro, new TextField());
     }
 
     /** Define mensagem de erro

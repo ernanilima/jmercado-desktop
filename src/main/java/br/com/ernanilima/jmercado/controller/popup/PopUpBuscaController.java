@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,8 @@ import java.util.ResourceBundle;
 
 @Controller
 public class PopUpBuscaController implements Initializable {
+
+    @Autowired private PopUpMensagemController ppMensagem;
 
     @Value("classpath:/fxml/popup/buscar.fxml")
     private Resource R_FXML;
@@ -74,7 +77,13 @@ public class PopUpBuscaController implements Initializable {
 
     /** Quando clicado no botao buscar */
     private void buscar() {
-        RESULTADO = campoBusca.getText();
+        String busca = campoBusca.getText();
+        if (busca.equals("")) {
+            ppMensagem.exibirPopUp("NENHUMA INFORMAÇÃO PARA BUSCAR");
+            return;
+        }
+
+        RESULTADO = busca;
         sair();
     }
 

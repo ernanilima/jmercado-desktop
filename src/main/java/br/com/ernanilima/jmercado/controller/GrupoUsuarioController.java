@@ -3,11 +3,13 @@ package br.com.ernanilima.jmercado.controller;
 import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.controller.popup.CorPopUp;
+import br.com.ernanilima.jmercado.controller.popup.PopUpBuscaController;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.MontarLiberacoes;
 import br.com.ernanilima.jmercado.model.GrupoUsuario;
 import br.com.ernanilima.jmercado.service.GrupoUsuarioService;
+import br.com.ernanilima.jmercado.service.componente.Legenda;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
 import br.com.ernanilima.jmercado.service.componente.Pesquisa;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
@@ -44,11 +46,13 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
     @Autowired private PopUpConfirmacaoController ppConfirmacao;
+    @Autowired private PopUpBuscaController ppBusca;
     @Autowired private FocusListener lFocus;
     @Autowired private KeyListener lKey;
     @Autowired private GrupoUsuarioService sGrupoUsuario;
     @Autowired private Utils utils;
     @Autowired private ValidarCampo vCampo;
+    @Autowired private Legenda legenda;
 
     @Autowired private Pesquisa pesquisa;
 
@@ -100,6 +104,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
         btnEditar.setOnAction(e -> editar());
         btnExcluir.setOnAction(e -> excluir());
         btnPesquisar.setOnAction(e -> pesquisar());
+        btnIgualar.setOnAction(e -> igualarGrupo());
         btnGravar.setOnAction(e -> gravar());
         btnCancelar.setOnAction(e -> cancelar());
 
@@ -232,6 +237,22 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
                 sGrupoUsuario.remover(tabela.getItems().get(linhaSelecionada));
                 carregarConteudoTabela();
                 tabela.getSelectionModel().select(linhaSelecionada > 0 ? linhaSelecionada - 1 : 0);
+            }
+        }
+    }
+
+    /** Permite que o grupo atual tenha suas permissoes igualadas com outro grupo */
+    private void igualarGrupo() {
+        ppBusca.exibirPopUp("CÓDIGO DO GRUPO QUE DESEJA OBTER AS PERMISSÕES.");
+        if (ppBusca.getRsultado() != null) {
+            GrupoUsuario mGrupoUsuario = sGrupoUsuario.getPorId(Integer.parseInt(ppBusca.getRsultado()));
+            if (mGrupoUsuario == null) {
+                legenda.exibirAlerta(MensagemAlerta.naoLocalizado("GRUPO DE USUÁRIO"));
+
+            } else {
+                TREE_SELECIONADO = new HashSet<>();
+                mGrupoUsuario.getLiberacoes().stream().map(CheckBoxTreeItem::new).forEach(l -> TREE_SELECIONADO.add(l));
+                carregarEstruturaTreeLiberacao();
             }
         }
     }
