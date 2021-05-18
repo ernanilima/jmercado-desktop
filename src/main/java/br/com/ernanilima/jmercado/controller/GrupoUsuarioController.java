@@ -1,8 +1,11 @@
 package br.com.ernanilima.jmercado.controller;
 
+import br.com.ernanilima.jmercado.liberacao.Liberacoes;
+import br.com.ernanilima.jmercado.liberacao.MontarLiberacoes;
 import br.com.ernanilima.jmercado.model.GrupoUsuario;
 import br.com.ernanilima.jmercado.service.GrupoUsuarioService;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
+import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -11,8 +14,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,15 +27,18 @@ import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 @Controller
-public class GrupoUsuarioController implements Initializable {
+public class GrupoUsuarioController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
     @Autowired private GrupoUsuarioService sGrupoUsuario;
+    @Autowired private Utils utils;
 
     @Value("classpath:/fxml/cad_grupousuario.fxml")
     private Resource R_FXML;
@@ -59,13 +65,14 @@ public class GrupoUsuarioController implements Initializable {
     @FXML private Button btnCancelar;
     @FXML private Label textoCampoDescricao;
     @FXML private TextField campoDescricao;
-    @FXML private TreeView<?> treeLiberacao;
+    @FXML private TreeView<Liberacoes> treeLiberacao;
 
     private ObservableList<GrupoUsuario> oListGrupoUsu;
     private List<GrupoUsuario> lsGrupoUsu;
     private TableColumn<GrupoUsuario, Integer> colunaCodigo;
     private TableColumn<GrupoUsuario, String> colunaDescricao;
 
+    private Set<TreeItem<Liberacoes>> TREE_SELECIONADO;
     private Stage STAGE;
     private FXMLLoader LOADER;
     private Parent ROOT;
@@ -74,6 +81,15 @@ public class GrupoUsuarioController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         STAGE = new Stage();
         oListGrupoUsu = FXCollections.observableArrayList();
+        TREE_SELECIONADO = new HashSet<>();
+
+        // ACOES EM BOTOES
+        btnCadastrar.setOnAction(e -> cadastrar());
+        btnEditar.setOnAction(e -> editar());
+        btnExcluir.setOnAction(e -> excluir());
+        btnPesquisar.setOnAction(e -> pesquisar());
+        btnGravar.setOnAction(e -> gravar());
+        btnCancelar.setOnAction(e -> cancelar());
 
         carregarEstruturaTabela();
         carregarOpcoesPesquisa();
@@ -126,6 +142,45 @@ public class GrupoUsuarioController implements Initializable {
         cbbxPesquisar.setItems(oList);
         cbbxPesquisar.getSelectionModel().selectFirst();
         cbbxPesquisar.setVisibleRowCount(9);
+    }
+
+    private void carregarEstruturaTreeLiberacao() {
+        treeLiberacao.setCellFactory(CheckBoxTreeCell.forTreeView());
+        treeLiberacao.setShowRoot(false);
+        treeLiberacao.setRoot(new MontarLiberacoes().getMenus(TREE_SELECIONADO));
+    }
+
+    @Override
+    public void pesquisar() {
+
+    }
+
+    @Override
+    public void cadastrar() {
+        TREE_SELECIONADO = new HashSet<>();
+        carregarEstruturaTreeLiberacao();
+        cInicio.setTitulo(campoTitulo, "Cadastrar Grupo De Usuário");
+        utils.exibirAba(tab, tpCadastrar, tpListar);
+    }
+
+    @Override
+    public void editar() {
+
+    }
+
+    @Override
+    public void excluir() {
+
+    }
+
+    @Override
+    public void gravar() {
+
+    }
+
+    @Override
+    public void cancelar() {
+
     }
 
     /** Obtem o painel para ser usado internamente.

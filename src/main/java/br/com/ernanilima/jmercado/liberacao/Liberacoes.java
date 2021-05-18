@@ -1,7 +1,6 @@
 package br.com.ernanilima.jmercado.liberacao;
 
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 
 @Getter
-@ToString
 public enum Liberacoes {
     // As liberacoes poderiam ter tambem o 'ROLE' que eh usado como padrao para aplicacoes wen
     // ex: ADMIN(9999, 9999, "ROLE_ADMIN", "Permisao de administrador")
@@ -85,5 +83,10 @@ public enum Liberacoes {
             if (codigo.equals(x.codigo))
                 return x;
         } throw new IllegalArgumentException("Invalido");
+    }
+
+    @Override
+    public String toString() {
+        return descricao;
     }
 }
