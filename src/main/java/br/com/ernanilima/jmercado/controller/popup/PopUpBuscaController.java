@@ -1,5 +1,6 @@
 package br.com.ernanilima.jmercado.controller.popup;
 
+import br.com.ernanilima.jmercado.service.componente.Mascara;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -48,6 +49,9 @@ public class PopUpBuscaController implements Initializable {
         // ACOES EM BOTOES
         btnBuscar.setOnAction(e -> buscar());
         btnCancelar.setOnAction(e -> cancelar());
+
+        // MASCARA EM CAMPO
+        Mascara.textoNumeroMaiusculo(campoBusca, 50);
     }
 
     /** Exibe como dialog */
