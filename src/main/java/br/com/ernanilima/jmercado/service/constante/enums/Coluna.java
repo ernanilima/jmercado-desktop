@@ -103,4 +103,55 @@ public class Coluna {
             return colunas;
         }
     }
+
+    /** USUARIOS */
+    public enum Usuario {
+
+        CODIGO("CÓDIGO", Mensagem.Usuario.CODIGO),
+        NOME_COMPLETO("NOME COMPLETO", Mensagem.Usuario.NOME_COMPLETO),
+        NOME_SISTEMA("NOME SISTEMA", Mensagem.Usuario.NOME_SISTEMA),
+        CODIGO_GRUPOUSUARIO("CÓD GRU", Mensagem.GrupoUsuario.CODIGO),
+        DESCRICAO_GRUPOUSUARIO("DESCRIÇÃO GRUPO", Mensagem.GrupoUsuario.DESCRICAO),
+        BLOQUEADO("BLOQ", Mensagem.Usuario.STATUS);
+
+        private final String coluna;
+        private final String legenda;
+        private static String[][] COLUNAS;
+
+        static {
+            // 6 linhas, 2 campos (descricao e mensagem)
+            COLUNAS = new String[6][2];
+            int i = 0;
+            for (Usuario coluna : Usuario.values()) {
+                // [numero da linha][numero do conteudo] = conteudo recebido
+                COLUNAS[i][0] = coluna.getColuna();
+                COLUNAS[i][1] = coluna.getLegenda();
+                i++;
+            }
+        }
+
+        Usuario(String coluna, String legenda) {
+            this.coluna = coluna;
+            this.legenda = legenda;
+        }
+
+        public String getColuna() {
+            return coluna;
+        }
+
+        public String getLegenda() {
+            return legenda;
+        }
+
+        public static String[][] getColunasLegendas() {
+            return COLUNAS;
+        }
+
+        public static List<String> getColunas() {
+            List<String> colunas = new ArrayList<>();
+            for (String[] strings : getColunasLegendas())
+                colunas.add(strings[0]);
+            return colunas;
+        }
+    }
 }

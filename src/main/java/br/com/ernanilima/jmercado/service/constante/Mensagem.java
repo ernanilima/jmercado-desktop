@@ -19,4 +19,13 @@ public class Mensagem {
         public static final String CODIGO = "CÓDIGO DO GRUPO DE USUÁRIO";
         public static final String DESCRICAO = "DESCRIÇÃO DO GRUPO DE USUÁRIO";
     }
+
+    /** Mensagens para cadastro de usuario
+     * {@link br.com.ernanilima.jmercado.controller.UsuarioController} */
+    public static class Usuario {
+        public static final String CODIGO = "CÓDIGO DO USUÁRIO";
+        public static final String NOME_COMPLETO = "NOME COMPLETO DO USUÁRIO";
+        public static final String NOME_SISTEMA = "NOME DO USUÁRIO QUE SERÁ EXIBIDO NO SISTEMA";
+        public static final String STATUS = "STATUS DO CADASTRO DO USUÁRIO";
+    }
 }
