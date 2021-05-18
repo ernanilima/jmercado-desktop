@@ -13,6 +13,7 @@ import br.com.ernanilima.jmercado.service.componente.Pesquisa;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
+import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -35,10 +36,7 @@ import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class GrupoUsuarioController implements Initializable, ICadastro {
@@ -50,6 +48,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     @Autowired private KeyListener lKey;
     @Autowired private GrupoUsuarioService sGrupoUsuario;
     @Autowired private Utils utils;
+    @Autowired private ValidarCampo vCampo;
 
     @Autowired private Pesquisa pesquisa;
 
@@ -237,12 +236,37 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
 
     @Override
     public void gravar() {
+        if (validarCampos()) {
+            GrupoUsuario mGrupoUsuario = new GrupoUsuario(
+                    (campoCodigo.getText().equals("")) ? -1 : Integer.parseInt(campoCodigo.getText()),
+                    campoDescricao.getText()
+            );
 
+            TREE_SELECIONADO.stream().map(TreeItem::getValue).map(Collections::singletonList).forEach(mGrupoUsuario::setLiberacoes);
+
+            sGrupoUsuario.gravar(mGrupoUsuario);
+            limpar();
+            carregarConteudoTabela();
+            cInicio.setTitulo(campoTitulo, "Lista De Grupos de Usuários");
+            utils.exibirAba(tab, tpListar, tpCadastrar);
+        }
     }
 
     @Override
     public void cancelar() {
+        limpar();
+        cInicio.setTitulo(campoTitulo, "Lista De Grupos de Usuários");
+        utils.exibirAba(tab, tpListar, tpCadastrar);
+    }
 
+    private void limpar() {
+        utils.limparCampos(campoPesquisar, campoCodigo, campoDescricao);
+    }
+
+    private boolean validarCampos() {
+        // campo de codigo eh gerado automaticamente
+        // por esse motivo nao precisa de validacao
+        return vCampo.campoVazio(campoDescricao, textoCampoDescricao);
     }
 
     /** Obtem o painel para ser usado internamente.
