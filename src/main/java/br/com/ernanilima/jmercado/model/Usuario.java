@@ -1,5 +1,7 @@
 package br.com.ernanilima.jmercado.model;
 
+import br.com.ernanilima.jmercado.liberacao.Liberacoes;
+import br.com.ernanilima.jmercado.liberacao.TipoLiberacao;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +10,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -51,5 +55,13 @@ public class Usuario implements Serializable, IModel {
         this.nomeSistema = nomeSistema;
         this.bloqueado = bloqueado;
         this.mGrupoUsuario = mGrupoUsuario;
+    }
+
+    public void setTipoLiberacao(TipoLiberacao tipoLiberacao) {
+        this.tipoLiberacao = tipoLiberacao.getCodigo();
+    }
+
+    public void setLiberacoes(List<Liberacoes> liberacoes) {
+        this.liberacoes.addAll(liberacoes.stream().map(Liberacoes::getCodigo).collect(Collectors.toSet()));
     }
 }

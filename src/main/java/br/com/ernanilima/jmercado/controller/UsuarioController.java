@@ -2,9 +2,14 @@ package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.MontarLiberacoes;
+import br.com.ernanilima.jmercado.liberacao.TipoLiberacao;
 import br.com.ernanilima.jmercado.model.Usuario;
+import br.com.ernanilima.jmercado.service.GrupoUsuarioService;
 import br.com.ernanilima.jmercado.service.UsuarioService;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
+import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
+import br.com.ernanilima.jmercado.utils.Filtro;
+import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -26,16 +31,17 @@ import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 @Controller
-public class UsuarioController implements Initializable {
+public class UsuarioController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
     @Autowired private UsuarioService sUsuario;
+    @Autowired private GrupoUsuarioService sGrupoUsuario;
+    @Autowired private Utils utils;
+    @Autowired private ValidarCampo vCampo;
 
     @Value("classpath:/fxml/cad_usuario.fxml")
     private Resource R_FXML;
@@ -93,6 +99,14 @@ public class UsuarioController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         STAGE = new Stage();
         oListUsuario = FXCollections.observableArrayList();
+
+        //ACOES EM BOTOES
+        btnCadastrar.setOnAction(e -> cadastrar());
+        btnEditar.setOnAction(e -> editar());
+        btnExcluir.setOnAction(e -> excluir());
+        btnPesquisar.setOnAction(e -> pesquisar());
+        btnGravar.setOnAction(e -> gravar());
+        btnCancelar.setOnAction(e -> cancelar());
 
         carregarEstruturaTabela();
         carregarOpcoesPesquisa();
@@ -171,6 +185,75 @@ public class UsuarioController implements Initializable {
         treeLiberacao.setCellFactory(CheckBoxTreeCell.forTreeView());
         treeLiberacao.setShowRoot(false);
         treeLiberacao.setRoot(new MontarLiberacoes().getMenus(TREE_SELECIONADO));
+    }
+
+    @Override
+    public void pesquisar() {
+
+    }
+
+    @Override
+    public void cadastrar() {
+        TREE_SELECIONADO = new HashSet<>();
+        carregarEstruturaTreeLiberacao();
+        grupoTipoLiberacao.selectToggle(btnRLiberacaoUsuario);
+        campoCodigo.setDisable(true);
+        cInicio.setTitulo(campoTitulo, "Cadastrar Usuário");
+        utils.exibirAba(tab, tpCadastrar, tpListar);
+    }
+
+    @Override
+    public void editar() {
+
+    }
+
+    @Override
+    public void excluir() {
+
+    }
+
+    @Override
+    public void gravar() {
+        if (validarCampos()) {
+            Usuario mUsuario = new Usuario(
+                    Filtro.pInt(campoCodigo.getText()),
+                    campoNomeCompleto.getText(),
+                    campoNomeSistema.getText(),
+                    chbxBloqueado.isSelected(),
+                    sGrupoUsuario.getPorId(Filtro.pInt(campoCodGrupoUsuario.getText()))
+            );
+
+            if (grupoTipoLiberacao.getSelectedToggle() == btnRLiberacaoUsuario) {
+                mUsuario.setTipoLiberacao(TipoLiberacao.USUARIO);
+                TREE_SELECIONADO.stream().map(TreeItem::getValue).map(Collections::singletonList).forEach(mUsuario::setLiberacoes);
+            } else if (grupoTipoLiberacao.getSelectedToggle() == btnRLiberacaoGrupo) {
+                mUsuario.setTipoLiberacao(TipoLiberacao.GRUPO);
+            }
+
+            sUsuario.gravar(mUsuario);
+            limpar();
+            carregarConteudoTabela();
+            cInicio.setTitulo(campoTitulo, "Lista De Usuários");
+            utils.exibirAba(tab, tpListar, tpCadastrar);
+        }
+    }
+
+    @Override
+    public void cancelar() {
+
+    }
+
+    private void limpar() {
+        utils.limparCampos(campoPesquisar, campoCodigo, campoNomeCompleto,
+                campoNomeSistema, campoCodGrupoUsuario, campoDescricaoGrupoUsuario);
+    }
+
+    private boolean validarCampos() {
+        // campo de codigo eh gerado automaticamente
+        // por esse motivo nao precisa de validacao
+        return vCampo.campoVazio(campoNomeCompleto, textoCampoNomeCompleto) &&
+                vCampo.campoVazio(campoNomeSistema, textoCampoNomeSistema) &&
+                vCampo.campoVazio(campoCodGrupoUsuario, textoCampoGrupoUsuario);
     }
 
     /** Obtem o painel para ser usado internamente.
