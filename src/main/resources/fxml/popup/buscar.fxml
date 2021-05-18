@@ -32,7 +32,7 @@
       </HBox>
       <HBox alignment="CENTER" layoutX="14.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button fx:id="btnConfirmar" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="130.0" text="Buscar">
+            <Button fx:id="btnBuscar" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="130.0" text="Buscar">
                <HBox.margin>
                   <Insets bottom="10.0" right="5.0" top="10.0" />
                </HBox.margin>
