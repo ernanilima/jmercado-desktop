@@ -1,6 +1,7 @@
 package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.model.GrupoUsuario;
+import br.com.ernanilima.jmercado.service.GrupoUsuarioService;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -25,13 +26,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 @Controller
 public class GrupoUsuarioController implements Initializable {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private GrupoUsuarioService sGrupoUsuario;
 
     @Value("classpath:/fxml/cad_grupousuario.fxml")
     private Resource R_FXML;
@@ -60,6 +61,8 @@ public class GrupoUsuarioController implements Initializable {
     @FXML private TextField campoDescricao;
     @FXML private TreeView<?> treeLiberacao;
 
+    private ObservableList<GrupoUsuario> oListGrupoUsu;
+    private List<GrupoUsuario> lsGrupoUsu;
     private TableColumn<GrupoUsuario, Integer> colunaCodigo;
     private TableColumn<GrupoUsuario, String> colunaDescricao;
 
@@ -70,6 +73,7 @@ public class GrupoUsuarioController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         STAGE = new Stage();
+        oListGrupoUsu = FXCollections.observableArrayList();
 
         carregarEstruturaTabela();
         carregarOpcoesPesquisa();
@@ -98,6 +102,17 @@ public class GrupoUsuarioController implements Initializable {
         colunaCodigo.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCodigo()));
         colunaDescricao.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDescricao()));
 
+    }
+
+    private void carregarConteudoTabela() {
+        oListGrupoUsu.clear();
+        sGrupoUsuario.listarTudoAsinc().thenAccept(list -> Platform.runLater(()-> {
+            lsGrupoUsu = list;
+            tabela.getSortOrder().clear();
+            oListGrupoUsu.addAll(lsGrupoUsu);
+            tabela.getItems().setAll(oListGrupoUsu);
+            tabela.requestFocus();
+        }));
     }
 
     private void carregarOpcoesPesquisa() {
@@ -133,6 +148,7 @@ public class GrupoUsuarioController implements Initializable {
                 ROOT = LOADER.load();
                 STAGE.initModality(Modality.APPLICATION_MODAL);
                 LOADER.setControllerFactory(aClass -> springContext.getBean(aClass));
+                carregarConteudoTabela();
             }
         } catch (IOException e) { e.printStackTrace(); }
     }
