@@ -15,6 +15,11 @@
     cor-btn-nC-hover: rgba(255,255,255,0.4);
     cor-btn-nC-focused: rgba(255,255,255,0.4);
 }
+#titulo {
+    -fx-font-size: 24;
+    -fx-text-fill: #2e578b;
+    -fx-font-weight: bold;
+}
 #campoLegenda {
     -fx-background-color: #EBEFF3;
     -fx-border-color: silver;

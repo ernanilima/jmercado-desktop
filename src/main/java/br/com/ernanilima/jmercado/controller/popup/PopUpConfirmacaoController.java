@@ -46,7 +46,7 @@ public class PopUpConfirmacaoController implements Initializable {
     }
 
     /** Exibe como dialog */
-    public void exibirPopUp(CorPopUp corParaSimNao, String mensagem) {
+    public void exibirPopUp(CoresPopUpConfirmacao corParaSimNao, String mensagem) {
         try {
             LOADER = new FXMLLoader(R_FXML.getURL());
             LOADER.setController(this);
@@ -73,7 +73,7 @@ public class PopUpConfirmacaoController implements Initializable {
 
     /** Define class para cores no css
      * @param corParaSimNao CorPopUp - cores dos botoes */
-    private void setCorBtn(CorPopUp corParaSimNao) {
+    private void setCorBtn(CoresPopUpConfirmacao corParaSimNao) {
         switch (corParaSimNao) {
             case VERDE_VERMELHO:
                 btnSim.getStyleClass().add("btnVerde");

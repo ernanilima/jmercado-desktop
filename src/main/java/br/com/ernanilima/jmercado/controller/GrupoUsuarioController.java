@@ -2,7 +2,7 @@ package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
-import br.com.ernanilima.jmercado.controller.popup.CorPopUp;
+import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
 import br.com.ernanilima.jmercado.controller.popup.PopUpBuscaController;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
@@ -59,6 +59,8 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
 
     @Value("classpath:/fxml/cad_grupousuario.fxml")
     private Resource R_FXML;
+    @Value("classpath:/css/modal.css")
+    private Resource R_CSS;
 
     @FXML private AnchorPane painel;
     @FXML private Label campoTitulo;
@@ -232,7 +234,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     public void excluir() {
         int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
         if (linhaSelecionada != -1) {
-            ppConfirmacao.exibirPopUp(CorPopUp.VERMELHO_VERDE,
+            ppConfirmacao.exibirPopUp(CoresPopUpConfirmacao.VERMELHO_VERDE,
                     MensagemAlerta.excluir(tabela.getItems().get(linhaSelecionada).getDescricao()));
             if (ppConfirmacao.getRsultado()) {
                 sGrupoUsuario.remover(tabela.getItems().get(linhaSelecionada));
@@ -313,6 +315,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
                 ROOT = LOADER.load();
                 STAGE.initModality(Modality.APPLICATION_MODAL);
                 LOADER.setControllerFactory(aClass -> springContext.getBean(aClass));
+                ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
                 carregarConteudoTabela();
             }
         } catch (IOException e) { e.printStackTrace(); }

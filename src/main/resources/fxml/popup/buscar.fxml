@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="1024.0" minHeight="-Infinity" minWidth="300.0" prefHeight="150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="1024.0" minHeight="-Infinity" minWidth="300.0" prefHeight="150.0" styleClass="painel-popup" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" layoutX="14.0" layoutY="40.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -21,7 +21,7 @@
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" />
                      </VBox.margin></Label>
-                  <TextField fx:id="campoBusca" maxWidth="1.7976931348623157E308">
+                  <TextField fx:id="campoBusca" maxWidth="1.7976931348623157E308" prefHeight="35.0">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="20.0" />
                      </VBox.margin>
@@ -32,12 +32,12 @@
       </HBox>
       <HBox alignment="CENTER" layoutX="14.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button fx:id="btnBuscar" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="130.0" text="Buscar">
+            <Button fx:id="btnBuscar" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="130.0" styleClass="btnBuscar" text="Buscar">
                <HBox.margin>
                   <Insets bottom="10.0" right="5.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnCancelar" layoutX="235.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="130.0" text="Cancelar">
+            <Button fx:id="btnCancelar" layoutX="235.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="130.0" styleClass="btnCancelar" text="Cancelar">
                <HBox.margin>
                   <Insets bottom="10.0" left="5.0" top="10.0" />
                </HBox.margin>

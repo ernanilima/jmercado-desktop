@@ -1,26 +1,41 @@
-#painel {
+/* POP-UPs */
+.painel-popup {
     -fx-background-color: white;
 }
-#btnSim,
-#btnNao {
+#btnSim, /* CONFIRMACAO */
+#btnNao, /* CONFIRMACAO */
+.btnBuscar, /* BUSCA */
+.btnCancelar, /* BUSCA */
+.btnOk /* MENSAGEM */ {
+    /* adiciona sombra no botao */
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 2, 5);
 }
-.btnVermelho {
-    -fx-background-color: red;
-    -fx-text-fill: white;
-}
-.btnVerde {
+.btnVerde, /* CONFIRMACAO */
+.btnBuscar, /* BUSCA */
+.btnOk /* MENSAGEM */ {
     -fx-background-color: green;
     -fx-text-fill: white;
 }
-/* BOTAO SELECIONADO */
-.btnVerde:focused,
-.btnVermelho:focused {
-    -fx-border-width: 0 0 3 0;
+.btnVermelho, /* CONFIRMACAO */
+.btnCancelar /* BUSCA */ {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+/* botao selecionado */
+.btnVerde:focused, /* CONFIRMACAO */
+.btnVermelho:focused, /* CONFIRMACAO */
+.btnBuscar:focused, /* BUSCA */
+.btnCancelar:focused, /* BUSCA */
+.btnOk:focused /* MENSAGEM */ {
+    -fx-border-width: 0 0 2 0;
     -fx-border-radius: 0 0 3 3;
     -fx-border-color: darkblue;
 }
-.btnVerde:hover,
-.btnVermelho:hover {
+/* botao com foco */
+.btnVerde:hover, /* CONFIRMACAO */
+.btnVermelho:hover, /* CONFIRMACAO */
+.btnBuscar:hover, /* BUSCA */
+.btnCancelar:hover, /* BUSCA */
+.btnOk:hover /* MENSAGEM */ {
     -fx-opacity: 0.7;
 }
