@@ -3,6 +3,7 @@ package br.com.ernanilima.jmercado.controller;
 import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
+import br.com.ernanilima.jmercado.controller.popup.PopUpBuscaController;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.MontarLiberacoes;
@@ -10,6 +11,7 @@ import br.com.ernanilima.jmercado.liberacao.TipoLiberacao;
 import br.com.ernanilima.jmercado.model.Usuario;
 import br.com.ernanilima.jmercado.service.GrupoUsuarioService;
 import br.com.ernanilima.jmercado.service.UsuarioService;
+import br.com.ernanilima.jmercado.service.componente.Legenda;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
 import br.com.ernanilima.jmercado.service.componente.Pesquisa;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
@@ -48,6 +50,7 @@ public class UsuarioController implements Initializable, ICadastro {
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
     @Autowired private PopUpConfirmacaoController ppConfirmacao;
+    @Autowired private PopUpBuscaController ppBusca;
     @Autowired private FocusListener lFocus;
     @Autowired private KeyListener lKey;
     @Autowired private UsuarioService sUsuario;
@@ -55,6 +58,7 @@ public class UsuarioController implements Initializable, ICadastro {
     @Autowired private Utils utils;
     @Autowired private ValidarCodigo vCodigo;
     @Autowired private ValidarCampo vCampo;
+    @Autowired private Legenda legenda;
 
     @Autowired private Pesquisa pesquisa;
 
@@ -117,10 +121,12 @@ public class UsuarioController implements Initializable, ICadastro {
         oListUsuario = FXCollections.observableArrayList();
 
         //ACOES EM BOTOES
+        btnPesquisar.setOnAction(e -> pesquisar());
         btnCadastrar.setOnAction(e -> cadastrar());
         btnEditar.setOnAction(e -> editar());
         btnExcluir.setOnAction(e -> excluir());
-        btnPesquisar.setOnAction(e -> pesquisar());
+        btnRemoverSenha.setOnAction(e -> removerSenha());
+        btnIgualar.setOnAction(e -> igualarUsuario());
         btnGravar.setOnAction(e -> gravar());
         btnCancelar.setOnAction(e -> cancelar());
 
@@ -247,6 +253,7 @@ public class UsuarioController implements Initializable, ICadastro {
         carregarEstruturaTreeLiberacao();
         grupoTipoLiberacao.selectToggle(btnRLiberacaoUsuario);
         campoCodigo.setDisable(true);
+        btnRemoverSenha.setDisable(true);
         SENHA_USUARIO = null;
         cInicio.setTitulo(campoTitulo, "Cadastrar Usuário");
         utils.exibirAba(tab, tpCadastrar, tpListar);
@@ -295,6 +302,40 @@ public class UsuarioController implements Initializable, ICadastro {
         }
     }
 
+    private void removerSenha() {
+        ppConfirmacao.exibirPopUp(CoresPopUpConfirmacao.VERMELHO_VERDE, MensagemAlerta.excluir("SENHA"));
+        if (ppConfirmacao.getRsultado()) {
+            Usuario mUsuario = tabela.getItems().get(tabela.getSelectionModel().getFocusedIndex());
+            SENHA_USUARIO = null;
+            mUsuario.setSenha(null);
+            sUsuario.gravar(mUsuario);
+        }
+    }
+
+    private void igualarUsuario() {
+        ppBusca.exibirPopUp("CÓDIGO DO USUÁRIO QUE DESEJA OBTER AS PERMISSÕES:");
+        if (ppBusca.getRsultado() != null) {
+            Usuario mUsuario = sUsuario.getPorId(Filtro.pInt(ppBusca.getRsultado()));
+            if (mUsuario == null) {
+                legenda.exibirAlerta(MensagemAlerta.naoLocalizado("USUÁRIO"));
+
+            } else {
+                campoCodGrupoUsuario.setText(String.valueOf(mUsuario.getMGrupoUsuario().getCodigo()));
+                campoDescricaoGrupoUsuario.setText(mUsuario.getMGrupoUsuario().getDescricao());
+
+                TREE_SELECIONADO = new HashSet<>();
+                if (mUsuario.getTipoLiberacao() == TipoLiberacao.USUARIO) {
+                    grupoTipoLiberacao.selectToggle(btnRLiberacaoUsuario);
+                    mUsuario.getLiberacoes().stream().map(CheckBoxTreeItem::new).forEach(l -> TREE_SELECIONADO.add(l));
+                } else if (mUsuario.getTipoLiberacao() == TipoLiberacao.GRUPO) {
+                    grupoTipoLiberacao.selectToggle(btnRLiberacaoGrupo);
+                    mUsuario.getMGrupoUsuario().getLiberacoes().stream().map(CheckBoxTreeItem::new).forEach(l -> TREE_SELECIONADO.add(l));
+                }
+                carregarEstruturaTreeLiberacao();
+            }
+        }
+    }
+
     @Override
     public void gravar() {
         if (validarCampos()) {
@@ -331,6 +372,7 @@ public class UsuarioController implements Initializable, ICadastro {
     }
 
     private void limpar() {
+        btnRemoverSenha.setDisable(false);
         utils.limparCampos(campoPesquisar, campoCodigo, campoNomeCompleto,
                 campoNomeSistema, campoCodGrupoUsuario, campoDescricaoGrupoUsuario);
     }
