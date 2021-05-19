@@ -4,8 +4,10 @@ import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.model.Usuario;
 import br.com.ernanilima.jmercado.service.UsuarioService;
+import br.com.ernanilima.jmercado.service.componente.Legenda;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
+import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
 import br.com.ernanilima.jmercado.suporte.UsuarioSuporte;
 import br.com.ernanilima.jmercado.utils.Filtro;
@@ -40,6 +42,7 @@ public class LoginController implements Initializable {
     @Autowired private UsuarioService sUsuario;
     @Autowired private Utils utils;
     @Autowired private ValidarCampo vCampo;
+    @Autowired private Legenda legenda;
 
     @Value("classpath:/fxml/login.fxml")
     private Resource R_FXML;
@@ -70,7 +73,8 @@ public class LoginController implements Initializable {
         STAGE = new Stage();
 
         // ACOES EM BOTOES
-        btnEntrar.setOnAction(e -> loginRealizado());
+        btnEntrar.setOnAction(e -> verificarLoginRealizado());
+        btnMudarSenha.setOnAction(e -> abrirMudarSenha());
 
         // ACOES DE FOCO
         campoCodigo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Usuario.CODIGO));
@@ -90,41 +94,55 @@ public class LoginController implements Initializable {
         utils.exibirAba(tab, tpLogin, tpMudarSenha);
     }
 
-    private void loginRealizado() {
-        if (validarCampos()) {
+    private void verificarLoginRealizado() {
+        if (validarCamposLogin()) {
             USUARIO_ATUAL = new UsuarioSuporte().getUsuarioSuporte();
-
             // LOGIN DE SUPORTE, VERIFICA APENAS INTERNAMENTE
             if (Filtro.pInt(campoCodigo.getText()) == USUARIO_ATUAL.getCodigo() &
                     passwdEncoder.matches(campoSenha.getText(), USUARIO_ATUAL.getSenha())) {
-                System.out.println("login de suporte realizado");
+                loginRealizado();
                 return;
             }
 
             USUARIO_ATUAL = sUsuario.getPorId(Filtro.pInt(campoCodigo.getText()));
-
             // LOGIN DE USUARIO
             if (USUARIO_ATUAL != null && passwdEncoder.matches(campoSenha.getText(), USUARIO_ATUAL.getSenha())) {
-                System.out.println("login do usuario realizado");
-                return;
-            }
-
-            // LOGIN SEM SENHA
-            if (USUARIO_ATUAL != null && USUARIO_ATUAL.getSenha() == null) {
-                System.out.println("necessario mudar a senha do usuario");
+                loginRealizado();
                 return;
             }
 
             // LOGIN INVALIDO
             if (USUARIO_ATUAL == null || !passwdEncoder.matches(campoSenha.getText(), USUARIO_ATUAL.getSenha())) {
-                System.out.println("login invalido");
+                legenda.exibirAlerta(MensagemAlerta.LOGIN_INVALIDO);
             }
         }
     }
 
-    private boolean validarCampos() {
+    private void abrirMudarSenha() {
+        if (validarCamposAbrirMudarSenha()) {
+            USUARIO_ATUAL = sUsuario.getPorId(Filtro.pInt(campoCodigo.getText()));
+            limpar();
+            utils.exibirAba(tab, tpMudarSenha, tpLogin);
+        }
+    }
+
+    /** Exibe a tela do sistema para login realizado */
+    private void loginRealizado() {
+        limpar();
+        STAGE.close();
+    }
+
+    private void limpar() {
+        utils.limparCampos(campoCodigo, campoSenha, campoSenhaAtual, campoNovaSenha1, campoNovaSenha2);
+    }
+
+    private boolean validarCamposLogin() {
         return vCampo.campoVazio(campoCodigo, new Label(campoCodigo.getPromptText())) &&
                 vCampo.campoVazio(campoSenha, new Label(campoSenha.getPromptText()));
+    }
+
+    private boolean validarCamposAbrirMudarSenha() {
+        return vCampo.campoVazio(campoCodigo, new Label(campoCodigo.getPromptText()));
     }
 
     public void exibirModal() {
