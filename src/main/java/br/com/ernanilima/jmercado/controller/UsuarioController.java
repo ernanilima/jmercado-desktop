@@ -49,6 +49,7 @@ public class UsuarioController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private GrupoUsuarioController cGrupoUsuario;
     @Autowired private PopUpConfirmacaoController ppConfirmacao;
     @Autowired private PopUpBuscaController ppBusca;
     @Autowired private FocusListener lFocus;
@@ -129,6 +130,7 @@ public class UsuarioController implements Initializable, ICadastro {
         btnIgualar.setOnAction(e -> igualarUsuario());
         btnGravar.setOnAction(e -> gravar());
         btnCancelar.setOnAction(e -> cancelar());
+        btnBuscar.setOnAction(e -> buscar());
 
         // ACAO EM BOTAO RADIO
         grupoTipoLiberacao.selectedToggleProperty().addListener((ob, to, t1) -> tipoLiberacao());
@@ -369,6 +371,16 @@ public class UsuarioController implements Initializable, ICadastro {
         limpar();
         cInicio.setTitulo(campoTitulo, "Lista De Usuários");
         utils.exibirAba(tab, tpListar, tpCadastrar);
+    }
+
+    /** Busca grupo de usuario para associar ao cadastro de usuario */
+    public void buscar() {
+        cGrupoUsuario.exibirModal();
+        campoCodGrupoUsuario.requestFocus();
+        if (cGrupoUsuario.getGrupoUsuario() != null) {
+            campoCodGrupoUsuario.setText(String.valueOf(cGrupoUsuario.getGrupoUsuario().getCodigo()));
+            campoDescricaoGrupoUsuario.setText(cGrupoUsuario.getGrupoUsuario().getDescricao());
+        }
     }
 
     private void limpar() {

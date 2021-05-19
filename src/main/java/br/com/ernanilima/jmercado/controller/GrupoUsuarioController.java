@@ -26,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.layout.AnchorPane;
@@ -95,14 +96,18 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     private Stage STAGE;
     private FXMLLoader LOADER;
     private Parent ROOT;
+    private Scene SCENE;
+    private boolean LINHA_SELECIONADA;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         STAGE = new Stage();
         oListGrupoUsuario = FXCollections.observableArrayList();
         TREE_SELECIONADO = new HashSet<>();
+        LINHA_SELECIONADA = false;
 
         // ACOES EM BOTOES
+        btnSelecionar.setOnAction(e -> selecionar());
         btnCadastrar.setOnAction(e -> cadastrar());
         btnEditar.setOnAction(e -> editar());
         btnExcluir.setOnAction(e -> excluir());
@@ -200,6 +205,13 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
         pesquisa.pesquisaGrupoUsuario(cbbxPesquisar, tabela, campoPesquisar);
     }
 
+    public void selecionar() {
+        if (btnSelecionar.isVisible() && tabela.getSelectionModel().getFocusedIndex() != -1) {
+            LINHA_SELECIONADA = true;
+            STAGE.close();
+        }
+    }
+
     @Override
     public void cadastrar() {
         TREE_SELECIONADO = new HashSet<>();
@@ -295,6 +307,17 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
         return vCampo.campoVazio(campoDescricao, textoCampoDescricao);
     }
 
+    /** Obtem o grupo de usuario selecionado
+     * @return GrupoUsuario */
+    public GrupoUsuario getGrupoUsuario() {
+        GrupoUsuario mGrupoUsuario = null;
+        if (LINHA_SELECIONADA) {
+            int linha = tabela.getSelectionModel().getFocusedIndex();
+            mGrupoUsuario = tabela.getItems().get(linha);
+        }
+        return mGrupoUsuario;
+    }
+
     /** Obtem o painel para ser usado internamente.
      * @return AnchorPane - painel para usar internamente */
     public AnchorPane getPainel() {
@@ -304,6 +327,25 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
         campoTitulo.setPrefHeight(0);
         cInicio.setTitulo(campoTitulo, "Lista De Grupos De Usuários");
         return painel;
+    }
+
+    /** Exibe o painel em forma de dialog */
+    public void exibirModal() {
+        STAGE = null;
+        construirPainel();
+
+        LINHA_SELECIONADA = false;
+        STAGE.setResizable(false);
+        if (ROOT.getScene() == null) {
+            SCENE = new Scene(ROOT);
+        }
+
+        STAGE.setScene(SCENE);
+        btnSelecionar.setVisible(true);
+        campoTitulo.setVisible(true);
+        campoTitulo.setPrefHeight(campoTitulo.getMaxHeight());
+        cInicio.setTitulo(campoTitulo, "Lista De Grupos De Usuários");
+        STAGE.showAndWait();
     }
 
     /** Constroi o painel para ser usado internamente */
