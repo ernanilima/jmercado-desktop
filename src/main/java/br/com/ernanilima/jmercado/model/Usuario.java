@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Entity
 @Table(name = "usuario")
-public class Usuario implements Serializable, IModel {
+public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -57,8 +57,16 @@ public class Usuario implements Serializable, IModel {
         this.mGrupoUsuario = mGrupoUsuario;
     }
 
+    public TipoLiberacao getTipoLiberacao() {
+        return TipoLiberacao.toEnum(tipoLiberacao);
+    }
+
     public void setTipoLiberacao(TipoLiberacao tipoLiberacao) {
         this.tipoLiberacao = tipoLiberacao.getCodigo();
+    }
+
+    public Set<Liberacoes> getLiberacoes() {
+        return liberacoes.stream().map(Liberacoes::toEnum).collect(Collectors.toSet());
     }
 
     public void setLiberacoes(List<Liberacoes> liberacoes) {

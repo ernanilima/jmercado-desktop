@@ -12,6 +12,7 @@ import br.com.ernanilima.jmercado.service.componente.Mascara;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
+import br.com.ernanilima.jmercado.service.validacao.ValidarCodigo;
 import br.com.ernanilima.jmercado.utils.Filtro;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
@@ -47,6 +48,7 @@ public class UsuarioController implements Initializable, ICadastro {
     @Autowired private UsuarioService sUsuario;
     @Autowired private GrupoUsuarioService sGrupoUsuario;
     @Autowired private Utils utils;
+    @Autowired private ValidarCodigo vCodigo;
     @Autowired private ValidarCampo vCampo;
 
     @Value("classpath:/fxml/cad_usuario.fxml")
@@ -100,6 +102,7 @@ public class UsuarioController implements Initializable, ICadastro {
     private Stage STAGE;
     private FXMLLoader LOADER;
     private Parent ROOT;
+    private String SENHA_USUARIO;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -231,13 +234,38 @@ public class UsuarioController implements Initializable, ICadastro {
         carregarEstruturaTreeLiberacao();
         grupoTipoLiberacao.selectToggle(btnRLiberacaoUsuario);
         campoCodigo.setDisable(true);
+        SENHA_USUARIO = null;
         cInicio.setTitulo(campoTitulo, "Cadastrar Usuário");
         utils.exibirAba(tab, tpCadastrar, tpListar);
     }
 
     @Override
     public void editar() {
-
+        int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
+        if (linhaSelecionada != -1) {
+            Usuario mUsuario = tabela.getItems().get(linhaSelecionada);
+            SENHA_USUARIO = mUsuario.getSenha();
+            campoCodigo.setDisable(true);
+            campoCodigo.setText(String.valueOf(mUsuario.getCodigo()));
+            chbxBloqueado.setSelected(mUsuario.getBloqueado());
+            campoNomeCompleto.setText(mUsuario.getNomeCompleto());
+            campoNomeSistema.setText(mUsuario.getNomeSistema());
+            campoCodGrupoUsuario.setText(String.valueOf(mUsuario.getMGrupoUsuario().getCodigo()));
+            campoDescricaoGrupoUsuario.setText(mUsuario.getMGrupoUsuario().getDescricao());
+            TREE_SELECIONADO = new HashSet<>();
+            if (mUsuario.getTipoLiberacao() == TipoLiberacao.USUARIO) {
+                grupoTipoLiberacao.selectToggle(btnRLiberacaoUsuario);
+                // busca as liberacoes do usuario e atualiza a tabletree
+                mUsuario.getLiberacoes().stream().map(CheckBoxTreeItem::new).forEach(l -> TREE_SELECIONADO.add(l));
+            } else if (mUsuario.getTipoLiberacao() == TipoLiberacao.GRUPO) {
+                grupoTipoLiberacao.selectToggle(btnRLiberacaoGrupo);
+                // busca as liberacoes do grupo de usuario e atualiza a tabletree
+                mUsuario.getMGrupoUsuario().getLiberacoes().stream().map(CheckBoxTreeItem::new).forEach(l -> TREE_SELECIONADO.add(l));
+            }
+            carregarEstruturaTreeLiberacao();
+            cInicio.setTitulo(campoTitulo, "Editar Usuário");
+            utils.exibirAba(tab, tpCadastrar, tpListar);
+        }
     }
 
     @Override
@@ -263,6 +291,8 @@ public class UsuarioController implements Initializable, ICadastro {
                 mUsuario.setTipoLiberacao(TipoLiberacao.GRUPO);
             }
 
+            mUsuario.setSenha(SENHA_USUARIO);
+
             sUsuario.gravar(mUsuario);
             limpar();
             carregarConteudoTabela();
@@ -286,7 +316,8 @@ public class UsuarioController implements Initializable, ICadastro {
         // por esse motivo nao precisa de validacao
         return vCampo.campoVazio(campoNomeCompleto, textoCampoNomeCompleto) &&
                 vCampo.campoVazio(campoNomeSistema, textoCampoNomeSistema) &&
-                vCampo.campoVazio(campoCodGrupoUsuario, textoCampoGrupoUsuario);
+                vCampo.campoVazio(campoCodGrupoUsuario, textoCampoGrupoUsuario) &&
+                vCodigo.buscarExistente(campoCodGrupoUsuario, campoDescricaoGrupoUsuario, sGrupoUsuario, textoCampoGrupoUsuario);
     }
 
     /** Oculta as permicoes caso o tipo de liberacao seja por grupo de usuario */
