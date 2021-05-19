@@ -27,5 +27,8 @@ public class Mensagem {
         public static final String NOME_COMPLETO = "NOME COMPLETO DO USUÁRIO";
         public static final String NOME_SISTEMA = "NOME DO USUÁRIO QUE SERÁ EXIBIDO NO SISTEMA";
         public static final String STATUS = "STATUS DO CADASTRO DO USUÁRIO";
+        public static final String SENHA = "SENHA DO USUÁRIO";
+        public static final String SENHA_NOVA1 = "NOVA SENHA DO USUÁRIO";
+        public static final String SENHA_NOVA2 = "REPETIR NOVA SENHA DO USUÁRIO";
     }
 }
