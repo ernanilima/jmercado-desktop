@@ -74,7 +74,10 @@ public class LoginController implements Initializable {
 
         // ACOES EM BOTOES
         btnEntrar.setOnAction(e -> verificarLoginRealizado());
+        btnSair.setOnAction(e -> finalizar());
         btnMudarSenha.setOnAction(e -> abrirMudarSenha());
+        btnGravar.setOnAction(e -> gravarMudarSenha());
+        btnCancelar.setOnAction(e -> utils.exibirAba(tab, tpLogin, tpMudarSenha));
 
         // ACOES DE FOCO
         campoCodigo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Usuario.CODIGO));
@@ -126,6 +129,24 @@ public class LoginController implements Initializable {
         }
     }
 
+    private void gravarMudarSenha() {
+        if (validarCamposGravarMudarSenha()) {
+            // verifica se usuario atual eh nulo, pode ser nulo se for informado um codigo aleatorio na tela de login
+            // verifica se o usuario atual tem uma senha
+            // verifica se senha atual combina com senha do usuario
+            // usado principalmente quando o usuario for nulo ou o usuario ter senha e a mesma nao combinar com senha digitada como atual
+            if (USUARIO_ATUAL == null ||
+                    USUARIO_ATUAL.getSenha() != null && !passwdEncoder.matches(campoSenhaAtual.getText(), USUARIO_ATUAL.getSenha())) {
+                legenda.exibirAlerta(MensagemAlerta.SENHA_NAO_MODIFICADA, campoSenhaAtual);
+                return;
+            }
+
+            USUARIO_ATUAL.setSenha(passwdEncoder.encode(campoNovaSenha1.getText()));
+            sUsuario.gravar(USUARIO_ATUAL);
+            loginRealizado();
+        }
+    }
+
     /** Exibe a tela do sistema para login realizado */
     private void loginRealizado() {
         limpar();
@@ -143,6 +164,11 @@ public class LoginController implements Initializable {
 
     private boolean validarCamposAbrirMudarSenha() {
         return vCampo.campoVazio(campoCodigo, new Label(campoCodigo.getPromptText()));
+    }
+
+    private boolean validarCamposGravarMudarSenha() {
+        return vCampo.campoVazio(campoNovaSenha1, new Label(campoNovaSenha1.getPromptText())) &&
+                vCampo.campoVazio(campoNovaSenha2, new Label(campoNovaSenha2.getPromptText()));
     }
 
     public void exibirModal() {
