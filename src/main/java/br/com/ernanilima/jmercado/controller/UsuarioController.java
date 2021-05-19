@@ -65,6 +65,8 @@ public class UsuarioController implements Initializable, ICadastro {
 
     @Value("classpath:/fxml/cad_usuario.fxml")
     private Resource R_FXML;
+    @Value("classpath:/css/modal.css")
+    private Resource R_CSS;
 
     @FXML private AnchorPane painel;
     @FXML private Label campoTitulo;
@@ -426,6 +428,7 @@ public class UsuarioController implements Initializable, ICadastro {
                 ROOT = LOADER.load();
                 STAGE.initModality(Modality.APPLICATION_MODAL);
                 LOADER.setControllerFactory(aClass -> springContext.getBean(aClass));
+                ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
                 carregarConteudoTabela();
             }
         } catch (IOException e) { e.printStackTrace(); }

@@ -20,6 +20,6 @@ public class MensagemAlerta {
      * @param naoLocalizado String - tipo nao localizado
      * @return String - XXX NÃO LOCALIZADO! */
     public static String naoLocalizado(String naoLocalizado) {
-        return naoLocalizado.toUpperCase() + " NÃO LOCALIZADO";
+        return naoLocalizado.replace(":", "").toUpperCase() + " NÃO LOCALIZADO";
     }
 }
