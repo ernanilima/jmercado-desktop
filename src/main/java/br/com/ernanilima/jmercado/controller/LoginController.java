@@ -178,6 +178,10 @@ public class LoginController implements Initializable {
                 vCampo.loginSenhasIguais(campoNovaSenha1, campoNovaSenha2);
     }
 
+    public Usuario getUsuarioAtual() {
+        return USUARIO_ATUAL;
+    }
+
     public void exibirModal() {
         try {
             LOADER = new FXMLLoader(R_FXML.getURL());
