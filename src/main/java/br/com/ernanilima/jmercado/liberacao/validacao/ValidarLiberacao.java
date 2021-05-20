@@ -3,6 +3,7 @@ package br.com.ernanilima.jmercado.liberacao.validacao;
 import br.com.ernanilima.jmercado.controller.LoginController;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.TipoLiberacao;
+import br.com.ernanilima.jmercado.suporte.validacao.ValidarUsuarioSuporte;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class ValidarLiberacao {
      * @param liberacaoNecessaria Liberacoes - liberacao solicitada
      * @param vBoxDoBtn VBox - box onde o botao esta */
     public void liberacaoUsuario(Node btnComValidacao, Liberacoes liberacaoNecessaria, VBox vBoxDoBtn) {
-        if (cLogin.getUsuarioAtual() != null) {
+        if (cLogin.getUsuarioAtual() != null && !ValidarUsuarioSuporte.conectado(cLogin.getUsuarioAtual())) {
             lsLiberacoesUsuario = (cLogin.getUsuarioAtual().getTipoLiberacao() == TipoLiberacao.USUARIO ?
                     cLogin.getUsuarioAtual().getLiberacoes() :
                     cLogin.getUsuarioAtual().getMGrupoUsuario().getLiberacoes());

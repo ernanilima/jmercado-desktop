@@ -7,9 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Component
@@ -18,7 +15,6 @@ public class UsuarioSuporte implements Serializable {
 
     private Integer codigo = 9999;
     private String nomeSistema = "SUPORTE";
-    private Set<Liberacoes> liberacao =  new HashSet<>(Collections.singletonList(Liberacoes.toEnum(getCodigo())));
 
     public Usuario getUsuarioSuporte() {
         Usuario mUsuario = new Usuario(getCodigo(), getNomeSistema(), getNomeSistema(), false, null);
