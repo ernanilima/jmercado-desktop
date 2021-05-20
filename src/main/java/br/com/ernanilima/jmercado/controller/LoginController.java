@@ -46,6 +46,8 @@ public class LoginController implements Initializable {
 
     @Value("classpath:/fxml/login.fxml")
     private Resource R_FXML;
+    @Value("classpath:/css/login.css")
+    private Resource R_CSS;
 
     @FXML private TabPane tab;
     @FXML private Tab tpLogin;
@@ -116,7 +118,7 @@ public class LoginController implements Initializable {
 
             // LOGIN INVALIDO
             if (USUARIO_ATUAL == null || !passwdEncoder.matches(campoSenha.getText(), USUARIO_ATUAL.getSenha())) {
-                legenda.exibirAlerta(MensagemAlerta.LOGIN_INVALIDO);
+                legenda.exibirAlerta(MensagemAlerta.LOGIN_INVALIDO, campoCodigo);
             }
         }
     }
@@ -187,6 +189,7 @@ public class LoginController implements Initializable {
             STAGE.initModality(Modality.APPLICATION_MODAL);
             STAGE.setOnCloseRequest(e -> finalizar());
             LOADER.setControllerFactory(aClass -> springContext.getBean(aClass));
+            ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
             STAGE.showAndWait();
         } catch (IOException e) { e.printStackTrace(); }
     }

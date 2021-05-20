@@ -1,0 +1,87 @@
+#tab .tab-header-area {
+    visibility: hidden;
+}
+#tab {
+    -fx-background-color: white;
+}
+#painelLogo {
+    -fx-background-color: linear-gradient(to top left, rgba(0,0,255,1), rgb(0,0,60)), linear-gradient(to bottom left, rgba(0,0,150,.8), rgba(255,255,255,.1));
+}
+#painelLogin {
+    -fx-background-color: white;
+}
+#iconeLogo {
+    -fx-background-image: url("/imagem/logo_256x256.png");
+    -fx-background-size: auto 200;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+#legendaLogo {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-font-family: "Verdana";
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-size: 24;
+}
+#iconeUsuario {
+    -fx-background-image: url("/imagem/icone/usuario_24x24.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#iconeSenha,
+#iconeSenhaAtual,
+#iconeNovaSenha1,
+#iconeNovaSenha2 {
+    -fx-background-image: url("/imagem/icone/senha_24x24.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#campoCodigo,
+#campoSenha,
+#campoSenhaAtual,
+#campoNovaSenha1,
+#campoNovaSenha2 {
+    -fx-background-color: silver, white;
+    -fx-background-insets: 1 1 0 1, 1 1 1 1;
+    -fx-background-radius: 0, 0;
+}
+#campoCodigo:focused,
+#campoSenha:focused,
+#campoSenhaAtual:focused,
+#campoNovaSenha1:focused,
+#campoNovaSenha2:focused {
+    -fx-background-color: #0000ff, white;
+    -fx-background-insets: 1 1 0 1, 1 1 2 1;
+}
+#btnSair {
+    -fx-background-color: transparent;
+    -fx-text-fill: cornflowerblue;
+}
+#btnEntrar {
+    -fx-background-color: #0000ff;
+    -fx-text-fill: white;
+}
+#btnMudarSenha {
+    -fx-background-color: #0000ff, #ccccff;
+    -fx-text-fill: #0000ff;
+    -fx-background-insets: 0, 1;
+}
+#btnCancelar {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+#btnGravar {
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+/*PASSAR O MAUSE*/
+#btnSair:hover {
+    -fx-background-color: #e6e6ff;
+}
+#btnEntrar:hover {
+    -fx-background-color: #6666ff;
+}
+#btnMudarSenha:hover {
+    -fx-background-color: #0000ff, #e6e6ff;
+}
