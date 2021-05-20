@@ -24,6 +24,7 @@ public class BCadProdutos {
 
     // box com botoes relacionados
     private VBox boxCCadProdutos = new VBox();
+    private VBox boxDoMenu = new VBox(btnBCadProdutos, boxCCadProdutos);
 
     /** Configura o botao,
      * @return VBox - botao, box com botoes relacionados */
@@ -33,9 +34,9 @@ public class BCadProdutos {
         configurarBox();
 
         // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnBCadProdutos, Liberacoes.CADASTROS_PRODUTOS);
+        vLiberacao.liberacaoUsuario(btnBCadProdutos, Liberacoes.CADASTROS_PRODUTOS, boxDoMenu);
 
-        return new VBox(btnBCadProdutos, boxCCadProdutos);
+        return boxDoMenu;
     }
 
     /** Acao ao pressionar botao */
@@ -71,20 +72,20 @@ public class BCadProdutos {
     public void minimizarBox() {
         boxCCadProdutos.setPrefHeight(0);
         boxCCadProdutos.setVisible(false);
-        boxCCadProdutos.getChildren().removeAll(botoesDeMenuC());
+        boxCCadProdutos.getChildren().removeAll(getMenusC());
     }
 
     /** Adiciona todos os botoes relacionados ao box */
     private void maximizarBox() {
         boxCCadProdutos.setPrefHeight(Control.USE_COMPUTED_SIZE);
         boxCCadProdutos.setVisible(true);
-        boxCCadProdutos.getChildren().addAll(botoesDeMenuC());
+        boxCCadProdutos.getChildren().addAll(getMenusC());
     }
 
     /** Todos os botoes secundarios
-     * @return Button[] - botoes de menu c */
-    private Button[] botoesDeMenuC() {
-        return new Button[] {
+     * @return VBox[] - menus C */
+    private VBox[] getMenusC() {
+        return new VBox[] {
                 cCadDepartamentos.getMenuC(),
                 cCadGrupos.getMenuC(),
                 cCadSubGrupos.getMenuC(),

@@ -22,6 +22,7 @@ public class ACadastros {
 
     // box com botoes relacionados
     private VBox boxBCadastros = new VBox();
+    private VBox boxDoMenu = new VBox(btnACadastros, boxBCadastros);
 
     /** Configura o botao principal,
      * @return VBox - botao principal, box com botoes relacionados */
@@ -31,9 +32,9 @@ public class ACadastros {
         configurarBox();
 
         // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnACadastros, Liberacoes.CADASTROS);
+        vLiberacao.liberacaoUsuario(btnACadastros, Liberacoes.CADASTROS, boxDoMenu);
 
-        return new VBox(btnACadastros, boxBCadastros);
+        return boxDoMenu;
     }
 
     /** Acao ao pressionar botao */
@@ -69,19 +70,22 @@ public class ACadastros {
     public void minimizarBox() {
         boxBCadastros.setPrefHeight(0);
         boxBCadastros.setVisible(false);
-        boxBCadastros.getChildren().removeAll(
-                bCadProdutos.getMenuB(),
-                bCadUsuarios.getMenuB()
-        );
+        boxBCadastros.getChildren().removeAll(getMenusB());
     }
 
     /** Adiciona todos os botoes relacionados ao box */
     private void maximizarBox() {
         boxBCadastros.setPrefHeight(Control.USE_COMPUTED_SIZE);
         boxBCadastros.setVisible(true);
-        boxBCadastros.getChildren().addAll(
+        boxBCadastros.getChildren().addAll(getMenusB());
+    }
+
+    /** Todos os botoes secundarios
+     * @return VBox[] - menus B */
+    private VBox[] getMenusB() {
+        return new VBox[] {
                 bCadProdutos.getMenuB(),
                 bCadUsuarios.getMenuB()
-        );
+        };
     }
 }

@@ -6,6 +6,7 @@ import br.com.ernanilima.jmercado.controller.UsuarioController;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.validacao.ValidarLiberacao;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -19,17 +20,18 @@ public class CCadUsuarios {
 
     // botao que abre o controller referente ao cadastro
     private Button btnCCadUsuario = new Button();
+    private VBox boxDoMenu = new VBox(btnCCadUsuario);
 
     /** Configura o botao,
-     * @return Button - botao */
-    public Button getMenuC() {
+     * @return VBox - menu */
+    public VBox getMenuC() {
         listener();
         configurarBotao();
 
         // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnCCadUsuario, Liberacoes.CADASTROS_USUARIOS_USUARIOS);
+        vLiberacao.liberacaoUsuario(btnCCadUsuario, Liberacoes.CADASTROS_USUARIOS_USUARIOS, boxDoMenu);
 
-        return btnCCadUsuario;
+        return boxDoMenu;
     }
 
     /** Acao ao pressionar botao */
