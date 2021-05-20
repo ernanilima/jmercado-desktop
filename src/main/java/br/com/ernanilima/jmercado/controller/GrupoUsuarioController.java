@@ -7,6 +7,7 @@ import br.com.ernanilima.jmercado.controller.popup.PopUpBuscaController;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.MontarLiberacoes;
+import br.com.ernanilima.jmercado.liberacao.validacao.ValidarLiberacao;
 import br.com.ernanilima.jmercado.model.GrupoUsuario;
 import br.com.ernanilima.jmercado.service.GrupoUsuarioService;
 import br.com.ernanilima.jmercado.service.componente.Legenda;
@@ -53,6 +54,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     @Autowired private KeyListener lKey;
     @Autowired private GrupoUsuarioService sGrupoUsuario;
     @Autowired private Utils utils;
+    @Autowired private ValidarLiberacao vLiberacao;
     @Autowired private ValidarCampo vCampo;
     @Autowired private Legenda legenda;
 
@@ -131,6 +133,12 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
         Mascara.textoNumeroMaiusculo(campoPesquisar, 50);
         Mascara.numeroInteiro(campoCodigo, 3);
         Mascara.textoNumeroMaiusculo(campoDescricao, 50);
+
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnCadastrar, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS_CADASTRAR);
+        vLiberacao.liberacaoUsuario(btnEditar, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS_EDITAR);
+        vLiberacao.liberacaoUsuario(btnExcluir, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS_EXCLUIR);
+        vLiberacao.liberacaoUsuario(btnIgualar, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS_IGUALAR);
 
         // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
         utils.exibirAba(tab, tpListar, tpCadastrar);

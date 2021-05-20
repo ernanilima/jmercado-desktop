@@ -4,6 +4,8 @@ import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
+import br.com.ernanilima.jmercado.liberacao.Liberacoes;
+import br.com.ernanilima.jmercado.liberacao.validacao.ValidarLiberacao;
 import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.service.DepartamentoService;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
@@ -48,6 +50,7 @@ public class DepartamentoController implements Initializable, ICadastro {
     @Autowired private KeyListener lKey;
     @Autowired private DepartamentoService sDepartamento;
     @Autowired private Utils utils;
+    @Autowired private ValidarLiberacao vLiberacao;
     @Autowired private ValidarCodigo vCodigo;
     @Autowired private ValidarCampo vCampo;
 
@@ -116,6 +119,11 @@ public class DepartamentoController implements Initializable, ICadastro {
         Mascara.textoNumeroMaiusculo(campoPesquisar, 50);
         Mascara.numeroInteiro(campoCodigo, 3);
         Mascara.textoNumeroMaiusculo(campoDescricao, 50);
+
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnCadastrar, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM_CADASTRAR);
+        vLiberacao.liberacaoUsuario(btnEditar, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM_EDITAR);
+        vLiberacao.liberacaoUsuario(btnExcluir, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM_EXCLUIR);
 
         // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
         utils.exibirAba(tab, tpListar, tpCadastrar);

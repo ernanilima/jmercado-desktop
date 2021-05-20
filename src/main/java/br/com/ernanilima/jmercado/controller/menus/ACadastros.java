@@ -1,6 +1,8 @@
 package br.com.ernanilima.jmercado.controller.menus;
 
 import br.com.ernanilima.jmercado.controller.MenuController;
+import br.com.ernanilima.jmercado.liberacao.Liberacoes;
+import br.com.ernanilima.jmercado.liberacao.validacao.ValidarLiberacao;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.layout.VBox;
@@ -13,6 +15,7 @@ public class ACadastros {
     @Autowired private MenuController cMenu;
     @Autowired private BCadProdutos bCadProdutos;
     @Autowired private BCadUsuarios bCadUsuarios;
+    @Autowired private ValidarLiberacao vLiberacao;
 
     // botao principal, abre o box com outros botoes relacionados
     private Button btnACadastros = new Button();
@@ -26,6 +29,9 @@ public class ACadastros {
         listener();
         configurarBotao();
         configurarBox();
+
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnACadastros, Liberacoes.CADASTROS);
 
         return new VBox(btnACadastros, boxBCadastros);
     }

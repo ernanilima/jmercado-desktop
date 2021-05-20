@@ -8,6 +8,7 @@ import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.MontarLiberacoes;
 import br.com.ernanilima.jmercado.liberacao.TipoLiberacao;
+import br.com.ernanilima.jmercado.liberacao.validacao.ValidarLiberacao;
 import br.com.ernanilima.jmercado.model.Usuario;
 import br.com.ernanilima.jmercado.service.GrupoUsuarioService;
 import br.com.ernanilima.jmercado.service.UsuarioService;
@@ -57,6 +58,7 @@ public class UsuarioController implements Initializable, ICadastro {
     @Autowired private UsuarioService sUsuario;
     @Autowired private GrupoUsuarioService sGrupoUsuario;
     @Autowired private Utils utils;
+    @Autowired private ValidarLiberacao vLiberacao;
     @Autowired private ValidarCodigo vCodigo;
     @Autowired private ValidarCampo vCampo;
     @Autowired private Legenda legenda;
@@ -157,6 +159,15 @@ public class UsuarioController implements Initializable, ICadastro {
         Mascara.textoNumeroMaiusculo(campoNomeCompleto, 50);
         Mascara.textoNumeroMaiusculo(campoNomeSistema, 10);
         Mascara.numeroInteiro(campoCodGrupoUsuario, 3);
+
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnCadastrar, Liberacoes.CADASTROS_USUARIOS_USUARIOS_CADASTRAR);
+        vLiberacao.liberacaoUsuario(btnEditar, Liberacoes.CADASTROS_USUARIOS_USUARIOS_EDITAR);
+        vLiberacao.liberacaoUsuario(btnExcluir, Liberacoes.CADASTROS_USUARIOS_USUARIOS_EXCLUIR);
+        vLiberacao.liberacaoUsuario(btnIgualar, Liberacoes.CADASTROS_USUARIOS_USUARIOS_IGUALAR);
+        // IMPORTANTE: pendente criar forma de validar remover senha atual e de outros
+        vLiberacao.liberacaoUsuario(btnRemoverSenha, Liberacoes.CADASTROS_USUARIOS_USUARIOS_REMOVERSENHA);
+        vLiberacao.liberacaoUsuario(chbxBloqueado, Liberacoes.CADASTROS_USUARIOS_USUARIOS_BLOQUSUARIO);
 
         // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
         utils.exibirAba(tab, tpListar, tpCadastrar);

@@ -1,6 +1,8 @@
 package br.com.ernanilima.jmercado.controller.menus;
 
 import br.com.ernanilima.jmercado.controller.MenuController;
+import br.com.ernanilima.jmercado.liberacao.Liberacoes;
+import br.com.ernanilima.jmercado.liberacao.validacao.ValidarLiberacao;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.layout.VBox;
@@ -15,6 +17,7 @@ public class BCadProdutos {
     @Autowired private CCadGrupos cCadGrupos;
     @Autowired private CCadSubGrupos cCadSubGrupos;
     @Autowired private CCadProdutos cCadProdutos;
+    @Autowired private ValidarLiberacao vLiberacao;
 
     // botao que abre o box com outros botoes relacionados
     private Button btnBCadProdutos = new Button();
@@ -28,6 +31,9 @@ public class BCadProdutos {
         listener();
         configurarBotao();
         configurarBox();
+
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnBCadProdutos, Liberacoes.CADASTROS_PRODUTOS);
 
         return new VBox(btnBCadProdutos, boxCCadProdutos);
     }
