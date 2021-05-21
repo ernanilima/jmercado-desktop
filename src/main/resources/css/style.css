@@ -2,8 +2,13 @@
     /* COR DO PAINEL LATERAL DE BOTOES */
     cor-painel-menu: darkblue;
 
+    cor-bg-barra-titulo: rgb(234,238,251);
+
     /* COR DE BOTOES */
     cor-btn-suporte: darkred;
+    cor-btn-usuario-hover: rgb(217,228,242);
+    cor-texto-btn-usuario: rgb(46,87,139);
+
     cor-btn-nA: darkblue;
     cor-btn-nA-hover: rgba(255,255,255,0.2);
     cor-btn-nA-focused: rgba(255,255,255,0.2);
@@ -16,11 +21,48 @@
     cor-btn-nC-hover: rgba(255,255,255,0.4);
     cor-btn-nC-focused: rgba(255,255,255,0.4);
 }
+#barraTitulo {
+    -fx-background-color: cor-bg-barra-titulo;
+    -fx-border-color: #d5ddf6;
+    -fx-border-width: 0 0 1 0;
+}
 #titulo {
     -fx-font-size: 24;
     -fx-text-fill: #2e578b;
     -fx-font-weight: bold;
 }
+/* BOTAO DE USUARIO */
+#iconeUsuario {
+    -fx-background-image: url("/imagem/icone/usuario_32x32.png");
+    -fx-background-size: auto 30;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#btnUsuario .label .text,
+#btnUsuario {
+    -fx-background-color: transparent;
+    -fx-fill: cor-texto-btn-usuario;
+    -fx-cursor: hand;
+}
+#btnUsuario .arrow-button .arrow {
+    /* cor da seta no botao de usuario */
+    -fx-background-color: cor-texto-btn-usuario;
+}
+#btnUsuario:focused,
+#btnUsuario:hover {
+    -fx-background-color: cor-btn-usuario-hover;
+}
+#btnUsuario .menu-item .label .text {
+    -fx-fill: cor-texto-btn-usuario !important;
+}
+#btnUsuario .context-menu {
+    -fx-background-color: white;
+}
+#btnUsuario .menu-item:focused,
+#btnUsuario .menu-item:hovered {
+    -fx-background-color: cor-bg-barra-titulo;
+}
+/* LEGENDA */
 #campoLegenda {
     -fx-background-color: #EBEFF3;
     -fx-border-color: silver;

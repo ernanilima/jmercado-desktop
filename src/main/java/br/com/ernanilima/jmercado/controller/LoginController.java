@@ -18,6 +18,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,9 @@ public class LoginController implements Initializable {
         btnMudarSenha.setOnAction(e -> abrirMudarSenha());
         btnGravar.setOnAction(e -> gravarMudarSenha());
         btnCancelar.setOnAction(e -> utils.exibirAba(tab, tpLogin, tpMudarSenha));
+
+        // ACOS EM CAMPOS
+        campoSenha.setOnKeyPressed(e -> {if(e.getCode() == KeyCode.ENTER) {verificarLoginRealizado();}});
 
         // TOOLTIP
         campoCodigo.setTooltip(new Tooltip(Mensagem.Usuario.CODIGO));

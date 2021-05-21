@@ -7,7 +7,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 public class InicioController implements Initializable {
 
     @Autowired private ApplicationContext springContext;
+    @Autowired private LoginController cLogin;
     @Autowired private MenuController cMenu;
 
     @Value("classpath:/fxml/inicio.fxml")
@@ -37,6 +38,8 @@ public class InicioController implements Initializable {
     @FXML private Label campoLegenda;
     @FXML private Label campoLegendaAlerta;
     @FXML private Label titulo;
+    @FXML private MenuButton btnUsuario;
+    private MenuItem itemTrocarUsuario = new MenuItem();
 
     private Stage STAGE;
     private FXMLLoader LOADER;
@@ -46,6 +49,13 @@ public class InicioController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         campoLegendaAlerta.setVisible(false);
         borderPane.setLeft(cMenu.menuLateral());
+
+        btnUsuario.setText("USUÁRIO");
+        itemTrocarUsuario.setText("Trocar Usuário");
+        btnUsuario.getItems().add(itemTrocarUsuario);
+
+        //ACOES EM BOTOES
+        itemTrocarUsuario.setOnAction(e -> cLogin.exibir(STAGE));
     }
 
     public void setTitulo(Label tituloModal, String tituloSistema) {
