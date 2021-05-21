@@ -50,7 +50,7 @@ public class InicioController implements Initializable {
         campoLegendaAlerta.setVisible(false);
         borderPane.setLeft(cMenu.geMenuLateral());
 
-        btnUsuario.setText("USUÁRIO");
+        btnUsuario.setText(cLogin.getUsuarioAtual().getNomeSistema());
         itemTrocarUsuario.setText("Trocar Usuário");
         btnUsuario.getItems().add(itemTrocarUsuario);
 

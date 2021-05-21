@@ -44,6 +44,7 @@ public class MenuController {
             scroll.getStylesheets().add(R_CSS.getURL().toExternalForm());
             scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scroll.setMinWidth(getLarguraX());
             scroll.setContent(box0Menu);
 
             menuPrincipal();

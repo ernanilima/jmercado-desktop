@@ -115,10 +115,13 @@ public class Pesquisa {
                 } else if (Coluna.Usuario.DESCRICAO_GRUPOUSUARIO.getColuna().equals(colunaParaPesquisar)) {
                     return model.getMGrupoUsuario().getDescricao().contains(pesquisa);
 
-                //} else if (Coluna.Usuario.BLOQUEADO.getColuna().equals(colunaParaPesquisar)) {
-                //    return model.getBloqueado().contains(pesquisa);
-                // criar forma de realizar busca com bloqueado
-
+                } else if (Coluna.Usuario.BLOQUEADO.getColuna().equals(colunaParaPesquisar)) {
+                    // rever forma de simplificar
+                    if (pesquisa.toLowerCase().contains("s")) {
+                        return model.getBloqueado().toString().contains("t");
+                    } else if (pesquisa.toLowerCase().contains("n")) {
+                        return model.getBloqueado().toString().contains("f");
+                    }
                 } else if (Coluna.GERAL.equals(colunaParaPesquisar)) {
                     return String.valueOf(model.getCodigo()).contains(pesquisa) ||
                             model.getNomeCompleto().contains(pesquisa) ||
