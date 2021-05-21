@@ -27,12 +27,10 @@ public class BCadUsuarios {
     /** Configura o botao,
      * @return VBox - botao, box com botoes relacionados */
     public VBox getMenuB() {
+        liberacaoParaBotao();
         listener();
         configurarBotao();
         configurarBox();
-
-        // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnBCadUsuarios, Liberacoes.CADASTROS_USUARIOS, boxDoMenu);
 
         return boxDoMenu;
     }
@@ -87,5 +85,11 @@ public class BCadUsuarios {
                 cCadGruposUsuarios.getMenuC(),
                 cCadUsuarios.getMenuC()
         };
+    }
+
+    /** Liberacao para o menu */
+    private void liberacaoParaBotao() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnBCadUsuarios, Liberacoes.CADASTROS_USUARIOS, boxDoMenu);
     }
 }

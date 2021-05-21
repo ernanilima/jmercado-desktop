@@ -29,12 +29,10 @@ public class BCadProdutos {
     /** Configura o botao,
      * @return VBox - botao, box com botoes relacionados */
     public VBox getMenuB() {
+        liberacaoParaBotao();
         listener();
         configurarBotao();
         configurarBox();
-
-        // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnBCadProdutos, Liberacoes.CADASTROS_PRODUTOS, boxDoMenu);
 
         return boxDoMenu;
     }
@@ -91,5 +89,11 @@ public class BCadProdutos {
                 cCadSubGrupos.getMenuC(),
                 cCadProdutos.getMenuC()
         };
+    }
+
+    /** Liberacao para o menu */
+    private void liberacaoParaBotao() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnBCadProdutos, Liberacoes.CADASTROS_PRODUTOS, boxDoMenu);
     }
 }

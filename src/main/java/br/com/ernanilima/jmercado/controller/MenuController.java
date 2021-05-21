@@ -38,7 +38,7 @@ public class MenuController {
 
     /** Constroi o menu lateral
      * @return ScrollPane - menu lateral */
-    protected ScrollPane menuLateral() {
+    protected ScrollPane geMenuLateral() {
         try {
             scroll.getStyleClass().add("scroll");
             scroll.getStylesheets().add(R_CSS.getURL().toExternalForm());
@@ -54,6 +54,7 @@ public class MenuController {
     /** Adiciona o box dos menus principais ao menu lateral
      * OBS: projeto basico tem apenas a opcao de cadastros */
     private void menuPrincipal() {
+        box0Menu.getChildren().clear();
         box0Menu.getChildren().addAll(
                 aCadastros.getMenuA(),
                 menuSuporte.getMenuSuporte()

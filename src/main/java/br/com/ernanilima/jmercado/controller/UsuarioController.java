@@ -160,6 +160,15 @@ public class UsuarioController implements Initializable, ICadastro {
         Mascara.textoNumeroMaiusculo(campoNomeSistema, 10);
         Mascara.numeroInteiro(campoCodGrupoUsuario, 3);
 
+        // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
+        utils.exibirAba(tab, tpListar, tpCadastrar);
+
+        carregarEstruturaTabela();
+        carregarOpcoesPesquisa();
+    }
+
+    /** Liberacoes solicitadas deve ser executada sempre que o controller for exibido */
+    private void liberacoesSolicitadas() {
         // VALIDACAO DE LIBERACOES DE USUARIO
         vLiberacao.liberacaoUsuario(btnCadastrar, Liberacoes.CADASTROS_USUARIOS_USUARIOS_CADASTRAR);
         vLiberacao.liberacaoUsuario(btnEditar, Liberacoes.CADASTROS_USUARIOS_USUARIOS_EDITAR);
@@ -168,12 +177,6 @@ public class UsuarioController implements Initializable, ICadastro {
         // IMPORTANTE: pendente criar forma de validar remover senha atual e de outros
         vLiberacao.liberacaoUsuario(btnRemoverSenha, Liberacoes.CADASTROS_USUARIOS_USUARIOS_REMOVERSENHA);
         vLiberacao.liberacaoUsuario(chbxBloqueado, Liberacoes.CADASTROS_USUARIOS_USUARIOS_BLOQUSUARIO);
-
-        // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
-        utils.exibirAba(tab, tpListar, tpCadastrar);
-
-        carregarEstruturaTabela();
-        carregarOpcoesPesquisa();
     }
 
     private void carregarEstruturaTabela() {
@@ -442,6 +445,7 @@ public class UsuarioController implements Initializable, ICadastro {
                 ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
                 carregarConteudoTabela();
             }
+            liberacoesSolicitadas();
         } catch (IOException e) { e.printStackTrace(); }
     }
 }

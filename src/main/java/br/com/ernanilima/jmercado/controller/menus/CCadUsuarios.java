@@ -25,11 +25,9 @@ public class CCadUsuarios {
     /** Configura o botao,
      * @return VBox - menu */
     public VBox getMenuC() {
+        liberacaoParaBotao();
         listener();
         configurarBotao();
-
-        // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnCCadUsuario, Liberacoes.CADASTROS_USUARIOS_USUARIOS, boxDoMenu);
 
         return boxDoMenu;
     }
@@ -48,5 +46,11 @@ public class CCadUsuarios {
         btnCCadUsuario.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadUsuario.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadUsuario.setText("Cadastrar Usuários");
+    }
+
+    /** Liberacao para o menu */
+    private void liberacaoParaBotao() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnCCadUsuario, Liberacoes.CADASTROS_USUARIOS_USUARIOS, boxDoMenu);
     }
 }

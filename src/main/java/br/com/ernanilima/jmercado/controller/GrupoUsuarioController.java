@@ -134,17 +134,20 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
         Mascara.numeroInteiro(campoCodigo, 3);
         Mascara.textoNumeroMaiusculo(campoDescricao, 50);
 
-        // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnCadastrar, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS_CADASTRAR);
-        vLiberacao.liberacaoUsuario(btnEditar, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS_EDITAR);
-        vLiberacao.liberacaoUsuario(btnExcluir, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS_EXCLUIR);
-        vLiberacao.liberacaoUsuario(btnIgualar, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS_IGUALAR);
-
         // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
         utils.exibirAba(tab, tpListar, tpCadastrar);
 
         carregarEstruturaTabela();
         carregarOpcoesPesquisa();
+    }
+
+    /** Liberacoes solicitadas deve ser executada sempre que o controller for exibido */
+    private void liberacoesSolicitadas() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnCadastrar, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS_CADASTRAR);
+        vLiberacao.liberacaoUsuario(btnEditar, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS_EDITAR);
+        vLiberacao.liberacaoUsuario(btnExcluir, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS_EXCLUIR);
+        vLiberacao.liberacaoUsuario(btnIgualar, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS_IGUALAR);
     }
 
     private void carregarEstruturaTabela() {
@@ -368,6 +371,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
                 ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
                 carregarConteudoTabela();
             }
+            liberacoesSolicitadas();
         } catch (IOException e) { e.printStackTrace(); }
     }
 }

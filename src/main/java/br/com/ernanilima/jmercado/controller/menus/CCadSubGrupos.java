@@ -23,10 +23,8 @@ public class CCadSubGrupos {
     /** Configura o botao,
      * @return VBox - menu */
     public VBox getMenuC() {
+        liberacaoParaBotao();
         configurarBotao();
-
-        // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnCCadSubGrupos, Liberacoes.CADASTROS_PRODUTOS_SUBGRUPO, boxDoMenu);
 
         return boxDoMenu;
     }
@@ -37,5 +35,11 @@ public class CCadSubGrupos {
         btnCCadSubGrupos.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadSubGrupos.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadSubGrupos.setText("Cadastrar SubGrupos");
+    }
+
+    /** Liberacao para o menu */
+    private void liberacaoParaBotao() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnCCadSubGrupos, Liberacoes.CADASTROS_PRODUTOS_SUBGRUPO, boxDoMenu);
     }
 }

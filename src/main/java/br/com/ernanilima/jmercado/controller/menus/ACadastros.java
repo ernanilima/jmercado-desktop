@@ -27,12 +27,10 @@ public class ACadastros {
     /** Configura o botao principal,
      * @return VBox - botao principal, box com botoes relacionados */
     public VBox getMenuA() {
+        liberacaoParaBotao();
         listener();
         configurarBotao();
         configurarBox();
-
-        // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnACadastros, Liberacoes.CADASTROS, boxDoMenu);
 
         return boxDoMenu;
     }
@@ -87,5 +85,11 @@ public class ACadastros {
                 bCadProdutos.getMenuB(),
                 bCadUsuarios.getMenuB()
         };
+    }
+
+    /** Liberacao para o menu */
+    private void liberacaoParaBotao() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnACadastros, Liberacoes.CADASTROS, boxDoMenu);
     }
 }

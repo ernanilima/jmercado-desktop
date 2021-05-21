@@ -25,11 +25,9 @@ public class CCadDepartamentos {
     /** Configura o botao,
      * @return VBox - menu */
     public VBox getMenuC() {
+        liberacaoParaBotao();
         listener();
         configurarBotao();
-
-        // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnCCadDepartamentos, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM, boxDoMenu);
 
         return boxDoMenu;
     }
@@ -48,5 +46,11 @@ public class CCadDepartamentos {
         btnCCadDepartamentos.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadDepartamentos.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadDepartamentos.setText("Cadastrar Departamentos");
+    }
+
+    /** Liberacao para o menu */
+    private void liberacaoParaBotao() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnCCadDepartamentos, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM, boxDoMenu);
     }
 }

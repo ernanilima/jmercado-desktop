@@ -25,11 +25,9 @@ public class CCadGruposUsuarios {
     /** Configura o botao,
      * @return VBox - menu */
     public VBox getMenuC() {
+        liberacaoParaBotao();
         listener();
         configurarBotao();
-
-        // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnCCadGruposUsuarios, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS, boxDoMenu);
 
         return boxDoMenu;
     }
@@ -48,5 +46,11 @@ public class CCadGruposUsuarios {
         btnCCadGruposUsuarios.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadGruposUsuarios.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadGruposUsuarios.setText("Cadastrar Grupos De Usuários");
+    }
+
+    /** Liberacao para o menu */
+    private void liberacaoParaBotao() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnCCadGruposUsuarios, Liberacoes.CADASTROS_USUARIOS_GRUPOS_USUARIOS, boxDoMenu);
     }
 }

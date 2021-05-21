@@ -39,8 +39,12 @@ public class ValidarLiberacao {
 
             boolean validacaoLiberacaoRealizada = validarLiberacao(lsLiberacoesUsuario, liberacaoNecessaria);
             btnComValidacao.setDisable(!validacaoLiberacaoRealizada);
-
             validacaoParaMenu(vBoxDoBtn, validacaoLiberacaoRealizada, btnComValidacao);
+
+        } else if (cLogin.getUsuarioAtual() != null && ValidarUsuarioSuporte.conectado(cLogin.getUsuarioAtual())) {
+            // para usuario de suporte
+            btnComValidacao.setDisable(false);
+            validacaoParaMenu(vBoxDoBtn, true, btnComValidacao);
         }
     }
 
@@ -62,6 +66,11 @@ public class ValidarLiberacao {
             // se botao estiver em um vbox e o usuario nao tiver liberacao
             // para visualizar o botao, o mesmo eh removido do vbox
             vBoxDoBtn.getChildren().remove(btnComValidacao);
+
+        } else if (vBoxDoBtn != null) {
+            // para usuario de suporte
+            vBoxDoBtn.getChildren().remove(btnComValidacao);
+            vBoxDoBtn.getChildren().add(0, btnComValidacao);
         }
     }
 }

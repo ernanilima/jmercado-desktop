@@ -48,14 +48,14 @@ public class InicioController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         campoLegendaAlerta.setVisible(false);
-        borderPane.setLeft(cMenu.menuLateral());
+        borderPane.setLeft(cMenu.geMenuLateral());
 
         btnUsuario.setText("USUÁRIO");
         itemTrocarUsuario.setText("Trocar Usuário");
         btnUsuario.getItems().add(itemTrocarUsuario);
 
         //ACOES EM BOTOES
-        itemTrocarUsuario.setOnAction(e -> cLogin.exibir(STAGE));
+        itemTrocarUsuario.setOnAction(e -> {cMenu.minimizaTodos(); cLogin.exibir(STAGE);});
     }
 
     public void setTitulo(Label tituloModal, String tituloSistema) {

@@ -23,10 +23,8 @@ public class CCadProdutos {
     /** Configura o botao,
      * @return VBox - menu */
     public VBox getMenuC() {
+        liberacaoParaBotao();
         configurarBotao();
-
-        // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnCCadProdutos, Liberacoes.CADASTROS_PRODUTOS_PRODUTOS, boxDoMenu);
 
         return boxDoMenu;
     }
@@ -37,5 +35,11 @@ public class CCadProdutos {
         btnCCadProdutos.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadProdutos.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadProdutos.setText("Cadastrar Produtos");
+    }
+
+    /** Liberacao para o menu */
+    private void liberacaoParaBotao() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnCCadProdutos, Liberacoes.CADASTROS_PRODUTOS_PRODUTOS, boxDoMenu);
     }
 }

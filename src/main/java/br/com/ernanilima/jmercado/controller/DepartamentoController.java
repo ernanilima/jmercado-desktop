@@ -120,16 +120,20 @@ public class DepartamentoController implements Initializable, ICadastro {
         Mascara.numeroInteiro(campoCodigo, 3);
         Mascara.textoNumeroMaiusculo(campoDescricao, 50);
 
-        // VALIDACAO DE LIBERACOES DE USUARIO
-        vLiberacao.liberacaoUsuario(btnCadastrar, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM_CADASTRAR);
-        vLiberacao.liberacaoUsuario(btnEditar, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM_EDITAR);
-        vLiberacao.liberacaoUsuario(btnExcluir, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM_EXCLUIR);
-
         // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
         utils.exibirAba(tab, tpListar, tpCadastrar);
 
         carregarEstruturaTabela();
         carregarOpcoesPesquisa();
+    }
+
+    /** Liberacoes solicitadas deve ser executada sempre que o controller for exibido */
+    private void liberacoesSolicitadas() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        System.out.println("verificou permissao no controller departamento");
+        vLiberacao.liberacaoUsuario(btnCadastrar, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM_CADASTRAR);
+        vLiberacao.liberacaoUsuario(btnEditar, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM_EDITAR);
+        vLiberacao.liberacaoUsuario(btnExcluir, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM_EXCLUIR);
     }
 
     private void carregarEstruturaTabela() {
@@ -288,6 +292,7 @@ public class DepartamentoController implements Initializable, ICadastro {
                 ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
                 carregarConteudoTabela();
             }
+            liberacoesSolicitadas();
         } catch (IOException e) { e.printStackTrace(); }
     }
 }
