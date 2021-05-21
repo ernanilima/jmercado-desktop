@@ -5,6 +5,7 @@ public class MensagemAlerta {
     public static final String CODIGO_EXISTENTE = "CÓDIGO JÁ EXISTE, INFORME OUTRO!";
     public static final String CODIGOZERO = "NÃO É PERMITIDO CÓDIGO IGUAL A \"0\"";
     public static final String LOGIN_INVALIDO = "LOGIN INVÁLIDO";
+    public static final String USUARIO_BLOQUEADO = "USUÁRIO BLOQUEADO";
     public static final String SENHA_NAO_MODIFICADA = "DADOS INVÁLIDOS, SENHA NÃO MODIFICADA";
     public static final String SENHA_NAO_COMBINAM = "SENHAS NOVAS NÃO COMBINAM";
 

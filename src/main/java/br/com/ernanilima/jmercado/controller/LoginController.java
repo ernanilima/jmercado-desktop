@@ -124,7 +124,9 @@ public class LoginController implements Initializable {
             USUARIO_ATUAL = sUsuario.getPorId(Filtro.pInt(campoCodigo.getText()));
             // LOGIN DE USUARIO
             if (USUARIO_ATUAL != null && passwdEncoder.matches(campoSenha.getText(), USUARIO_ATUAL.getSenha())) {
-                loginRealizado();
+                // se usuario bloqueado, exibe alerta
+                if (USUARIO_ATUAL.getBloqueado()) { legenda.exibirAlerta(MensagemAlerta.USUARIO_BLOQUEADO, campoCodigo, erroCodigo);
+                } else { loginRealizado(); }
                 return;
             }
 
