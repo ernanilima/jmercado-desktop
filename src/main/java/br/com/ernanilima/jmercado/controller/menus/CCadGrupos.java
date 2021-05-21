@@ -1,5 +1,6 @@
 package br.com.ernanilima.jmercado.controller.menus;
 
+import br.com.ernanilima.jmercado.controller.GrupoController;
 import br.com.ernanilima.jmercado.controller.InicioController;
 import br.com.ernanilima.jmercado.controller.MenuController;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 public class CCadGrupos {
 
     @Autowired private InicioController cInicio;
+    @Autowired private GrupoController cGrupo;
     @Autowired private MenuController cMenu;
     @Autowired private ValidarLiberacao vLiberacao;
 
@@ -24,9 +26,18 @@ public class CCadGrupos {
      * @return VBox - menu */
     public VBox getMenuC() {
         liberacaoParaBotao();
+        listener();
         configurarBotao();
 
         return boxDoMenu;
+    }
+
+    /** Acao ao pressionar botao */
+    private void listener() {
+        btnCCadGrupos.setOnAction(e -> {
+            cMenu.minimizaTodos();
+            cInicio.setPainelCentral(cGrupo.getPainel());
+        });
     }
 
     /** Constroi o botao */
