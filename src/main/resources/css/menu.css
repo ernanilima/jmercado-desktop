@@ -52,3 +52,10 @@
 .btnC:hover {
     -fx-background-color: cor-btn-nC-hover;
 }
+
+.btnSuporte {
+    -fx-background-color: cor-btn-suporte;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}

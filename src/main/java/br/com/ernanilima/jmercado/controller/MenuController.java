@@ -3,6 +3,7 @@ package br.com.ernanilima.jmercado.controller;
 import br.com.ernanilima.jmercado.controller.menus.ACadastros;
 import br.com.ernanilima.jmercado.controller.menus.BCadProdutos;
 import br.com.ernanilima.jmercado.controller.menus.BCadUsuarios;
+import br.com.ernanilima.jmercado.controller.menus.suporte.MenuSuporte;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.io.IOException;
 @Controller
 public class MenuController {
 
+    @Autowired private MenuSuporte menuSuporte;
     @Autowired private ACadastros aCadastros;
     @Autowired private BCadProdutos bCadProdutos;
     @Autowired private BCadUsuarios bCadUsuarios;
@@ -52,8 +54,9 @@ public class MenuController {
     /** Adiciona o box dos menus principais ao menu lateral
      * OBS: projeto basico tem apenas a opcao de cadastros */
     private void menuPrincipal() {
-        box0Menu.getChildren().add(
-                aCadastros.getMenuA()
+        box0Menu.getChildren().addAll(
+                aCadastros.getMenuA(),
+                menuSuporte.getMenuSuporte()
         );
     }
 
