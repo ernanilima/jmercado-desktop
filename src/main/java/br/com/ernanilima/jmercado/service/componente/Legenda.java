@@ -21,17 +21,24 @@ public class Legenda {
         cInicio.setLegenda(legenda);
     }
 
-    /** Define mensagem de erro sem parametro do campo
-     * usado para exibir apenas a mensagem de alerta
+    /** Define mensagem de erro, usado principalmente em popup
      * @param legendaErro String - mensagem de erro */
     public void exibirAlerta(String legendaErro) {
         this.exibirAlerta(legendaErro, new TextField());
     }
 
-    /** Define mensagem de erro
+    /** Define mensagem de erro, exibe mensagem na tela {@link InicioController}
      * @param legendaErro String - mensagem de erro
      * @param campoRetornoErro Node - campo do erro */
     public void exibirAlerta(String legendaErro, Node campoRetornoErro) {
+        this.exibirAlerta(legendaErro, campoRetornoErro, cInicio.getCampoAlerta());
+    }
+
+    /** Define mensagem de erro, usado principalmente em login
+     * @param legendaErro String - mensagem de erro
+     * @param campoRetornoErro Node - campo do erro
+     * @param camposMensagemErro Label... - campo(s) para exibir a mensagem de erro */
+    public void exibirAlerta(String legendaErro, Node campoRetornoErro, Label... camposMensagemErro) {
         final int TEMPO_EXECUCAO = 3000;
         campoRetornoErro.requestFocus();
 
@@ -45,8 +52,10 @@ public class Legenda {
                     try {
                         Platform.runLater(() -> {
                             // ADICIONA A LEGENDA DE ERRO
-                            cInicio.getCampoAlerta().setText(legendaErro);
-                            cInicio.getCampoAlerta().setVisible(true);
+                            for (Label campoMensagemErro : camposMensagemErro) {
+                                campoMensagemErro.setText(legendaErro);
+                                campoMensagemErro.setVisible(true);
+                            }
                         });
 
                         // PAUSA A THREAD
@@ -54,8 +63,10 @@ public class Legenda {
 
                         Platform.runLater(() -> {
                             // ADICIONA O BACKGROUND ORIGINAL NO CAMPO OBRIGATORIO
-                            cInicio.getCampoAlerta().setVisible(false);
-                            cInicio.getCampoAlerta().setText("");
+                            for (Label campoMensagemErro : camposMensagemErro) {
+                                campoMensagemErro.setVisible(false);
+                                campoMensagemErro.setText("");
+                            }
                         });
                     } catch (InterruptedException e) {e.printStackTrace();}
                     loop++;

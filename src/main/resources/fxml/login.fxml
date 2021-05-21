@@ -12,97 +12,187 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox id="painelLogo" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">
+      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label id="iconeLogo" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-            <Label id="legendaLogo" layoutX="160.0" layoutY="202.0" text="jMercado" />
+            <VBox id="painelLogo" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label id="iconeLogo" prefHeight="250.0" prefWidth="250.0" VBox.vgrow="ALWAYS" />
+                  <Label id="legendaLogo" layoutX="160.0" layoutY="202.0" text="jMercado" />
+               </children>
+            </VBox>
+            <TabPane fx:id="tab" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-tab-max-height: -5;" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="0.0" tabMaxWidth="0.0" HBox.hgrow="ALWAYS">
+              <tabs>
+                <Tab fx:id="tpLogin" closable="false" text="Login">
+                     <content>
+                        <AnchorPane id="painelLogin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <children>
+                              <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox alignment="CENTER" maxHeight="400.0" maxWidth="350.0" minHeight="400.0">
+                                       <children>
+                                          <Label id="tituloLogin" maxWidth="1.7976931348623157E308" text="Login">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="25.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <VBox>
+                                             <children>
+                                                <AnchorPane>
+                                                   <children>
+                                                      <TextField fx:id="campoCodigo" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" promptText="Código" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                         <padding>
+                                                            <Insets left="40.0" />
+                                                         </padding>
+                                                      </TextField>
+                                                      <Label id="iconeUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="2.0" />
+                                                      <Label fx:id="erroCodigo" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="erro-login" text="ERRO CÓDIGO" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="35.0">
+                                                         <font>
+                                                            <Font size="10.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <PasswordField fx:id="campoSenha" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" promptText="Senha" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
+                                                         <padding>
+                                                            <Insets left="40.0" />
+                                                         </padding>
+                                                      </PasswordField>
+                                                      <Label id="iconeSenha" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="52.0" />
+                                                      <Label fx:id="erroSenha" layoutX="20.0" layoutY="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="erro-login" text="ERRO SENHA" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="90.0">
+                                                         <font>
+                                                            <Font size="10.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </AnchorPane>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="25.0" />
+                                             </VBox.margin>
+                                          </VBox>
+                                          <HBox alignment="CENTER">
+                                             <children>
+                                                <Button fx:id="btnSair" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Sair" HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets right="5.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button fx:id="btnEntrar" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Entrar" HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets left="5.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <Button fx:id="btnMudarSenha" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Mudar Senha" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+                                       </VBox.margin>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                <Tab fx:id="tpMudarSenha" closable="false" text="Mudar Senha">
+                     <content>
+                        <AnchorPane id="painelLogin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <children>
+                              <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox alignment="CENTER" maxHeight="400.0" maxWidth="350.0" minHeight="400.0">
+                                       <children>
+                                          <Label id="tituloLogin" maxWidth="1.7976931348623157E308" text="Mudar/Criar Senha">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="25.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <VBox>
+                                             <children>
+                                                <AnchorPane>
+                                                   <children>
+                                                      <PasswordField fx:id="campoSenhaAtual" prefHeight="35.0" promptText="Senha Atual" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                         <padding>
+                                                            <Insets left="40.0" />
+                                                         </padding>
+                                                      </PasswordField>
+                                                      <Label id="iconeSenhaAtual" layoutX="127.5" layoutY="175.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="2.0" />
+                                                      <Label fx:id="erroSenhaAtual" layoutX="137.5" layoutY="185.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="erro-login" text="ERRO SENHA ATUAL" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="35.0">
+                                                         <font>
+                                                            <Font size="10.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <PasswordField fx:id="campoNovaSenha1" layoutY="35.0" prefHeight="35.0" promptText="Nova Senha" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
+                                                         <padding>
+                                                            <Insets left="40.0" />
+                                                         </padding>
+                                                      </PasswordField>
+                                                      <Label id="iconeNovaSenha1" layoutX="127.5" layoutY="205.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="52.0" />
+                                                      <PasswordField fx:id="campoNovaSenha2" layoutY="70.0" prefHeight="35.0" promptText="Repetir Nova Senha" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
+                                                         <padding>
+                                                            <Insets left="40.0" />
+                                                         </padding>
+                                                      </PasswordField>
+                                                      <Label id="iconeNovaSenha2" layoutX="127.5" layoutY="235.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="102.0" />
+                                                      <Label fx:id="erroNovaSenha1" layoutX="147.5" layoutY="195.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="erro-login" text="ERRO NOVA SENHA 1" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="90.0">
+                                                         <font>
+                                                            <Font size="10.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="erroNovaSenha2" layoutX="157.5" layoutY="205.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="erro-login" text="ERRO NOVA SENHA 2" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="145.0">
+                                                         <font>
+                                                            <Font size="10.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="25.0" />
+                                             </VBox.margin>
+                                          </VBox>
+                                          <HBox alignment="CENTER">
+                                             <children>
+                                                <Button fx:id="btnCancelar" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Cancelar" HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets right="5.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button fx:id="btnGravar" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Gravar" HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets left="5.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+                                       </VBox.margin>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
          </children>
-      </VBox>
-      <TabPane fx:id="tab" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" style="-fx-tab-max-height: -5;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <tabs>
-          <Tab fx:id="tpLogin" closable="false" text="Login">
-               <content>
-                  <AnchorPane id="painelLogin">
-                     <children>
-                        <HBox layoutY="82.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
-                           <children>
-                              <TextField fx:id="campoCodigo" prefHeight="35.0" promptText="Código" HBox.hgrow="ALWAYS">
-                                 <padding>
-                                    <Insets left="40.0" />
-                                 </padding>
-                              </TextField>
-                           </children>
-                        </HBox>
-                        <HBox layoutY="117.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="160.0">
-                           <children>
-                              <PasswordField fx:id="campoSenha" prefHeight="35.0" promptText="Senha" HBox.hgrow="ALWAYS">
-                                 <padding>
-                                    <Insets left="40.0" />
-                                 </padding>
-                              </PasswordField>
-                           </children>
-                        </HBox>
-                        <Button fx:id="btnEntrar" focusTraversable="false" layoutY="264.5" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Entrar" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="250.0" />
-                        <Label id="tituloLogin" maxWidth="1.7976931348623157E308" text="Login" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="40.0">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="btnSair" focusTraversable="false" layoutX="10.0" layoutY="274.5" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Sair" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="250.0" />
-                        <Button fx:id="btnMudarSenha" focusTraversable="false" layoutX="10.0" layoutY="274.5" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Mudar Senha" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="320.0" />
-                        <Label id="iconeUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.rightAnchor="237.0" AnchorPane.topAnchor="102.0" />
-                        <Label id="iconeSenha" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.rightAnchor="237.0" AnchorPane.topAnchor="162.0" />
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-          <Tab fx:id="tpMudarSenha" closable="false" text="Mudar Senha">
-               <content>
-                  <AnchorPane id="painelLogin">
-                     <children>
-                        <Label id="tituloLogin" maxWidth="1.7976931348623157E308" text="Mudar/Criar Senha" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="40.0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <HBox layoutY="82.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
-                           <children>
-                              <PasswordField fx:id="campoSenhaAtual" prefHeight="35.0" promptText="Senha Atual" HBox.hgrow="ALWAYS">
-                                 <padding>
-                                    <Insets left="40.0" />
-                                 </padding>
-                              </PasswordField>
-                           </children>
-                        </HBox>
-                        <HBox layoutY="117.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="160.0">
-                           <children>
-                              <PasswordField fx:id="campoNovaSenha1" prefHeight="35.0" promptText="Nova Senha" HBox.hgrow="ALWAYS">
-                                 <padding>
-                                    <Insets left="40.0" />
-                                 </padding>
-                              </PasswordField>
-                           </children>
-                        </HBox>
-                        <HBox layoutX="40.0" layoutY="110.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="220.0">
-                           <children>
-                              <PasswordField fx:id="campoNovaSenha2" prefHeight="35.0" promptText="Repetir Nova Senha" HBox.hgrow="ALWAYS">
-                                 <padding>
-                                    <Insets left="40.0" />
-                                 </padding>
-                              </PasswordField>
-                           </children>
-                        </HBox>
-                        <Button fx:id="btnGravar" focusTraversable="false" layoutY="264.5" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Gravar" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="310.0" />
-                        <Button fx:id="btnCancelar" focusTraversable="false" layoutX="10.0" layoutY="274.5" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Cancelar" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="310.0" />
-                        <Label id="iconeSenhaAtual" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.rightAnchor="237.0" AnchorPane.topAnchor="102.0" />
-                        <Label id="iconeNovaSenha1" layoutX="43.0" layoutY="112.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.rightAnchor="237.0" AnchorPane.topAnchor="162.0" />
-                        <Label id="iconeNovaSenha2" layoutX="43.0" layoutY="172.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.rightAnchor="237.0" AnchorPane.topAnchor="222.0" />
-                     </children>
-                  </AnchorPane>
-               </content></Tab>
-        </tabs>
-      </TabPane>
+      </HBox>
    </children>
 </AnchorPane>

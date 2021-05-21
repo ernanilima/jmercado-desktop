@@ -1,7 +1,5 @@
 package br.com.ernanilima.jmercado.controller;
 
-import br.com.ernanilima.jmercado.controller.listener.FocusListener;
-import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.model.Usuario;
 import br.com.ernanilima.jmercado.service.UsuarioService;
 import br.com.ernanilima.jmercado.service.componente.Legenda;
@@ -16,10 +14,11 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,8 +36,7 @@ public class LoginController implements Initializable {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private BCryptPasswordEncoder passwdEncoder;
-    @Autowired private FocusListener lFocus;
-    @Autowired private KeyListener lKey;
+    @Autowired private InicioController cInicio;
     @Autowired private UsuarioService sUsuario;
     @Autowired private Utils utils;
     @Autowired private ValidarCampo vCampo;
@@ -62,17 +60,27 @@ public class LoginController implements Initializable {
     @FXML private PasswordField campoNovaSenha2;
     @FXML private Button btnGravar;
     @FXML private Button btnCancelar;
+    @FXML private Label erroCodigo;
+    @FXML private Label erroSenha;
+    @FXML private Label erroSenhaAtual;
+    @FXML private Label erroNovaSenha1;
+    @FXML private Label erroNovaSenha2;
 
     private Stage STAGE;
     private FXMLLoader LOADER;
     private Parent ROOT;
-    private Scene SCENE;
 
     private Usuario USUARIO_ATUAL;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        STAGE = new Stage();
+
+        // MENSAGEM DE ERRO OCULTA
+        erroCodigo.setVisible(false);
+        erroSenha.setVisible(false);
+        erroSenhaAtual.setVisible(false);
+        erroNovaSenha1.setVisible(false);
+        erroNovaSenha2.setVisible(false);
 
         // ACOES EM BOTOES
         btnEntrar.setOnAction(e -> verificarLoginRealizado());
@@ -81,12 +89,12 @@ public class LoginController implements Initializable {
         btnGravar.setOnAction(e -> gravarMudarSenha());
         btnCancelar.setOnAction(e -> utils.exibirAba(tab, tpLogin, tpMudarSenha));
 
-        // ACOES DE FOCO
-        campoCodigo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Usuario.CODIGO));
-        campoSenha.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Usuario.SENHA));
-        campoSenhaAtual.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Usuario.SENHA));
-        campoNovaSenha1.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Usuario.SENHA_NOVA1));
-        campoNovaSenha2.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Usuario.SENHA_NOVA2));
+        // TOOLTIP
+        campoCodigo.setTooltip(new Tooltip(Mensagem.Usuario.CODIGO));
+        campoSenha.setTooltip(new Tooltip(Mensagem.Usuario.SENHA));
+        campoSenhaAtual.setTooltip(new Tooltip(Mensagem.Usuario.SENHA));
+        campoNovaSenha1.setTooltip(new Tooltip(Mensagem.Usuario.SENHA_NOVA1));
+        campoNovaSenha2.setTooltip(new Tooltip(Mensagem.Usuario.SENHA_NOVA2));
 
         // MASCARAS EM CAMPOS
         Mascara.numeroInteiro(campoCodigo, 4);
@@ -118,7 +126,7 @@ public class LoginController implements Initializable {
 
             // LOGIN INVALIDO
             if (USUARIO_ATUAL == null || !passwdEncoder.matches(campoSenha.getText(), USUARIO_ATUAL.getSenha())) {
-                legenda.exibirAlerta(MensagemAlerta.LOGIN_INVALIDO, campoCodigo);
+                legenda.exibirAlerta(MensagemAlerta.LOGIN_INVALIDO, campoCodigo, erroCodigo, erroSenha);
             }
         }
     }
@@ -139,7 +147,7 @@ public class LoginController implements Initializable {
             // usado principalmente quando o usuario for nulo ou o usuario ter senha e a mesma nao combinar com senha digitada como atual
             if (USUARIO_ATUAL == null ||
                     USUARIO_ATUAL.getSenha() != null && !passwdEncoder.matches(campoSenhaAtual.getText(), USUARIO_ATUAL.getSenha())) {
-                legenda.exibirAlerta(MensagemAlerta.SENHA_NAO_MODIFICADA, campoSenhaAtual);
+                legenda.exibirAlerta(MensagemAlerta.SENHA_NAO_MODIFICADA, campoSenhaAtual, erroSenhaAtual);
                 return;
             }
 
@@ -152,7 +160,7 @@ public class LoginController implements Initializable {
     /** Exibe a tela do sistema para login realizado */
     private void loginRealizado() {
         limpar();
-        STAGE.close();
+        cInicio.exibir(STAGE);
     }
 
     private void limpar() {
@@ -160,41 +168,51 @@ public class LoginController implements Initializable {
     }
 
     private boolean validarCamposLogin() {
-        return vCampo.loginCodigoVazio(campoCodigo, campoCodigo.getPromptText()) &&
-                vCampo.loginSenhaVaziaInvalida(campoSenha, campoSenha.getPromptText(), 3);
+        return vCampo.loginCodigoVazio(campoCodigo, campoCodigo.getPromptText(), erroCodigo) &&
+                vCampo.loginSenhaVaziaInvalida(campoSenha, campoSenha.getPromptText(), 3, erroSenha);
     }
 
     private boolean validarCamposAbrirMudarSenha() {
-        return vCampo.loginCodigoVazio(campoCodigo, campoCodigo.getPromptText());
+        return vCampo.loginCodigoVazio(campoCodigo, campoCodigo.getPromptText(), erroCodigo);
     }
 
     private boolean validarCamposGravarMudarSenha() {
         return (USUARIO_ATUAL == null || USUARIO_ATUAL.getSenha() == null ||
                 // se usuario nao for nulo e sua senha tambem nao for nula
-                vCampo.loginSenhaVaziaInvalida(campoSenhaAtual, campoSenhaAtual.getPromptText(), 3)) &&
+                vCampo.loginSenhaVaziaInvalida(campoSenhaAtual, campoSenhaAtual.getPromptText(), 3, erroSenhaAtual)) &&
 
-                vCampo.loginSenhaVaziaInvalida(campoNovaSenha1, campoNovaSenha1.getPromptText(), 3) &&
-                vCampo.loginSenhaVaziaInvalida(campoNovaSenha2, campoNovaSenha2.getPromptText(), 3) &&
-                vCampo.loginSenhasIguais(campoNovaSenha1, campoNovaSenha2);
+                vCampo.loginSenhaVaziaInvalida(campoNovaSenha1, campoNovaSenha1.getPromptText(), 3, erroNovaSenha1) &&
+                vCampo.loginSenhaVaziaInvalida(campoNovaSenha2, campoNovaSenha2.getPromptText(), 3, erroNovaSenha2) &&
+                vCampo.loginSenhasIguais(campoNovaSenha1, campoNovaSenha2, erroNovaSenha1, erroNovaSenha2);
     }
 
     public Usuario getUsuarioAtual() {
         return USUARIO_ATUAL;
     }
 
-    public void exibirModal() {
+    /** Exibe tela de login
+     * @param stage Stage - stage principal */
+    public void exibir(Stage stage) {
         try {
+            STAGE = stage;
             LOADER = new FXMLLoader(R_FXML.getURL());
             LOADER.setController(this);
             ROOT = LOADER.load();
-            SCENE = new Scene(ROOT);
-            STAGE.setScene(SCENE);
-            STAGE.setResizable(false);
-            STAGE.initModality(Modality.APPLICATION_MODAL);
-            STAGE.setOnCloseRequest(e -> finalizar());
-            LOADER.setControllerFactory(aClass -> springContext.getBean(aClass));
+            Scene scene = new Scene(ROOT);
+            STAGE.setScene(scene);
+            LOADER.setControllerFactory(x -> springContext.getBean(x));
             ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
-            STAGE.showAndWait();
+            STAGE.setResizable(true);
+            /* MAXIMIZADO INICIO */
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+            STAGE.setX(bounds.getMinX());
+            STAGE.setY(bounds.getMinY());
+            STAGE.setWidth(bounds.getWidth());
+            STAGE.setHeight(bounds.getHeight());
+            STAGE.setMaximized(true);
+            /* MAXIMIZADO FIM */
+            STAGE.show();
         } catch (IOException e) { e.printStackTrace(); }
     }
 

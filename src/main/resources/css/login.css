@@ -85,3 +85,7 @@
 #btnMudarSenha:hover {
     -fx-background-color: #0000ff, #e6e6ff;
 }
+/* ERRO */
+.erro-login {
+    -fx-text-fill: RED;
+}

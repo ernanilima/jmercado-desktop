@@ -26,7 +26,6 @@ public class InicioController implements Initializable {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private MenuController cMenu;
-    @Autowired private LoginController cLogin;
 
     @Value("classpath:/fxml/inicio.fxml")
     private Resource R_FXML;
@@ -95,8 +94,6 @@ public class InicioController implements Initializable {
             STAGE.setMaximized(true);
             /* MAXIMIZADO FIM */
             STAGE.show();
-
-            cLogin.exibirModal();
         } catch (IOException e) { e.printStackTrace(); }
     }
 }

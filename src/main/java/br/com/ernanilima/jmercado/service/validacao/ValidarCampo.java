@@ -32,11 +32,12 @@ public class ValidarCampo {
      * Caso o campo nao tenha um inteiro (codigo), um alerta eh exibido.
      * @param campo - campo a ser validado
      * @param tituloCampo String - titulo do campo a ser validado
+     * @param campoMensagemErro Label - campo para exibir mensagem de erro
      * @return boolean - true se tudo ok com o campo passado no parametro */
-    public boolean loginCodigoVazio(Node campo, String tituloCampo) {
+    public boolean loginCodigoVazio(Node campo, String tituloCampo, Label campoMensagemErro) {
         String s = textoCampoParametro(campo);
         if (Filtro.pInt(s) <= 0) {
-            legenda.exibirAlerta(MensagemAlerta.campoObrigatorio(tituloCampo), campo);
+            legenda.exibirAlerta(MensagemAlerta.campoObrigatorio(tituloCampo), campo, campoMensagemErro);
             return false;
         }
         return true;
@@ -47,11 +48,12 @@ public class ValidarCampo {
      * @param campo Node - campo a ser validado
      * @param tituloCampo String - titulo do campo a ser validado
      * @param numCaracteres int - quantidade de caractere(s)
+     * @param campoMensagemErro Label - campo para exibir mensagem de erro
      * @return boolean - true se tudo ok com o campo passado no parametro */
-    public boolean loginSenhaVaziaInvalida(Node campo, String tituloCampo, int numCaracteres) {
+    public boolean loginSenhaVaziaInvalida(Node campo, String tituloCampo, int numCaracteres, Label campoMensagemErro) {
         String s = textoCampoParametro(campo);
         if (s.length() < numCaracteres) {
-            legenda.exibirAlerta(MensagemAlerta.minimoCaracteres(numCaracteres, tituloCampo), campo);
+            legenda.exibirAlerta(MensagemAlerta.minimoCaracteres(numCaracteres, tituloCampo), campo, campoMensagemErro);
             return false;
         }
         return true;
@@ -60,12 +62,13 @@ public class ValidarCampo {
     /** Valida se senhas sao iguais
      * @param campoSenha1 Node - campo da senha1 para ser comparada
      * @param campoSenha2 Node - campo da senha2 para ser comparada
+     * @param campoMensagemErro Label... - campo(s) para exibir a mensagem de erro
      * @return boolean - true se senhas combinarem */
-    public boolean loginSenhasIguais(Node campoSenha1, Node campoSenha2) {
+    public boolean loginSenhasIguais(Node campoSenha1, Node campoSenha2, Label... campoMensagemErro) {
         String senha1 = textoCampoParametro(campoSenha1);
         String senha2 = textoCampoParametro(campoSenha2);
         if (!senha1.equals("") && !senha1.equals(senha2)) {
-            legenda.exibirAlerta(MensagemAlerta.SENHA_NAO_COMBINAM, campoSenha1);
+            legenda.exibirAlerta(MensagemAlerta.SENHA_NAO_COMBINAM, campoSenha1, campoMensagemErro);
             return false;
         }
         return true;
