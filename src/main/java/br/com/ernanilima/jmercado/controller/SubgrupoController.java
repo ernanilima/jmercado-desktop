@@ -1,8 +1,16 @@
 package br.com.ernanilima.jmercado.controller;
 
+import br.com.ernanilima.jmercado.controller.listener.FocusListener;
+import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.model.Subgrupo;
+import br.com.ernanilima.jmercado.service.GrupoService;
 import br.com.ernanilima.jmercado.service.SubgrupoService;
+import br.com.ernanilima.jmercado.service.componente.Mascara;
+import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
+import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
+import br.com.ernanilima.jmercado.service.validacao.ValidarCodigo;
+import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -27,11 +35,17 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 @Controller
-public class SubgrupoController implements Initializable {
+public class SubgrupoController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private FocusListener lFocus;
+    @Autowired private KeyListener lKey;
     @Autowired private SubgrupoService sSubgrupo;
+    @Autowired private GrupoService sGrupo;
+    @Autowired private Utils utils;
+    @Autowired private ValidarCodigo vCodigo;
+    @Autowired private ValidarCampo vCampo;
 
     @Value("classpath:/fxml/cad_subgrupo.fxml")
     private Resource R_FXML;
@@ -84,6 +98,38 @@ public class SubgrupoController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         STAGE = new Stage();
         oListSubgrupo = FXCollections.observableArrayList();
+
+        //ACOES EM BOTOES
+        btnPesquisar.setOnAction(e -> pesquisar());
+        btnCadastrar.setOnAction(e -> cadastrar());
+        btnEditar.setOnAction(e -> editar());
+        btnExcluir.setOnAction(e -> excluir());
+        btnGravar.setOnAction(e -> gravar());
+        btnCancelar.setOnAction(e -> cancelar());
+        btnBuscar.setOnAction(e -> buscar());
+
+        // ACOES DE FOCO
+        campoPesquisar.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.PESQUISA));
+        tabela.getFocusModel().focusedCellProperty().addListener(lFocus.tabelaActionListener(tabela, Coluna.ProdSubgrupo.getColunasLegendas()));
+        campoCodigo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdSubgrupo.CODIGO));
+        campoDescricao.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdSubgrupo.DESCRICAO));
+        campoCodGrupo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdGrupo.CODIGO));
+        campoDescricaoGrupo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdGrupo.DESCRICAO));
+        campoCodDepartamento.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdDepartamento.CODIGO));
+        campoDescricaoDepartamento.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdDepartamento.DESCRICAO));
+
+        // ACOES AO PRESSIONAR TECLAS
+        campoPesquisar.setOnKeyPressed(lKey.campoPesquisaKeyPressed(tabela, this));
+        painel.setOnKeyReleased(lKey.atalhoKeyReleased(this));
+
+        // MASCARAS EM CAMPOS
+        Mascara.textoNumeroMaiusculo(campoPesquisar, 50);
+        Mascara.numeroInteiro(campoCodigo, 3);
+        Mascara.textoNumeroMaiusculo(campoDescricao, 50);
+        Mascara.numeroInteiro(campoCodGrupo, 3);
+
+        // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
+        utils.exibirAba(tab, tpListar, tpCadastrar);
 
         carregarEstruturaTabela();
         carregarOpcoesPesquisa();
@@ -153,6 +199,54 @@ public class SubgrupoController implements Initializable {
         cbbxPesquisar.setItems(oList);
         cbbxPesquisar.getSelectionModel().selectFirst();
         cbbxPesquisar.setVisibleRowCount(9);
+    }
+
+
+    @Override
+    public void pesquisar() {
+
+    }
+
+    @Override
+    public void cadastrar() {
+
+    }
+
+    @Override
+    public void editar() {
+
+    }
+
+    @Override
+    public void excluir() {
+
+    }
+
+    @Override
+    public void gravar() {
+
+    }
+
+    @Override
+    public void cancelar() {
+
+    }
+
+    public void buscar() {
+
+    }
+
+    private void limpar() {
+        utils.limparCampos(campoPesquisar, campoCodigo, campoDescricao, campoCodGrupo,
+                campoDescricaoGrupo, campoCodDepartamento, campoDescricaoDepartamento);
+    }
+
+    private boolean validarCampos() {
+        return vCampo.campoVazio(campoCodigo, textoCampoCodigo) &&
+                vCampo.campoVazio(campoDescricao, textoCampoDescricao) &&
+                vCampo.campoVazio(campoCodGrupo, textoCampoGrupo) &&
+                !vCodigo.novo(campoCodigo, sSubgrupo) &&
+                vCodigo.buscarExistente(campoCodGrupo, campoDescricaoGrupo, sGrupo, textoCampoGrupo);
     }
 
     /** Obtem o painel para ser usado internamente.
