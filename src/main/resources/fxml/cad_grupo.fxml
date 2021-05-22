@@ -174,7 +174,7 @@
                                                             <Insets />
                                                          </HBox.margin>
                                                       </TextField>
-                                                      <Button id="btnBusca" fx:id="btnBuscar" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0">
+                                                      <Button fx:id="btnBuscar" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0">
                                                          <HBox.margin>
                                                             <Insets right="10.0" />
                                                          </HBox.margin>

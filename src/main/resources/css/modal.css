@@ -84,7 +84,7 @@
 #btnBuscar {
     -fx-background-color: linear-gradient(to bottom, #707070 5%, #050504 100%);;
     -fx-background-insets: 0;
-    -fx-background-image: url("/static/icone/ico_busca_branco.png");
+    -fx-background-image: url("/imagem/icone/busca_branco_32x32.png");
     -fx-background-size: 25 25;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;

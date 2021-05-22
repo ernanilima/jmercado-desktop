@@ -4,6 +4,8 @@ import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
+import br.com.ernanilima.jmercado.liberacao.Liberacoes;
+import br.com.ernanilima.jmercado.liberacao.validacao.ValidarLiberacao;
 import br.com.ernanilima.jmercado.model.Grupo;
 import br.com.ernanilima.jmercado.service.DepartamentoService;
 import br.com.ernanilima.jmercado.service.GrupoService;
@@ -51,6 +53,7 @@ public class GrupoController implements Initializable, ICadastro {
     @Autowired private GrupoService sGrupo;
     @Autowired private DepartamentoService sDepartamento;
     @Autowired private Utils utils;
+    @Autowired private ValidarLiberacao vLiberacao;
     @Autowired private ValidarCodigo vCodigo;
     @Autowired private ValidarCampo vCampo;
 
@@ -137,6 +140,15 @@ public class GrupoController implements Initializable, ICadastro {
         carregarOpcoesPesquisa();
     }
 
+    /** Liberacoes solicitadas deve ser executada sempre que o controller for exibido */
+    private void liberacoesSolicitadas() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnCadastrar, Liberacoes.CADASTROS_PRODUTOS_GRUPO_CADASTRAR);
+        vLiberacao.liberacaoUsuario(btnEditar, Liberacoes.CADASTROS_PRODUTOS_GRUPO_EDITAR);
+        vLiberacao.liberacaoUsuario(btnExcluir, Liberacoes.CADASTROS_PRODUTOS_GRUPO_EXCLUIR);
+    }
+
     private void carregarEstruturaTabela() {
         //Exibi texto na tabela caso ela esteja vazia
         tabela.setPlaceholder(new Label(""));
@@ -186,7 +198,7 @@ public class GrupoController implements Initializable, ICadastro {
     /** Carrega as opcoes para pesquisa no combobox */
     private void carregarOpcoesPesquisa() {
         ObservableList<String> oList = FXCollections.observableArrayList();
-        List<String> list = Coluna.ProdDepartamento.getColunas();
+        List<String> list = Coluna.ProdGrupo.getColunas();
         oList.clear();
 
         oList.add(Coluna.GERAL);
@@ -316,6 +328,7 @@ public class GrupoController implements Initializable, ICadastro {
                 ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
                 carregarConteudoTabela();
             }
+            liberacoesSolicitadas();
         } catch (IOException e) { e.printStackTrace(); }
     }
 }
