@@ -109,11 +109,11 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
         LINHA_SELECIONADA = false;
 
         // ACOES EM BOTOES
+        btnPesquisar.setOnAction(e -> pesquisar());
         btnSelecionar.setOnAction(e -> selecionar());
         btnCadastrar.setOnAction(e -> cadastrar());
         btnEditar.setOnAction(e -> editar());
         btnExcluir.setOnAction(e -> excluir());
-        btnPesquisar.setOnAction(e -> pesquisar());
         btnIgualar.setOnAction(e -> igualarGrupo());
         btnGravar.setOnAction(e -> gravar());
         btnCancelar.setOnAction(e -> cancelar());

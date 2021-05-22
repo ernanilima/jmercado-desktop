@@ -25,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -91,14 +92,18 @@ public class DepartamentoController implements Initializable, ICadastro {
     private Stage STAGE;
     private FXMLLoader LOADER;
     private Parent ROOT;
+    private Scene SCENE;
+    private boolean LINHA_SELECIONADA;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         STAGE = new Stage();
         oListDepartamento = FXCollections.observableArrayList();
+        LINHA_SELECIONADA = false;
 
         //ACOES EM BOTOES
         btnPesquisar.setOnAction(e -> pesquisar());
+        btnSelecionar.setOnAction(e -> selecionar());
         btnCadastrar.setOnAction(e -> cadastrar());
         btnEditar.setOnAction(e -> editar());
         btnExcluir.setOnAction(e -> excluir());
@@ -196,6 +201,13 @@ public class DepartamentoController implements Initializable, ICadastro {
         pesquisa.pesquisaDepartamento(cbbxPesquisar, tabela, campoPesquisar);
     }
 
+    public void selecionar() {
+        if (btnSelecionar.isVisible() && tabela.getSelectionModel().getFocusedIndex() != -1) {
+            LINHA_SELECIONADA = true;
+            STAGE.close();
+        }
+    }
+
     /** Cadastrar novo */
     @Override
     public void cadastrar() {
@@ -266,6 +278,17 @@ public class DepartamentoController implements Initializable, ICadastro {
                 !vCodigo.novo(campoCodigo, sDepartamento);
     }
 
+    /** Obtem o grupo de usuario selecionado
+     * @return Departamento */
+    public Departamento getDepartamento() {
+        Departamento mDepartamento = null;
+        if (LINHA_SELECIONADA) {
+            int linha = tabela.getSelectionModel().getFocusedIndex();
+            mDepartamento = tabela.getItems().get(linha);
+        }
+        return mDepartamento;
+    }
+
     /** Obtem o painel para ser usado internamente.
      * @return AnchorPane - painel para usar internamente */
     public AnchorPane getPainel() {
@@ -275,6 +298,25 @@ public class DepartamentoController implements Initializable, ICadastro {
         campoTitulo.setPrefHeight(0);
         cInicio.setTitulo(campoTitulo, "Lista De Departamentos");
         return painel;
+    }
+
+    /** Exibe o painel em forma de dialog */
+    public void exibirModal() {
+        STAGE = null;
+        construirPainel();
+
+        LINHA_SELECIONADA = false;
+        STAGE.setResizable(false);
+        if (ROOT.getScene() == null) {
+            SCENE = new Scene(ROOT);
+        }
+
+        STAGE.setScene(SCENE);
+        btnSelecionar.setVisible(true);
+        campoTitulo.setVisible(true);
+        campoTitulo.setPrefHeight(campoTitulo.getMaxHeight());
+        cInicio.setTitulo(campoTitulo, "Lista De Grupos De Produtos");
+        STAGE.showAndWait();
     }
 
     /** Constroi o painel para ser usado internamente */

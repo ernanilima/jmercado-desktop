@@ -44,6 +44,7 @@ public class GrupoController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private DepartamentoController cDepartamento;
     @Autowired private PopUpConfirmacaoController ppConfirmacao;
     @Autowired private FocusListener lFocus;
     @Autowired private KeyListener lKey;
@@ -269,8 +270,14 @@ public class GrupoController implements Initializable, ICadastro {
         utils.exibirAba(tab, tpListar, tpCadastrar);
     }
 
+    /** Busca departamento para associar ao cadastro de grupo */
     private void buscar() {
-
+        cDepartamento.exibirModal();
+        campoCodDepartamento.requestFocus();
+        if (cDepartamento.getDepartamento() != null) {
+            campoCodDepartamento.setText(String.valueOf(cDepartamento.getDepartamento().getCodigo()));
+            campoDescricaoDepartamento.setText(cDepartamento.getDepartamento().getDescricao());
+        }
     }
 
     private void limpar() {
