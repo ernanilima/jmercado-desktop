@@ -390,7 +390,7 @@ public class UsuarioController implements Initializable, ICadastro {
     }
 
     /** Busca grupo de usuario para associar ao cadastro de usuario */
-    public void buscar() {
+    private void buscar() {
         cGrupoUsuario.exibirModal();
         campoCodGrupoUsuario.requestFocus();
         if (cGrupoUsuario.getGrupoUsuario() != null) {

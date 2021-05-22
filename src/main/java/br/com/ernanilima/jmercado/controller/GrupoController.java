@@ -1,5 +1,11 @@
 package br.com.ernanilima.jmercado.controller;
 
+import br.com.ernanilima.jmercado.controller.listener.FocusListener;
+import br.com.ernanilima.jmercado.controller.listener.KeyListener;
+import br.com.ernanilima.jmercado.service.componente.Mascara;
+import br.com.ernanilima.jmercado.service.constante.Mensagem;
+import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
+import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,10 +25,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Controller
-public class GrupoController implements Initializable {
+public class GrupoController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private FocusListener lFocus;
+    @Autowired private KeyListener lKey;
+    @Autowired private Utils utils;
 
     @Value("classpath:/fxml/cad_grupo.fxml")
     private Resource R_FXML;
@@ -62,6 +71,70 @@ public class GrupoController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         STAGE = new Stage();
+
+        //ACOES EM BOTOES
+        btnPesquisar.setOnAction(e -> pesquisar());
+        btnCadastrar.setOnAction(e -> cadastrar());
+        btnEditar.setOnAction(e -> editar());
+        btnExcluir.setOnAction(e -> excluir());
+        btnGravar.setOnAction(e -> gravar());
+        btnCancelar.setOnAction(e -> cancelar());
+        btnBuscar.setOnAction(e -> buscar());
+
+        // ACOES DE FOCO
+        campoPesquisar.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.PESQUISA));
+        tabela.getFocusModel().focusedCellProperty().addListener(lFocus.tabelaActionListener(tabela, Coluna.ProdGrupo.getColunasLegendas()));
+        campoCodigo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdGrupo.CODIGO));
+        campoDescricao.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdGrupo.DESCRICAO));
+        campoCodDepartamento.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdDepartamento.CODIGO));
+        campoDescricaoDepartamento.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdDepartamento.DESCRICAO));
+
+        // ACOES AO PRESSIONAR TECLAS
+        campoPesquisar.setOnKeyPressed(lKey.campoPesquisaKeyPressed(tabela, this));
+        painel.setOnKeyReleased(lKey.atalhoKeyReleased(this));
+
+        // MASCARAS EM CAMPOS
+        Mascara.textoNumeroMaiusculo(campoPesquisar, 50);
+        Mascara.numeroInteiro(campoCodigo, 3);
+        Mascara.textoNumeroMaiusculo(campoDescricao, 50);
+        Mascara.numeroInteiro(campoCodDepartamento, 3);
+
+        // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
+        utils.exibirAba(tab, tpListar, tpCadastrar);
+    }
+
+    @Override
+    public void pesquisar() {
+
+    }
+
+    @Override
+    public void cadastrar() {
+
+    }
+
+    @Override
+    public void editar() {
+
+    }
+
+    @Override
+    public void excluir() {
+
+    }
+
+    @Override
+    public void gravar() {
+
+    }
+
+    @Override
+    public void cancelar() {
+
+    }
+
+    private void buscar() {
+
     }
 
     /** Obtem o painel para ser usado internamente.

@@ -13,6 +13,13 @@ public class Mensagem {
         public static final String DESCRICAO = "DESCRIÇÃO DO DEPARTAMENTO.";
     }
 
+    /** Mensagem para cadastro de grupo
+     * {@link br.com.ernanilima.jmercado.controller.GrupoController} */
+    public static class ProdGrupo {
+        public static final String CODIGO = "CÓDIGO DO GRUPO.";
+        public static final String DESCRICAO = "DESCRIÇÃO DO GRUPO.";
+    }
+
     /** Mensagens para cadastro de grupo de usuario
      * {@link br.com.ernanilima.jmercado.controller.GrupoUsuarioController} */
     public static class GrupoUsuario {
