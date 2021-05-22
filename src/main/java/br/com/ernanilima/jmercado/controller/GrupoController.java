@@ -2,12 +2,19 @@ package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
+import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
+import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.model.Grupo;
+import br.com.ernanilima.jmercado.service.DepartamentoService;
 import br.com.ernanilima.jmercado.service.GrupoService;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
 import br.com.ernanilima.jmercado.service.componente.Pesquisa;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
+import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
+import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
+import br.com.ernanilima.jmercado.service.validacao.ValidarCodigo;
+import br.com.ernanilima.jmercado.utils.Filtro;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -37,10 +44,14 @@ public class GrupoController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private PopUpConfirmacaoController ppConfirmacao;
     @Autowired private FocusListener lFocus;
     @Autowired private KeyListener lKey;
     @Autowired private GrupoService sGrupo;
+    @Autowired private DepartamentoService sDepartamento;
     @Autowired private Utils utils;
+    @Autowired private ValidarCodigo vCodigo;
+    @Autowired private ValidarCampo vCampo;
 
     @Autowired private Pesquisa pesquisa;
 
@@ -198,31 +209,81 @@ public class GrupoController implements Initializable, ICadastro {
 
     @Override
     public void cadastrar() {
-
+        cInicio.setTitulo(campoTitulo, "Cadastrar Grupo De Produto");
+        utils.exibirAba(tab, tpCadastrar, tpListar);
+        campoCodigo.requestFocus();
     }
 
     @Override
     public void editar() {
+        int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
+        if (linhaSelecionada != -1) {
+            Grupo mGrupo = tabela.getItems().get(linhaSelecionada);
+            campoCodigo.setDisable(true);
+            campoCodigo.setText(String.valueOf(mGrupo.getCodigo()));
+            campoDescricao.setText(mGrupo.getDescricao());
+            campoCodDepartamento.setText(String.valueOf(mGrupo.getMDepartamento().getCodigo()));
+            campoDescricaoDepartamento.setText(mGrupo.getMDepartamento().getDescricao());
 
+            cInicio.setTitulo(campoTitulo, "Editar Grupo De Produtos");
+            utils.exibirAba(tab, tpCadastrar, tpListar);
+            campoDescricao.requestFocus();
+        }
     }
 
     @Override
     public void excluir() {
-
+        int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
+        if (linhaSelecionada != -1) {
+            ppConfirmacao.exibirPopUp(CoresPopUpConfirmacao.VERMELHO_VERDE,
+                    MensagemAlerta.excluir(tabela.getItems().get(linhaSelecionada).getDescricao()));
+            if (ppConfirmacao.getRsultado()) {
+                sGrupo.remover(tabela.getItems().get(linhaSelecionada));
+                carregarConteudoTabela();
+                tabela.getSelectionModel().select(linhaSelecionada > 0 ? linhaSelecionada - 1 : 0);
+            }
+        }
     }
 
     @Override
     public void gravar() {
+        if (validarCampos()) {
+            Grupo mGrupo = new Grupo(
+                    Filtro.pInt(campoCodigo.getText()),
+                    campoDescricao.getText(),
+                    sDepartamento.getPorId(Filtro.pInt(campoCodDepartamento.getText()))
+            );
 
+            sGrupo.gravar(mGrupo);
+            limpar();
+            carregarConteudoTabela();
+            cInicio.setTitulo(campoTitulo, "Lista De Grupos De Produtos");
+            utils.exibirAba(tab, tpListar, tpCadastrar);
+        }
     }
 
     @Override
     public void cancelar() {
-
+        limpar();
+        cInicio.setTitulo(campoTitulo, "Lista De Grupos De Produtos");
+        utils.exibirAba(tab, tpListar, tpCadastrar);
     }
 
     private void buscar() {
 
+    }
+
+    private void limpar() {
+        utils.limparCampos(campoPesquisar, campoCodigo, campoDescricao,
+                campoCodDepartamento, campoDescricaoDepartamento);
+    }
+
+    private boolean validarCampos() {
+        return vCampo.campoVazio(campoCodigo, textoCampoCodigo) &&
+                vCampo.campoVazio(campoDescricao, textoCampoDescricao) &&
+                vCampo.campoVazio(campoCodDepartamento, textoCampoDepartamento) &&
+                !vCodigo.novo(campoCodigo, sGrupo) &&
+                vCodigo.buscarExistente(campoCodDepartamento, campoDescricaoDepartamento, sDepartamento, textoCampoDepartamento);
     }
 
     /** Obtem o painel para ser usado internamente.
