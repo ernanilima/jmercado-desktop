@@ -151,7 +151,6 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     }
 
     private void carregarEstruturaTabela() {
-
         //Exibi texto na tabela caso ela esteja vazia
         tabela.setPlaceholder(new Label(""));
 
@@ -172,7 +171,6 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
 
         colunaCodigo.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCodigo()));
         colunaDescricao.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDescricao()));
-
     }
 
     private void carregarConteudoTabela() {

@@ -20,6 +20,13 @@ public class Mensagem {
         public static final String DESCRICAO = "DESCRIÇÃO DO GRUPO.";
     }
 
+    /** Mensagem para cadastro de subgrupo
+     * {@link br.com.ernanilima.jmercado.controller.SubgrupoController} */
+    public static class ProdSubgrupo {
+        public static final String CODIGO = "CÓDIGO DO SUBGRUPO.";
+        public static final String DESCRICAO = "DESCRIÇÃO DO SUBGRUPO.";
+    }
+
     /** Mensagens para cadastro de grupo de usuario
      * {@link br.com.ernanilima.jmercado.controller.GrupoUsuarioController} */
     public static class GrupoUsuario {

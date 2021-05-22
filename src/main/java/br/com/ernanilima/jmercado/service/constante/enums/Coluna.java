@@ -106,6 +106,57 @@ public class Coluna {
         }
     }
 
+    /** SUBGRUPO */
+    public enum ProdSubgrupo {
+
+        CODIGO("CÓDIGO", Mensagem.ProdSubgrupo.CODIGO),
+        DESCRICAO("DESCRIÇÃO", Mensagem.ProdSubgrupo.DESCRICAO),
+        CODIGO_GRUPO("CÓD. GRUPO", Mensagem.ProdGrupo.CODIGO),
+        DESCRICAO_GRUPO("DESC. GRUPO", Mensagem.ProdGrupo.DESCRICAO),
+        CODIGO_DEPARTAMENTO("CÓD. DEPART.", Mensagem.ProdDepartamento.CODIGO),
+        DESCRICAO_DEPARTAMENTO("DESC. DEPART.", Mensagem.ProdDepartamento.DESCRICAO);
+
+        private final String coluna;
+        private final String legenda;
+        private static String[][] COLUNAS;
+
+        static {
+            // 6 linhas, 2 campos (descricao e mensagem)
+            COLUNAS = new String[6][2];
+            int i = 0;
+            for (ProdSubgrupo coluna : ProdSubgrupo.values()) {
+                // [numero da linha][numero do conteudo] = conteudo recebido
+                COLUNAS[i][0] = coluna.getColuna();
+                COLUNAS[i][1] = coluna.getLegenda();
+                i++;
+            }
+        }
+
+        ProdSubgrupo(String coluna, String legenda) {
+            this.coluna = coluna;
+            this.legenda = legenda;
+        }
+
+        public String getColuna() {
+            return coluna;
+        }
+
+        public String getLegenda() {
+            return legenda;
+        }
+
+        public static String[][] getColunasLegendas() {
+            return COLUNAS;
+        }
+
+        public static List<String> getColunas() {
+            List<String> colunas = new ArrayList<>();
+            for (String[] strings : getColunasLegendas())
+                colunas.add(strings[0]);
+            return colunas;
+        }
+    }
+
     /** GRUPOS USUARIOS */
     public enum GrupoUsuario {
 
