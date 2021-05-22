@@ -130,14 +130,12 @@ public class DepartamentoController implements Initializable, ICadastro {
     /** Liberacoes solicitadas deve ser executada sempre que o controller for exibido */
     private void liberacoesSolicitadas() {
         // VALIDACAO DE LIBERACOES DE USUARIO
-        System.out.println("verificou permissao no controller departamento");
         vLiberacao.liberacaoUsuario(btnCadastrar, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM_CADASTRAR);
         vLiberacao.liberacaoUsuario(btnEditar, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM_EDITAR);
         vLiberacao.liberacaoUsuario(btnExcluir, Liberacoes.CADASTROS_PRODUTOS_DEPARTAM_EXCLUIR);
     }
 
     private void carregarEstruturaTabela() {
-
         //Exibi texto na tabela caso ela esteja vazia
         tabela.setPlaceholder(new Label(""));
 
@@ -160,7 +158,6 @@ public class DepartamentoController implements Initializable, ICadastro {
 
         colunaCodigo.setCellValueFactory(model -> new SimpleObjectProperty<>(model.getValue().getCodigo()));
         colunaDescricao.setCellValueFactory(model -> new SimpleObjectProperty<>(model.getValue().getDescricao()));
-
     }
 
     private void carregarConteudoTabela() {

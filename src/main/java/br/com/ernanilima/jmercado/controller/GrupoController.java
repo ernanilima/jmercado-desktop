@@ -2,10 +2,16 @@ package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
+import br.com.ernanilima.jmercado.model.Grupo;
+import br.com.ernanilima.jmercado.service.GrupoService;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.utils.Utils;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,6 +28,7 @@ import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Controller
@@ -31,6 +38,7 @@ public class GrupoController implements Initializable, ICadastro {
     @Autowired private InicioController cInicio;
     @Autowired private FocusListener lFocus;
     @Autowired private KeyListener lKey;
+    @Autowired private GrupoService sGrupo;
     @Autowired private Utils utils;
 
     @Value("classpath:/fxml/cad_grupo.fxml")
@@ -43,14 +51,14 @@ public class GrupoController implements Initializable, ICadastro {
     @FXML private TabPane tab;
     @FXML private Tab tpListar;
     @FXML private TextField campoPesquisar;
-    @FXML private ComboBox<?> cbbxPesquisar;
+    @FXML private ComboBox<String> cbbxPesquisar;
     @FXML private Button btnPesquisar;
     @FXML private Button btnSelecionar;
     @FXML private Button btnCadastrar;
     @FXML private Button btnEditar;
     @FXML private Button btnExcluir;
     @FXML private AnchorPane boxLista;
-    @FXML private TableView<?> tabela;
+    @FXML private TableView<Grupo> tabela;
     @FXML private Tab tpCadastrar;
     @FXML private AnchorPane box;
     @FXML private Label textoCampoCodigo;
@@ -64,6 +72,13 @@ public class GrupoController implements Initializable, ICadastro {
     @FXML private Button btnBuscar;
     @FXML private TextField campoDescricaoDepartamento;
 
+    private ObservableList<Grupo> oListGrupo;
+    private List<Grupo> lsGrupo;
+    private TableColumn<Grupo, Integer> colunaCodigo;
+    private TableColumn<Grupo, String> colunaDescricao;
+    private TableColumn<Grupo, Integer> colunaCodigoDepartamento;
+    private TableColumn<Grupo, String> colunaDescricaoDepartamento;
+
     private Stage STAGE;
     private FXMLLoader LOADER;
     private Parent ROOT;
@@ -71,6 +86,7 @@ public class GrupoController implements Initializable, ICadastro {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         STAGE = new Stage();
+        oListGrupo = FXCollections.observableArrayList();
 
         //ACOES EM BOTOES
         btnPesquisar.setOnAction(e -> pesquisar());
@@ -101,6 +117,69 @@ public class GrupoController implements Initializable, ICadastro {
 
         // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
         utils.exibirAba(tab, tpListar, tpCadastrar);
+
+        carregarEstruturaTabela();
+        carregarOpcoesPesquisa();
+    }
+
+    private void carregarEstruturaTabela() {
+        //Exibi texto na tabela caso ela esteja vazia
+        tabela.setPlaceholder(new Label(""));
+
+        colunaCodigo = new TableColumn<>(Coluna.ProdGrupo.CODIGO.getColuna());
+        colunaDescricao = new TableColumn<>(Coluna.ProdGrupo.DESCRICAO.getColuna());
+        colunaCodigoDepartamento = new TableColumn<>(Coluna.ProdGrupo.CODIGO_DEPARTAMENTO.getColuna());
+        colunaDescricaoDepartamento = new TableColumn<>(Coluna.ProdGrupo.DESCRICAO_DEPARTAMENTO.getColuna());
+
+        colunaCodigo.setMinWidth(85);
+        colunaCodigo.setMaxWidth(colunaCodigo.getMinWidth());
+        colunaCodigoDepartamento.setMinWidth(100);
+        colunaCodigoDepartamento.setMaxWidth(colunaCodigoDepartamento.getMinWidth());
+        colunaDescricaoDepartamento.setMinWidth(210);
+        colunaDescricaoDepartamento.setMaxWidth(colunaDescricaoDepartamento.getMinWidth());
+
+        // permite selecionar celular ou linha inteira
+        tabela.getSelectionModel().setCellSelectionEnabled(true);
+        // adiciona botao que permite escolher colunas
+        tabela.setTableMenuButtonVisible(true);
+
+        // ajusta descricao
+        tabela.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        tabela.getColumns().add(colunaCodigo);
+        tabela.getColumns().add(colunaDescricao);
+        tabela.getColumns().add(colunaCodigoDepartamento);
+        tabela.getColumns().add(colunaDescricaoDepartamento);
+
+        colunaCodigo.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCodigo()));
+        colunaDescricao.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDescricao()));
+        colunaCodigoDepartamento.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getMDepartamento().getCodigo()));
+        colunaDescricaoDepartamento.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getMDepartamento().getDescricao()));
+    }
+
+    private void carregarConteudoTabela() {
+        oListGrupo.clear();
+        sGrupo.listarTudoAsinc().thenAccept(list -> Platform.runLater(()-> {
+            lsGrupo = list;
+            tabela.getSortOrder().clear();
+            oListGrupo.addAll(lsGrupo);
+            tabela.getItems().setAll(oListGrupo);
+            tabela.requestFocus();
+        }));
+    }
+
+    /** Carrega as opcoes para pesquisa no combobox */
+    private void carregarOpcoesPesquisa() {
+        ObservableList<String> oList = FXCollections.observableArrayList();
+        List<String> list = Coluna.ProdDepartamento.getColunas();
+        oList.clear();
+
+        oList.add(Coluna.GERAL);
+        oList.addAll(list);
+
+        cbbxPesquisar.setItems(oList);
+        cbbxPesquisar.getSelectionModel().selectFirst();
+        cbbxPesquisar.setVisibleRowCount(9);
     }
 
     @Override
@@ -158,6 +237,7 @@ public class GrupoController implements Initializable, ICadastro {
                 STAGE.initModality(Modality.APPLICATION_MODAL);
                 LOADER.setControllerFactory(aClass -> springContext.getBean(aClass));
                 ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
+                carregarConteudoTabela();
             }
         } catch (IOException e) { e.printStackTrace(); }
     }
