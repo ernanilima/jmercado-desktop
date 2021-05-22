@@ -5,6 +5,7 @@ import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.model.Grupo;
 import br.com.ernanilima.jmercado.service.GrupoService;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
+import br.com.ernanilima.jmercado.service.componente.Pesquisa;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.utils.Utils;
@@ -40,6 +41,8 @@ public class GrupoController implements Initializable, ICadastro {
     @Autowired private KeyListener lKey;
     @Autowired private GrupoService sGrupo;
     @Autowired private Utils utils;
+
+    @Autowired private Pesquisa pesquisa;
 
     @Value("classpath:/fxml/cad_grupo.fxml")
     private Resource R_FXML;
@@ -184,7 +187,13 @@ public class GrupoController implements Initializable, ICadastro {
 
     @Override
     public void pesquisar() {
+        // atualiza a taleba com todos os itens ja carregados
+        // antes de realizar pesquisa
+        // OBS: nao realiza nova consulta no banco
+        tabela.getItems().setAll(oListGrupo);
 
+        // realiza pesquisa
+        pesquisa.pesquisaGrupo(cbbxPesquisar, tabela, campoPesquisar);
     }
 
     @Override

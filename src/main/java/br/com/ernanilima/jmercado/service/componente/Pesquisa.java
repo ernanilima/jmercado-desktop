@@ -1,6 +1,7 @@
 package br.com.ernanilima.jmercado.service.componente;
 
 import br.com.ernanilima.jmercado.model.Departamento;
+import br.com.ernanilima.jmercado.model.Grupo;
 import br.com.ernanilima.jmercado.model.GrupoUsuario;
 import br.com.ernanilima.jmercado.model.Usuario;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
@@ -29,7 +30,6 @@ public class Pesquisa {
 
         if (!pesquisa.equals("")) {
             lista.setPredicate(model -> {
-
                 if (Coluna.ProdDepartamento.CODIGO.getColuna().equals(colunaParaPesquisar)) {
                     return String.valueOf(model.getCodigo()).contains(pesquisa);
 
@@ -54,6 +54,48 @@ public class Pesquisa {
      * @param cbbxPesquisar ComboBox<String> - combobox da pesquisa
      * @param tabela TableView<Departamento> - tabela para pesquisa
      * @param campoPesquisar TextField - campo com texto para pesquisa */
+    public void pesquisaGrupo(ComboBox<String> cbbxPesquisar, TableView<Grupo> tabela, TextField campoPesquisar) {
+        if (!campoPesquisar.isFocused()) {campoPesquisar.requestFocus(); return;}
+        FilteredList<Grupo> lista = new FilteredList<>(tabela.getItems(), p -> true);
+
+        String colunaParaPesquisar = cbbxPesquisar.getSelectionModel().getSelectedItem();
+        tabela.getSortOrder().clear();
+        String pesquisa = campoPesquisar.getText();
+
+        if (!pesquisa.equals("")) {
+            lista.setPredicate(model -> {
+                if (Coluna.ProdGrupo.CODIGO.getColuna().equals(colunaParaPesquisar)) {
+                    return String.valueOf(model.getCodigo()).contains(pesquisa);
+
+                } else if (Coluna.ProdGrupo.DESCRICAO.getColuna().equals(colunaParaPesquisar)) {
+                    return model.getDescricao().contains(pesquisa);
+
+                } else if (Coluna.ProdGrupo.CODIGO_DEPARTAMENTO.getColuna().equals(colunaParaPesquisar)) {
+                    return String.valueOf(model.getMDepartamento().getCodigo()).contains(pesquisa);
+
+                } else if (Coluna.ProdGrupo.DESCRICAO_DEPARTAMENTO.getColuna().equals(colunaParaPesquisar)) {
+                    return model.getMDepartamento().getDescricao().contains(pesquisa);
+
+                } else if (Coluna.GERAL.equals(colunaParaPesquisar)) {
+                    return String.valueOf(model.getCodigo()).contains(pesquisa) ||
+                            model.getDescricao().contains(pesquisa) ||
+                            String.valueOf(model.getMDepartamento().getCodigo()).contains(pesquisa) ||
+                            model.getMDepartamento().getDescricao().contains(pesquisa);
+                } return false;
+            });
+        }
+
+        SortedList<Grupo> listaFiltrada = new SortedList<>(lista);
+        listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
+
+        tabela.getItems().setAll(listaFiltrada);
+        tabela.getSelectionModel().selectFirst();
+    }
+
+    /** Realiza pesquisa na tabela
+     * @param cbbxPesquisar ComboBox<String> - combobox da pesquisa
+     * @param tabela TableView<Departamento> - tabela para pesquisa
+     * @param campoPesquisar TextField - campo com texto para pesquisa */
     public void pesquisaGrupoUsuario(ComboBox<String> cbbxPesquisar, TableView<GrupoUsuario> tabela, TextField campoPesquisar) {
         if (!campoPesquisar.isFocused()) {campoPesquisar.requestFocus(); return;}
         FilteredList<GrupoUsuario> lista = new FilteredList<>(tabela.getItems(), p -> true);
@@ -64,7 +106,6 @@ public class Pesquisa {
 
         if (!pesquisa.equals("")) {
             lista.setPredicate(model -> {
-
                 if (Coluna.GrupoUsuario.CODIGO.getColuna().equals(colunaParaPesquisar)) {
                     return String.valueOf(model.getCodigo()).contains(pesquisa);
 
@@ -99,7 +140,6 @@ public class Pesquisa {
 
         if (!pesquisa.equals("")) {
             lista.setPredicate(model -> {
-
                 if (Coluna.Usuario.CODIGO.getColuna().equals(colunaParaPesquisar)) {
                     return String.valueOf(model.getCodigo()).contains(pesquisa);
 
