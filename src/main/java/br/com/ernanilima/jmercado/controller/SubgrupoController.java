@@ -2,14 +2,18 @@ package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
+import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
+import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.model.Subgrupo;
 import br.com.ernanilima.jmercado.service.GrupoService;
 import br.com.ernanilima.jmercado.service.SubgrupoService;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
+import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCodigo;
+import br.com.ernanilima.jmercado.utils.Filtro;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -39,6 +43,7 @@ public class SubgrupoController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private PopUpConfirmacaoController ppConfirmacao;
     @Autowired private FocusListener lFocus;
     @Autowired private KeyListener lKey;
     @Autowired private SubgrupoService sSubgrupo;
@@ -209,27 +214,67 @@ public class SubgrupoController implements Initializable, ICadastro {
 
     @Override
     public void cadastrar() {
-
+        cInicio.setTitulo(campoTitulo, "Cadastrar Subgrupo De Produto");
+        utils.exibirAba(tab, tpCadastrar, tpListar);
+        campoCodigo.requestFocus();
     }
 
     @Override
     public void editar() {
+        int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
+        if (linhaSelecionada != -1) {
+            Subgrupo mSubgrupo = tabela.getItems().get(linhaSelecionada);
+            campoCodigo.setDisable(true);
+            campoCodigo.setText(String.valueOf(mSubgrupo.getCodigo()));
+            campoDescricao.setText(mSubgrupo.getDescricao());
+            campoCodGrupo.setText(String.valueOf(mSubgrupo.getMGrupo().getCodigo()));
+            campoDescricaoGrupo.setText(mSubgrupo.getMGrupo().getDescricao());
+            campoCodDepartamento.setText(String.valueOf(mSubgrupo.getMDepartamento().getCodigo()));
+            campoDescricaoDepartamento.setText(mSubgrupo.getMDepartamento().getDescricao());
 
+            cInicio.setTitulo(campoTitulo, "Editar Subgrupo De Produto");
+            utils.exibirAba(tab, tpCadastrar, tpListar);
+            campoDescricao.requestFocus();
+        }
     }
 
     @Override
     public void excluir() {
-
+        int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
+        if (linhaSelecionada != -1) {
+            ppConfirmacao.exibirPopUp(CoresPopUpConfirmacao.VERDE_VERMELHO,
+                    MensagemAlerta.excluir(tabela.getItems().get(linhaSelecionada).getDescricao()));
+            if (ppConfirmacao.getRsultado()) {
+                sSubgrupo.remover(tabela.getItems().get(linhaSelecionada));
+                carregarConteudoTabela();
+                tabela.getSelectionModel().select(linhaSelecionada > 0 ? linhaSelecionada - 1 : 0);
+            }
+        }
     }
 
     @Override
     public void gravar() {
+        if (validarCampos()) {
+            Subgrupo mSubgrupo = new Subgrupo(
+                    Filtro.pInt(campoCodigo.getText()),
+                    campoDescricao.getText(),
+                    sGrupo.getPorId(Filtro.pInt(campoCodGrupo.getText())),
+                    sGrupo.getPorId(Filtro.pInt(campoCodGrupo.getText())).getMDepartamento()
+            );
 
+            sSubgrupo.gravar(mSubgrupo);
+            limpar();
+            carregarConteudoTabela();
+            cInicio.setTitulo(campoTitulo, "Lista De Subgrupos De Produtos");
+            utils.exibirAba(tab, tpListar, tpCadastrar);
+        }
     }
 
     @Override
     public void cancelar() {
-
+        limpar();
+        cInicio.setTitulo(campoTitulo, "Lista De Subgrupos De Produtos");
+        utils.exibirAba(tab, tpListar, tpCadastrar);
     }
 
     public void buscar() {
