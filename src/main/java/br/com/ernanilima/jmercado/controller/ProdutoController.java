@@ -2,10 +2,13 @@ package br.com.ernanilima.jmercado.controller;
 
 import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
+import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
+import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.model.Produto;
 import br.com.ernanilima.jmercado.service.ProdutoService;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
+import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
@@ -36,6 +39,7 @@ public class ProdutoController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private PopUpConfirmacaoController ppConfirmacao;
     @Autowired private FocusListener lFocus;
     @Autowired private KeyListener lKey;
     @Autowired private ProdutoService sProduto;
@@ -235,17 +239,49 @@ public class ProdutoController implements Initializable, ICadastro {
 
     @Override
     public void cadastrar() {
-
+        cInicio.setTitulo(campoTitulo, "Cadastrar Produto");
+        utils.exibirAba(tab, tpCadastrar, tpListar);
+        campoCodigo.requestFocus();
     }
 
     @Override
     public void editar() {
+        int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
+        if (linhaSelecionada != -1) {
+            Produto mProduto = tabela.getItems().get(linhaSelecionada);
+            campoCodigo.setDisable(true);
+            campoCodigo.setText(String.valueOf(mProduto.getCodigo()));
+            campoCodigoBarras.setText(String.valueOf(mProduto.getCodigoBarras()));
+            campoDescricaoProduto.setText(mProduto.getDescricao());
+            campoDescricaoCupom.setText(mProduto.getDescricaoCupom());
+            campoDescricaoCliente.setText(mProduto.getDescricaoCliente());
+            campoComplemento.setText(mProduto.getComplemento());
+            campoCodigoDepartamento.setText(String.valueOf(mProduto.getMDepartamento().getCodigo()));
+            campoDescricaoDepartamento.setText(mProduto.getMDepartamento().getDescricao());
+            campoCodigoGrupo.setText(String.valueOf(mProduto.getMGrupo().getCodigo()));
+            campoDescricaoGrupo.setText(mProduto.getMGrupo().getDescricao());
+            campoCodigoSubgrupo.setText(String.valueOf(mProduto.getMSubgrupo().getCodigo()));
+            campoDescricaoSubgrupo.setText(mProduto.getMSubgrupo().getDescricao());
+            campoPrecoVenda.setText(String.valueOf(mProduto.getMPreco().getPrecoVenda()));
 
+            cInicio.setTitulo(campoTitulo, "Editar Produto");
+            utils.exibirAba(tab, tpCadastrar, tpListar);
+            campoDescricaoProduto.requestFocus();
+        }
     }
 
     @Override
     public void excluir() {
-
+        int linhaSelecionada = tabela.getSelectionModel().getFocusedIndex();
+        if (linhaSelecionada != -1) {
+            ppConfirmacao.exibirPopUp(CoresPopUpConfirmacao.VERMELHO_VERDE,
+                    MensagemAlerta.excluir(tabela.getItems().get(linhaSelecionada).getDescricao()));
+            if (ppConfirmacao.getRsultado()) {
+                sProduto.remover(tabela.getItems().get(linhaSelecionada));
+                carregarConteudoTabela();
+                tabela.getSelectionModel().select(linhaSelecionada > 0 ? linhaSelecionada - 1 : 0);
+            }
+        }
     }
 
     @Override
@@ -255,7 +291,9 @@ public class ProdutoController implements Initializable, ICadastro {
 
     @Override
     public void cancelar() {
-
+        limpar();
+        cInicio.setTitulo(campoTitulo, "Lista De Produtos");
+        utils.exibirAba(tab, tpListar, tpCadastrar);
     }
 
     private void buscarDepartamento() {
@@ -268,6 +306,13 @@ public class ProdutoController implements Initializable, ICadastro {
 
     private void buscarSubgrupo() {
 
+    }
+
+    private void limpar() {
+        utils.limparCampos(campoPesquisar, campoCodigo, campoCodigoBarras, campoDescricaoProduto,
+                campoDescricaoCupom, campoDescricaoCliente, campoComplemento, campoCodigoDepartamento,
+                campoDescricaoDepartamento, campoCodigoGrupo, campoDescricaoGrupo, campoCodigoSubgrupo,
+                campoDescricaoSubgrupo, campoPrecoVenda);
     }
 
     /** Obtem o painel para ser usado internamente.
