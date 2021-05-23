@@ -11,4 +11,15 @@ public class Filtro {
         if (numeroInt.equals("")) { return -1; }
         return Integer.parseInt(numeroInt);
     }
+
+    /** Possibilita que filtre conteudo para numero long
+     * Usado principalmente para codigo de barras
+     * @param numberLong String - conteudo para filtrar
+     * @return long - conteudo filtrado para numero long */
+    public static long pLong(String numberLong) {
+        if (numberLong == null) { return -1; }
+        numberLong = numberLong.replaceAll("[^0-9]", "");
+        if (numberLong.equals("")) { return -1; }
+        return Long.parseLong(numberLong);
+    }
 }

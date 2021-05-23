@@ -30,7 +30,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public Produto getPorCodigoBarras(long codigoBarras) {
-        return null;
+        Optional<Produto> model = rProduto.findByCodigoBarras(codigoBarras);
+        return model.orElse(null);
     }
 
     @Override

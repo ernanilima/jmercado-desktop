@@ -2,6 +2,7 @@ package br.com.ernanilima.jmercado.service.validacao;
 
 import br.com.ernanilima.jmercado.service.IService;
 
+import br.com.ernanilima.jmercado.service.ProdutoService;
 import br.com.ernanilima.jmercado.service.componente.Legenda;
 import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import br.com.ernanilima.jmercado.utils.Filtro;
@@ -15,7 +16,7 @@ public class ValidarCodigo {
 
     @Autowired private Legenda legenda;
 
-    /** Validacao de codigo, verifica se ja existe ou codigo em branco
+    /** Validacao de codigo, verifica se codigo ja existe
      * @param campoCodigo TextField - campo do codigo
      * @param service IService - servico de busca
      * @return boolean - false se codigo nao existir */
@@ -66,6 +67,33 @@ public class ValidarCodigo {
         } else {
             // nada informado, eh validado em campo vazio
             campoDescricao.setText("");
+            return false;
+        }
+    }
+
+    /** Validacao do codigo de barras, verifica se codigo de barras ja existe para algum produto
+     * Se codigo de barras for do mesmo produto (editar), retorna false
+     * @param campoCodigo TextField - campo do codigo
+     * @param campoCodigoBarras TextField - campo do codigo de barras
+     * @param sProduto ProdutoService - servico de busca
+     * @return boolean - false se codigo de barras nao existir */
+    public boolean codigoDeBarras(TextField campoCodigo, TextField campoCodigoBarras, ProdutoService sProduto) {
+        if (!campoCodigoBarras.getText().equals("") && // existe codigo para gravar
+                Filtro.pLong(campoCodigoBarras.getText()) > 0 && // codigo maior que zero
+                sProduto.getPorCodigoBarras(Filtro.pLong(campoCodigoBarras.getText())) != null && // codigo ja cadastrado
+                sProduto.getPorCodigoBarras(Filtro.pLong(campoCodigoBarras.getText())).getCodigo() != Filtro.pInt(campoCodigo.getText())
+        ) {
+            // codigo existe no banco de dados
+            legenda.exibirAlerta(MensagemAlerta.CODIGO_BARRAS_EXISTENTE, campoCodigoBarras);
+            return true;
+
+        } else if (!campoCodigoBarras.getText().equals("") && Filtro.pLong(campoCodigoBarras.getText()) <= 0) {
+            // codigo nao informado ou igual a zero(0)
+            legenda.exibirAlerta(MensagemAlerta.CODIGOZERO, campoCodigoBarras);
+            return true;
+
+        } else {
+            // codigo de barras novo nao existe no banco de dados
             return false;
         }
     }

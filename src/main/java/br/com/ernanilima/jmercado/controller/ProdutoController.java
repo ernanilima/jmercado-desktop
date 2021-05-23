@@ -364,6 +364,7 @@ public class ProdutoController implements Initializable, ICadastro {
                 vCampo.campoVazio(campoCodigoGrupo, textoCampoGrupo) &&
                 vCampo.campoVazio(campoCodigoSubgrupo, textoCampoSubgrupo) &&
                 !vCodigo.novo(campoCodigo, sProduto) &&
+                !vCodigo.codigoDeBarras(campoCodigo, campoCodigoBarras, sProduto) &&
                 vCodigo.buscarExistente(campoCodigoDepartamento, campoDescricaoDepartamento, sDepartamento, textoCampoDepartamento) &&
                 vCodigo.buscarExistente(campoCodigoGrupo, campoDescricaoGrupo, sGrupo, textoCampoGrupo) &&
                 vCodigo.buscarExistente(campoCodigoSubgrupo, campoDescricaoSubgrupo, sSubgrupo, textoCampoSubgrupo);
