@@ -4,6 +4,8 @@ import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
+import br.com.ernanilima.jmercado.liberacao.Liberacoes;
+import br.com.ernanilima.jmercado.liberacao.validacao.ValidarLiberacao;
 import br.com.ernanilima.jmercado.model.Subgrupo;
 import br.com.ernanilima.jmercado.service.GrupoService;
 import br.com.ernanilima.jmercado.service.SubgrupoService;
@@ -51,6 +53,7 @@ public class SubgrupoController implements Initializable, ICadastro {
     @Autowired private SubgrupoService sSubgrupo;
     @Autowired private GrupoService sGrupo;
     @Autowired private Utils utils;
+    @Autowired private ValidarLiberacao vLiberacao;
     @Autowired private ValidarCodigo vCodigo;
     @Autowired private ValidarCampo vCampo;
 
@@ -144,6 +147,14 @@ public class SubgrupoController implements Initializable, ICadastro {
         carregarOpcoesPesquisa();
     }
 
+    /** Liberacoes solicitadas deve ser executada sempre que o controller for exibido */
+    private void liberacoesSolicitadas() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnCadastrar, Liberacoes.CADASTROS_PRODUTOS_SUBGRUPO_CADASTRAR);
+        vLiberacao.liberacaoUsuario(btnEditar, Liberacoes.CADASTROS_PRODUTOS_SUBGRUPO_EDITAR);
+        vLiberacao.liberacaoUsuario(btnExcluir, Liberacoes.CADASTROS_PRODUTOS_SUBGRUPO_EXCLUIR);
+    }
+
     private void carregarEstruturaTabela() {
         //Exibi texto na tabela caso ela esteja vazia
         tabela.setPlaceholder(new Label(""));
@@ -210,7 +221,6 @@ public class SubgrupoController implements Initializable, ICadastro {
         cbbxPesquisar.setVisibleRowCount(9);
     }
 
-
     @Override
     public void pesquisar() {
         // atualiza a taleba com todos os itens ja carregados
@@ -224,7 +234,7 @@ public class SubgrupoController implements Initializable, ICadastro {
 
     @Override
     public void cadastrar() {
-        cInicio.setTitulo(campoTitulo, "Cadastrar Subgrupo De Produto");
+        cInicio.setTitulo(campoTitulo, "Cadastrar Subgrupo De Produtos");
         utils.exibirAba(tab, tpCadastrar, tpListar);
         campoCodigo.requestFocus();
     }
@@ -242,7 +252,7 @@ public class SubgrupoController implements Initializable, ICadastro {
             campoCodDepartamento.setText(String.valueOf(mSubgrupo.getMDepartamento().getCodigo()));
             campoDescricaoDepartamento.setText(mSubgrupo.getMDepartamento().getDescricao());
 
-            cInicio.setTitulo(campoTitulo, "Editar Subgrupo De Produto");
+            cInicio.setTitulo(campoTitulo, "Editar Subgrupo De Produtos");
             utils.exibirAba(tab, tpCadastrar, tpListar);
             campoDescricao.requestFocus();
         }
@@ -334,6 +344,7 @@ public class SubgrupoController implements Initializable, ICadastro {
                 ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
                 carregarConteudoTabela();
             }
+            liberacoesSolicitadas();
         } catch (IOException e) { e.printStackTrace(); }
     }
 }
