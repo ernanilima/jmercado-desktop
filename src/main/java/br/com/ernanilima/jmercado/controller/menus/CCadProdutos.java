@@ -2,6 +2,7 @@ package br.com.ernanilima.jmercado.controller.menus;
 
 import br.com.ernanilima.jmercado.controller.InicioController;
 import br.com.ernanilima.jmercado.controller.MenuController;
+import br.com.ernanilima.jmercado.controller.ProdutoController;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.validacao.ValidarLiberacao;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 public class CCadProdutos {
 
     @Autowired private InicioController cInicio;
+    @Autowired private ProdutoController cProduto;
     @Autowired private MenuController cMenu;
     @Autowired private ValidarLiberacao vLiberacao;
 
@@ -24,9 +26,18 @@ public class CCadProdutos {
      * @return VBox - menu */
     public VBox getMenuC() {
         liberacaoParaBotao();
+        listener();
         configurarBotao();
 
         return boxDoMenu;
+    }
+
+    /** Acao ao pressionar botao */
+    private void listener() {
+        btnCCadProdutos.setOnAction(e -> {
+            cMenu.minimizaTodos();
+            cInicio.setPainelCentral(cProduto.getPainel());
+        });
     }
 
     /** Constroi o botao */
