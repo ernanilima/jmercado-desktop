@@ -44,6 +44,9 @@ public class ProdutoController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private DepartamentoController cDepartamento;
+    @Autowired private GrupoController cGrupo;
+    @Autowired private SubgrupoController cSubgrupo;
     @Autowired private PopUpConfirmacaoController ppConfirmacao;
     @Autowired private FocusListener lFocus;
     @Autowired private KeyListener lKey;
@@ -332,15 +335,30 @@ public class ProdutoController implements Initializable, ICadastro {
     }
 
     private void buscarDepartamento() {
-
+        cDepartamento.exibirModal();
+        campoCodigoDepartamento.requestFocus();
+        if (cDepartamento.getDepartamento() != null) {
+            campoCodigoDepartamento.setText(String.valueOf(cDepartamento.getDepartamento().getCodigo()));
+            campoDescricaoDepartamento.setText(cDepartamento.getDepartamento().getDescricao());
+        }
     }
 
     private void buscarGrupo() {
-
+        cGrupo.exibirModal();
+        campoCodigoGrupo.requestFocus();
+        if (cGrupo.getGrupo() != null) {
+            campoCodigoGrupo.setText(String.valueOf(cGrupo.getGrupo().getCodigo()));
+            campoDescricaoGrupo.setText(cGrupo.getGrupo().getDescricao());
+        }
     }
 
     private void buscarSubgrupo() {
-
+        cSubgrupo.exibirModal();
+        campoCodigoSubgrupo.requestFocus();
+        if (cSubgrupo.getSubgrupo() != null) {
+            campoCodigoSubgrupo.setText(String.valueOf(cSubgrupo.getSubgrupo().getCodigo()));
+            campoDescricaoSubgrupo.setText(cSubgrupo.getSubgrupo().getDescricao());
+        }
     }
 
     private void limpar() {

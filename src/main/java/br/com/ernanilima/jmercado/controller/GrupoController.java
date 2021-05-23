@@ -225,7 +225,7 @@ public class GrupoController implements Initializable, ICadastro {
         pesquisa.pesquisaGrupo(cbbxPesquisar, tabela, campoPesquisar);
     }
 
-    public void selecionar() {
+    private void selecionar() {
         if (btnSelecionar.isVisible() && tabela.getSelectionModel().getFocusedIndex() != -1) {
             LINHA_SELECIONADA = true;
             STAGE.close();
@@ -319,7 +319,7 @@ public class GrupoController implements Initializable, ICadastro {
 
     /** Obter o grupo selecionado
      * @return Grupo */
-    public Grupo obterGrupo() {
+    public Grupo getGrupo() {
         Grupo mGrupo = null;
         if (LINHA_SELECIONADA) {
             int linha = tabela.getSelectionModel().getFocusedIndex();

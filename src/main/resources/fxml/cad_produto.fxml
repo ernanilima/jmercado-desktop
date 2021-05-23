@@ -249,7 +249,7 @@
                                                    <children>
                                                       <Label fx:id="textoCampoDepartamento" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="110.0" text="Departamento:" />
                                                       <TextField id="campoBusca" fx:id="campoCodigoDepartamento" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="110.0" />
-                                                      <Button id="btnBusca" fx:id="btnBuscarDepartamento" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" />
+                                                      <Button id="btnBuscar" fx:id="btnBuscarDepartamento" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" />
                                                       <TextField fx:id="campoDescricaoDepartamento" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" HBox.hgrow="ALWAYS">
                                                          <HBox.margin>
                                                             <Insets left="10.0" />
@@ -263,7 +263,7 @@
                                                    <children>
                                                       <Label fx:id="textoCampoGrupo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="110.0" text="Grupo:" />
                                                       <TextField id="campoBusca" fx:id="campoCodigoGrupo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="110.0" />
-                                                      <Button id="btnBusca" fx:id="btnBuscarGrupo" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" />
+                                                      <Button id="btnBuscar" fx:id="btnBuscarGrupo" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" />
                                                       <TextField fx:id="campoDescricaoGrupo" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" HBox.hgrow="ALWAYS">
                                                          <HBox.margin>
                                                             <Insets left="10.0" />
@@ -291,7 +291,7 @@
                                                    <children>
                                                       <Label fx:id="textoCampoSubgrupo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="110.0" text="Subgrupo:" />
                                                       <TextField id="campoBusca" fx:id="campoCodigoSubgrupo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="110.0" />
-                                                      <Button id="btnBusca" fx:id="btnBuscarSubgrupo" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" />
+                                                      <Button id="btnBuscar" fx:id="btnBuscarSubgrupo" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" />
                                                       <TextField fx:id="campoDescricaoSubgrupo" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" HBox.hgrow="ALWAYS">
                                                          <HBox.margin>
                                                             <Insets left="10.0" />

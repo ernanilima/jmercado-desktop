@@ -26,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -105,14 +106,18 @@ public class SubgrupoController implements Initializable, ICadastro {
     private Stage STAGE;
     private FXMLLoader LOADER;
     private Parent ROOT;
+    private Scene SCENE;
+    private boolean LINHA_SELECIONADA;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         STAGE = new Stage();
         oListSubgrupo = FXCollections.observableArrayList();
+        LINHA_SELECIONADA = false;
 
         //ACOES EM BOTOES
         btnPesquisar.setOnAction(e -> pesquisar());
+        btnSelecionar.setOnAction(e -> selecionar());
         btnCadastrar.setOnAction(e -> cadastrar());
         btnEditar.setOnAction(e -> editar());
         btnExcluir.setOnAction(e -> excluir());
@@ -232,6 +237,13 @@ public class SubgrupoController implements Initializable, ICadastro {
         pesquisa.pesquisaSubgrupo(cbbxPesquisar, tabela, campoPesquisar);
     }
 
+    private void selecionar() {
+        if (btnSelecionar.isVisible() && tabela.getSelectionModel().getFocusedIndex() != -1) {
+            LINHA_SELECIONADA = true;
+            STAGE.close();
+        }
+    }
+
     @Override
     public void cadastrar() {
         cInicio.setTitulo(campoTitulo, "Cadastrar Subgrupo De Produtos");
@@ -300,11 +312,11 @@ public class SubgrupoController implements Initializable, ICadastro {
     public void buscar() {
         cGrupo.exibirModal();
         campoCodGrupo.requestFocus();
-        if (cGrupo.obterGrupo() != null) {
-            campoCodGrupo.setText(String.valueOf(cGrupo.obterGrupo().getCodigo()));
-            campoDescricaoGrupo.setText(cGrupo.obterGrupo().getDescricao());
-            campoCodDepartamento.setText(String.valueOf(cGrupo.obterGrupo().getMDepartamento().getCodigo()));
-            campoDescricaoDepartamento.setText(cGrupo.obterGrupo().getMDepartamento().getDescricao());
+        if (cGrupo.getGrupo() != null) {
+            campoCodGrupo.setText(String.valueOf(cGrupo.getGrupo().getCodigo()));
+            campoDescricaoGrupo.setText(cGrupo.getGrupo().getDescricao());
+            campoCodDepartamento.setText(String.valueOf(cGrupo.getGrupo().getMDepartamento().getCodigo()));
+            campoDescricaoDepartamento.setText(cGrupo.getGrupo().getMDepartamento().getDescricao());
         }
     }
 
@@ -321,6 +333,15 @@ public class SubgrupoController implements Initializable, ICadastro {
                 vCodigo.buscarExistente(campoCodGrupo, campoDescricaoGrupo, sGrupo, textoCampoGrupo);
     }
 
+    public Subgrupo getSubgrupo() {
+        Subgrupo mSubGrupo = null;
+        if (LINHA_SELECIONADA) {
+            int linha = tabela.getSelectionModel().getFocusedIndex();
+            mSubGrupo = tabela.getItems().get(linha);
+        }
+        return mSubGrupo;
+    }
+
     /** Obtem o painel para ser usado internamente.
      * @return AnchorPane - painel para usar internamente */
     public AnchorPane getPainel() {
@@ -330,6 +351,25 @@ public class SubgrupoController implements Initializable, ICadastro {
         campoTitulo.setPrefHeight(0);
         cInicio.setTitulo(campoTitulo, "Lista De Subgrupos De Produtos");
         return painel;
+    }
+
+    /** Exibe o painel em forma de dialog */
+    public void exibirModal() {
+        STAGE = null;
+        construirPainel();
+
+        LINHA_SELECIONADA = false;
+        STAGE.setResizable(false);
+        if (ROOT.getScene() == null) {
+            SCENE = new Scene(ROOT);
+        }
+
+        STAGE.setScene(SCENE);
+        btnSelecionar.setVisible(true);
+        campoTitulo.setVisible(true);
+        campoTitulo.setPrefHeight(campoTitulo.getMaxHeight());
+        cInicio.setTitulo(campoTitulo, "Lista De Subgrupos De Produtos");
+        STAGE.showAndWait();
     }
 
     /** Constroi o painel para ser usado internamente */
