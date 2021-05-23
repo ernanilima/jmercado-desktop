@@ -8,6 +8,7 @@ import br.com.ernanilima.jmercado.model.Subgrupo;
 import br.com.ernanilima.jmercado.service.GrupoService;
 import br.com.ernanilima.jmercado.service.SubgrupoService;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
+import br.com.ernanilima.jmercado.service.componente.Pesquisa;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
@@ -51,6 +52,8 @@ public class SubgrupoController implements Initializable, ICadastro {
     @Autowired private Utils utils;
     @Autowired private ValidarCodigo vCodigo;
     @Autowired private ValidarCampo vCampo;
+
+    @Autowired private Pesquisa pesquisa;
 
     @Value("classpath:/fxml/cad_subgrupo.fxml")
     private Resource R_FXML;
@@ -209,7 +212,13 @@ public class SubgrupoController implements Initializable, ICadastro {
 
     @Override
     public void pesquisar() {
+        // atualiza a taleba com todos os itens ja carregados
+        // antes de realizar pesquisa
+        // OBS: nao realiza nova consulta no banco
+        tabela.getItems().setAll(oListSubgrupo);
 
+        // realiza pesquisa
+        pesquisa.pesquisaSubgrupo(cbbxPesquisar, tabela, campoPesquisar);
     }
 
     @Override
