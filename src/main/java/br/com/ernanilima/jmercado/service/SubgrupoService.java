@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public interface SubgrupoService extends IService {
-    Subgrupo gravar(Subgrupo departamento);
+    Subgrupo gravar(Subgrupo subgrupo);
     Subgrupo getPorId(int codigo);
     void remover(int codigo);
-    void remover(Subgrupo departamento);
+    void remover(Subgrupo subgrupo);
     List<Subgrupo> listarTudo();
     CompletableFuture<List<Subgrupo>> listarTudoAsinc();
 }

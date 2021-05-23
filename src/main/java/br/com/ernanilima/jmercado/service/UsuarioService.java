@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public interface UsuarioService {
-    Usuario gravar(Usuario departamento);
+    Usuario gravar(Usuario usuario);
     Usuario getPorId(int codigo);
     void remover(int codigo);
-    void remover(Usuario departamento);
+    void remover(Usuario usuario);
     List<Usuario> listarTudo();
     CompletableFuture<List<Usuario>> listarTudoAsinc();
 }

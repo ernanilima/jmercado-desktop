@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public interface GrupoService extends IService {
-    Grupo gravar(Grupo departamento);
+    Grupo gravar(Grupo grupo);
     Grupo getPorId(int codigo);
     void remover(int codigo);
-    void remover(Grupo departamento);
+    void remover(Grupo grupo);
     List<Grupo> listarTudo();
     CompletableFuture<List<Grupo>> listarTudoAsinc();
 }

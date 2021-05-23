@@ -1,8 +1,8 @@
 package br.com.ernanilima.jmercado.service.impl;
 
-import br.com.ernanilima.jmercado.model.Grupo;
-import br.com.ernanilima.jmercado.repository.GrupoRepository;
-import br.com.ernanilima.jmercado.service.GrupoService;
+import br.com.ernanilima.jmercado.model.Produto;
+import br.com.ernanilima.jmercado.repository.ProdutoRepository;
+import br.com.ernanilima.jmercado.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Async;
@@ -13,49 +13,54 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class GrupoServiceImpl implements GrupoService {
+public class ProdutoServiceImpl implements ProdutoService {
 
-    @Autowired private GrupoRepository rGrupo;
+    @Autowired private ProdutoRepository rProduto;
 
     @Override
-    public Grupo gravar(Grupo grupo) {
-        return rGrupo.save(grupo);
+    public Produto gravar(Produto produto) {
+        return rProduto.save(produto);
     }
 
     @Override
-    public Grupo getPorId(int codigo) {
-        Optional<Grupo> model = rGrupo.findById(codigo);
+    public Produto getPorId(int codigo) {
+        Optional<Produto> model = rProduto.findById(codigo);
         return model.orElse(null);
+    }
+
+    @Override
+    public Produto getPorCodigoBarras(long codigoBarras) {
+        return null;
     }
 
     @Override
     public void remover(int codigo) {
         try {
             getPorId(codigo);
-            rGrupo.deleteById(codigo);
+            rProduto.deleteById(codigo);
         } catch (DataIntegrityViolationException e) {
             System.out.println("NAO PODE REMOVER");
         }
     }
 
     @Override
-    public void remover(Grupo grupo) {
+    public void remover(Produto produto) {
         try {
-            rGrupo.delete(grupo);
+            rProduto.delete(produto);
         } catch (DataIntegrityViolationException e) {
             System.out.println("NAO PODE REMOVER");
         }
     }
 
     @Override
-    public List<Grupo> listarTudo() {
-        return rGrupo.findAll();
+    public List<Produto> listarTudo() {
+        return rProduto.findAll();
     }
 
     @Async
     @Override
-    public CompletableFuture<List<Grupo>> listarTudoAsinc() {
-        final List<Grupo> list = rGrupo.findAll();
+    public CompletableFuture<List<Produto>> listarTudoAsinc() {
+        final List<Produto> list = rProduto.findAll();
         return CompletableFuture.completedFuture(list);
     }
 }

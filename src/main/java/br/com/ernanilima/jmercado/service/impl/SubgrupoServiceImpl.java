@@ -18,8 +18,8 @@ public class SubgrupoServiceImpl implements SubgrupoService {
     @Autowired private SubgrupoRepository rSubgrupo;
 
     @Override
-    public Subgrupo gravar(Subgrupo departamento) {
-        return rSubgrupo.save(departamento);
+    public Subgrupo gravar(Subgrupo subgrupo) {
+        return rSubgrupo.save(subgrupo);
     }
 
     @Override
@@ -39,9 +39,9 @@ public class SubgrupoServiceImpl implements SubgrupoService {
     }
 
     @Override
-    public void remover(Subgrupo departamento) {
+    public void remover(Subgrupo subgrupo) {
         try {
-            rSubgrupo.delete(departamento);
+            rSubgrupo.delete(subgrupo);
         } catch (DataIntegrityViolationException e) {
             System.out.println("NAO PODE REMOVER");
         }

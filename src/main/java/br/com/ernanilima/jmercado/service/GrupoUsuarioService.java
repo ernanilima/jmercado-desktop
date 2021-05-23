@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public interface GrupoUsuarioService extends IService {
-    GrupoUsuario gravar(GrupoUsuario usuario);
+    GrupoUsuario gravar(GrupoUsuario grupoUsuario);
     GrupoUsuario getPorId(int codigo);
     void remover(int codigo);
     void remover(GrupoUsuario grupoUsuario);

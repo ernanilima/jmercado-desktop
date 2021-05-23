@@ -24,5 +24,4 @@ public class Departamento implements Serializable, IModel {
 
     @Column(length = 50, nullable = false)
     private String descricao;
-
 }

@@ -18,8 +18,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired private UsuarioRepository rUsuario;
 
     @Override
-    public Usuario gravar(Usuario departamento) {
-        return rUsuario.save(departamento);
+    public Usuario gravar(Usuario usuario) {
+        return rUsuario.save(usuario);
     }
 
     @Override
@@ -39,9 +39,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void remover(Usuario departamento) {
+    public void remover(Usuario usuario) {
         try {
-            rUsuario.delete(departamento);
+            rUsuario.delete(usuario);
         } catch (DataIntegrityViolationException e) {
             System.out.println("NAO PODE REMOVER");
         }
