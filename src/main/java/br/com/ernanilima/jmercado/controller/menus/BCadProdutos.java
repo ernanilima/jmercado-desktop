@@ -15,7 +15,7 @@ public class BCadProdutos {
     @Autowired private MenuController cMenu;
     @Autowired private CCadDepartamentos cCadDepartamentos;
     @Autowired private CCadGrupos cCadGrupos;
-    @Autowired private CCadSubGrupos cCadSubGrupos;
+    @Autowired private CCadSubgrupos cCadSubgrupos;
     @Autowired private CCadProdutos cCadProdutos;
     @Autowired private ValidarLiberacao vLiberacao;
 
@@ -86,7 +86,7 @@ public class BCadProdutos {
         return new VBox[] {
                 cCadDepartamentos.getMenuC(),
                 cCadGrupos.getMenuC(),
-                cCadSubGrupos.getMenuC(),
+                cCadSubgrupos.getMenuC(),
                 cCadProdutos.getMenuC()
         };
     }

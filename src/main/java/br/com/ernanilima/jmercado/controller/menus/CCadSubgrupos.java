@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class CCadSubGrupos {
+public class CCadSubgrupos {
 
     @Autowired private InicioController cInicio;
     @Autowired private SubgrupoController cSubgrupo;
@@ -45,7 +45,7 @@ public class CCadSubGrupos {
         btnCCadSubGrupos.getStyleClass().add("btnC");
         btnCCadSubGrupos.setMinSize(cMenu.getLarguraX(), cMenu.getAlturaY());
         btnCCadSubGrupos.setMaxSize(cMenu.getLarguraX(), cMenu.getAlturaY());
-        btnCCadSubGrupos.setText("Cadastrar SubGrupos");
+        btnCCadSubGrupos.setText("Cadastrar Subgrupos");
     }
 
     /** Liberacao para o menu */

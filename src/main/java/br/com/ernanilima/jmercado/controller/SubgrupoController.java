@@ -44,6 +44,7 @@ public class SubgrupoController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private GrupoController cGrupo;
     @Autowired private PopUpConfirmacaoController ppConfirmacao;
     @Autowired private FocusListener lFocus;
     @Autowired private KeyListener lKey;
@@ -287,7 +288,14 @@ public class SubgrupoController implements Initializable, ICadastro {
     }
 
     public void buscar() {
-
+        cGrupo.exibirModal();
+        campoCodGrupo.requestFocus();
+        if (cGrupo.obterGrupo() != null) {
+            campoCodGrupo.setText(String.valueOf(cGrupo.obterGrupo().getCodigo()));
+            campoDescricaoGrupo.setText(cGrupo.obterGrupo().getDescricao());
+            campoCodDepartamento.setText(String.valueOf(cGrupo.obterGrupo().getMDepartamento().getCodigo()));
+            campoDescricaoDepartamento.setText(cGrupo.obterGrupo().getMDepartamento().getDescricao());
+        }
     }
 
     private void limpar() {
