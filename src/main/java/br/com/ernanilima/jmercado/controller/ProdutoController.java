@@ -4,12 +4,19 @@ import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
+import br.com.ernanilima.jmercado.model.Preco;
 import br.com.ernanilima.jmercado.model.Produto;
+import br.com.ernanilima.jmercado.service.DepartamentoService;
+import br.com.ernanilima.jmercado.service.GrupoService;
 import br.com.ernanilima.jmercado.service.ProdutoService;
+import br.com.ernanilima.jmercado.service.SubgrupoService;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
+import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
+import br.com.ernanilima.jmercado.service.validacao.ValidarCodigo;
+import br.com.ernanilima.jmercado.utils.Filtro;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -43,7 +50,12 @@ public class ProdutoController implements Initializable, ICadastro {
     @Autowired private FocusListener lFocus;
     @Autowired private KeyListener lKey;
     @Autowired private ProdutoService sProduto;
+    @Autowired private DepartamentoService sDepartamento;
+    @Autowired private GrupoService sGrupo;
+    @Autowired private SubgrupoService sSubgrupo;
     @Autowired private Utils utils;
+    @Autowired private ValidarCodigo vCodigo;
+    @Autowired private ValidarCampo vCampo;
 
     @Value("classpath:/fxml/cad_produto.fxml")
     private Resource R_FXML;
@@ -286,7 +298,34 @@ public class ProdutoController implements Initializable, ICadastro {
 
     @Override
     public void gravar() {
+        if (validarCampos()) {
+            Produto mProduto = new Produto(
+                    Filtro.pInt(campoCodigo.getText()),
+                    Long.parseLong(campoCodigoBarras.getText()),
+                    campoDescricaoProduto.getText(),
+                    campoDescricaoCupom.getText(),
+                    campoDescricaoCliente.getText(),
+                    campoComplemento.getText(),
+                    sDepartamento.getPorId(Filtro.pInt(campoCodigoDepartamento.getText())),
+                    sGrupo.getPorId(Filtro.pInt(campoCodigoGrupo.getText())),
+                    sSubgrupo.getPorId(Filtro.pInt(campoCodigoSubgrupo.getText()))
+            );
 
+            mProduto.setMPreco(new Preco(
+                    mProduto.getCodigo(),
+                    mProduto,
+                    Double.parseDouble(campoPrecoVenda.getText()),
+                    null
+            ));
+
+            mProduto.getMPreco().setMProduto(mProduto);
+
+            sProduto.gravar(mProduto);
+            limpar();
+            carregarConteudoTabela();
+            cInicio.setTitulo(campoTitulo, "Lista De Produtos");
+            utils.exibirAba(tab, tpListar, tpCadastrar);
+        }
     }
 
     @Override
@@ -313,6 +352,21 @@ public class ProdutoController implements Initializable, ICadastro {
                 campoDescricaoCupom, campoDescricaoCliente, campoComplemento, campoCodigoDepartamento,
                 campoDescricaoDepartamento, campoCodigoGrupo, campoDescricaoGrupo, campoCodigoSubgrupo,
                 campoDescricaoSubgrupo, campoPrecoVenda);
+    }
+
+    private boolean validarCampos() {
+        return vCampo.campoVazio(campoCodigo, textoCampoCodigo) &&
+                vCampo.campoVazio(campoCodigoBarras, textoCampoCodigoBarras) &&
+                vCampo.campoVazio(campoDescricaoProduto, textoCampoDescricaoProduto) &&
+                vCampo.campoVazio(campoDescricaoCupom, textoCampoDescricaoCupom) &&
+                vCampo.campoVazio(campoDescricaoCliente, textoCampoDescricaoCliente) &&
+                vCampo.campoVazio(campoCodigoDepartamento, textoCampoDepartamento) &&
+                vCampo.campoVazio(campoCodigoGrupo, textoCampoGrupo) &&
+                vCampo.campoVazio(campoCodigoSubgrupo, textoCampoSubgrupo) &&
+                !vCodigo.novo(campoCodigo, sProduto) &&
+                vCodigo.buscarExistente(campoCodigoDepartamento, campoDescricaoDepartamento, sDepartamento, textoCampoDepartamento) &&
+                vCodigo.buscarExistente(campoCodigoGrupo, campoDescricaoGrupo, sGrupo, textoCampoGrupo) &&
+                vCodigo.buscarExistente(campoCodigoSubgrupo, campoDescricaoSubgrupo, sSubgrupo, textoCampoSubgrupo);
     }
 
     /** Obtem o painel para ser usado internamente.

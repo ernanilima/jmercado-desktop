@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "produto")
 public class Produto implements Serializable, IModel {
@@ -49,4 +48,16 @@ public class Produto implements Serializable, IModel {
 
     @OneToOne(mappedBy = "mProduto", cascade = CascadeType.ALL)
     private Preco mPreco;
+
+    public Produto(int codigo, long codigoBarras, String descricao, String descricaoCupom, String descricaoCliente, String complemento, Departamento mDepartamento, Grupo mGrupo, Subgrupo mSubgrupo) {
+        this.codigo = codigo;
+        this.codigoBarras = codigoBarras;
+        this.descricao = descricao;
+        this.descricaoCupom = descricaoCupom;
+        this.descricaoCliente = descricaoCliente;
+        this.complemento = complemento;
+        this.mDepartamento = mDepartamento;
+        this.mGrupo = mGrupo;
+        this.mSubgrupo = mSubgrupo;
+    }
 }
