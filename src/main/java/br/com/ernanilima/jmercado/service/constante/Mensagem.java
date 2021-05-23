@@ -5,7 +5,6 @@ public class Mensagem {
 
     public static final String PESQUISA = "INFORME SUA PESQUISA E PRESSIONE ENTER.";
     public static final String LIBERACAO_GRUPUSUA  = "LIBERAÇÕES DE GRUPO/USUÁRIO";
-    public static final String PRECO_VENDA  = "PREÇO DE VENDA";
 
     /** Mensagens para cadastro de departamento
      * {@link br.com.ernanilima.jmercado.controller.DepartamentoController} */

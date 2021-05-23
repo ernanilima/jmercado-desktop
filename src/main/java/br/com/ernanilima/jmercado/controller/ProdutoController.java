@@ -1,8 +1,13 @@
 package br.com.ernanilima.jmercado.controller;
 
+import br.com.ernanilima.jmercado.controller.listener.FocusListener;
+import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.model.Produto;
 import br.com.ernanilima.jmercado.service.ProdutoService;
+import br.com.ernanilima.jmercado.service.componente.Mascara;
+import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
+import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -27,11 +32,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 @Controller
-public class ProdutoController implements Initializable {
+public class ProdutoController implements Initializable, ICadastro {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private FocusListener lFocus;
+    @Autowired private KeyListener lKey;
     @Autowired private ProdutoService sProduto;
+    @Autowired private Utils utils;
 
     @Value("classpath:/fxml/cad_produto.fxml")
     private Resource R_FXML;
@@ -99,6 +107,54 @@ public class ProdutoController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         STAGE = new Stage();
         oListProduto = FXCollections.observableArrayList();
+
+        //ACOES EM BOTOES
+        btnPesquisar.setOnAction(e -> pesquisar());
+        btnCadastrar.setOnAction(e -> cadastrar());
+        btnEditar.setOnAction(e -> editar());
+        btnExcluir.setOnAction(e -> excluir());
+        btnGravar.setOnAction(e -> gravar());
+        btnCancelar.setOnAction(e -> cancelar());
+        btnBuscarDepartamento.setOnAction(e -> buscarDepartamento());
+        btnBuscarGrupo.setOnAction(e -> buscarGrupo());
+        btnBuscarSubgrupo.setOnAction(e -> buscarSubgrupo());
+
+        // ACOES DE FOCO
+        campoPesquisar.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.PESQUISA));
+        tabela.getFocusModel().focusedCellProperty().addListener(lFocus.tabelaActionListener(tabela, Coluna.Produto.getColunasLegendas()));
+        campoCodigo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Produto.CODIGO));
+        campoCodigoBarras.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Produto.CODIGO_BARRAS));
+        campoDescricaoProduto.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Produto.DESCRICAO_PRODUTO));
+        campoDescricaoCupom.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Produto.DESCRICAO_CUPOM));
+        campoDescricaoCliente.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Produto.DESCRICAO_CLIENTE));
+        campoComplemento.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Produto.COMPLEMENTO));
+        campoCodigoDepartamento.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdDepartamento.CODIGO));
+        campoDescricaoDepartamento.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdDepartamento.DESCRICAO));
+        campoCodigoGrupo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdGrupo.CODIGO));
+        campoDescricaoGrupo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdGrupo.DESCRICAO));
+        campoCodigoSubgrupo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdSubgrupo.CODIGO));
+        campoDescricaoSubgrupo.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.ProdSubgrupo.DESCRICAO));
+        campoPrecoVenda.focusedProperty().addListener(lFocus.exibeLegendaActionListener(Mensagem.Produto.PRECO_VENDA));
+
+        // ACOES AO PRESSIONAR TECLAS
+        campoPesquisar.setOnKeyPressed(lKey.campoPesquisaKeyPressed(tabela, this));
+        painel.setOnKeyReleased(lKey.atalhoKeyReleased(this));
+
+        // MASCARAS EM CAMPOS
+        Mascara.textoNumeroMaiusculo(campoPesquisar, 50);
+        Mascara.numeroInteiro(campoCodigo, 3);
+        Mascara.numeroInteiro(campoCodigoBarras, 14);
+        Mascara.textoNumeroMaiusculo(campoDescricaoProduto, 50);
+        Mascara.textoNumeroMaiusculo(campoDescricaoCupom, 50);
+        Mascara.textoNumeroMaiusculo(campoDescricaoCliente, 50);
+        Mascara.textoNumeroMaiusculo(campoComplemento, 50);
+        Mascara.numeroInteiro(campoCodigoDepartamento, 3);
+        Mascara.numeroInteiro(campoCodigoGrupo, 3);
+        Mascara.numeroInteiro(campoCodigoSubgrupo, 3);
+        Mascara.numeroMonetario(campoPrecoVenda, 2);
+
+        // EXIBE A ABA PRINCIPAL E DESABILITA AS OUTRAS
+        utils.exibirAba(tab, tpListar, tpCadastrar);
 
         carregarEstruturaTabela();
         carregarOpcoesPesquisa();
@@ -170,6 +226,48 @@ public class ProdutoController implements Initializable {
         cbbxPesquisar.setItems(oList);
         cbbxPesquisar.getSelectionModel().selectFirst();
         cbbxPesquisar.setVisibleRowCount(9);
+    }
+
+    @Override
+    public void pesquisar() {
+
+    }
+
+    @Override
+    public void cadastrar() {
+
+    }
+
+    @Override
+    public void editar() {
+
+    }
+
+    @Override
+    public void excluir() {
+
+    }
+
+    @Override
+    public void gravar() {
+
+    }
+
+    @Override
+    public void cancelar() {
+
+    }
+
+    private void buscarDepartamento() {
+
+    }
+
+    private void buscarGrupo() {
+
+    }
+
+    private void buscarSubgrupo() {
+
     }
 
     /** Obtem o painel para ser usado internamente.

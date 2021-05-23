@@ -304,7 +304,7 @@
                                                 <HBox GridPane.columnIndex="1">
                                                    <children>
                                                       <Label fx:id="textoCampoPrecoVenda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="110.0" text="Preço De Venda:" />
-                                                      <TextField fx:id="campoPrecoVenda" alignment="CENTER_RIGHT" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" HBox.hgrow="ALWAYS" />
+                                                      <TextField fx:id="campoPrecoVenda" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" HBox.hgrow="ALWAYS" />
                                                    </children>
                                                    <GridPane.margin>
                                                       <Insets left="20.0" />

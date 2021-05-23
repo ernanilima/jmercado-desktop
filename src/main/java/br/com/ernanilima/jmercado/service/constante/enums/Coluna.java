@@ -165,7 +165,7 @@ public class Coluna {
         CODIGO_BARRAS("CÓD. BARRAS", Mensagem.Produto.CODIGO_BARRAS),
         CODIGO_SUBGRUPO("CÓD. SUBGRUPO", Mensagem.ProdSubgrupo.CODIGO),
         DESCRICAO_SUBGRUPO("DESC. SUBGRUPO", Mensagem.ProdSubgrupo.DESCRICAO),
-        PRECO_DE_VENDA("PREÇO DE VENDA", Mensagem.PRECO_VENDA);
+        PRECO_DE_VENDA("PREÇO DE VENDA", Mensagem.Produto.PRECO_VENDA);
 
         private final String coluna;
         private final String legenda;
