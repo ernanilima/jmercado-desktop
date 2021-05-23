@@ -6,10 +6,7 @@ import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.model.Preco;
 import br.com.ernanilima.jmercado.model.Produto;
-import br.com.ernanilima.jmercado.service.DepartamentoService;
-import br.com.ernanilima.jmercado.service.GrupoService;
-import br.com.ernanilima.jmercado.service.ProdutoService;
-import br.com.ernanilima.jmercado.service.SubgrupoService;
+import br.com.ernanilima.jmercado.service.*;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
@@ -38,6 +35,7 @@ import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -312,13 +310,10 @@ public class ProdutoController implements Initializable, ICadastro {
             );
 
             mProduto.setMPreco(new Preco(
-                    mProduto.getCodigo(),
                     mProduto,
-                    Double.parseDouble(campoPrecoVenda.getText()),
-                    null
+                    Filtro.pDouble(campoPrecoVenda.getText()),
+                    Calendar.getInstance()
             ));
-
-            mProduto.getMPreco().setMProduto(mProduto);
 
             sProduto.gravar(mProduto);
             limpar();
@@ -327,6 +322,7 @@ public class ProdutoController implements Initializable, ICadastro {
             utils.exibirAba(tab, tpListar, tpCadastrar);
         }
     }
+
 
     @Override
     public void cancelar() {

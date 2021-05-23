@@ -1,6 +1,5 @@
 package br.com.ernanilima.jmercado.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +11,6 @@ import java.util.Calendar;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "prodpreco")
 public class Preco implements Serializable {
@@ -29,4 +27,11 @@ public class Preco implements Serializable {
 
     private double precoVenda;
     private Calendar dataUltAltPrecoVenda;
+
+    public Preco(Produto mProduto, double precoVenda, Calendar dataUltAltPrecoVenda) {
+        this.id = mProduto.getCodigo();
+        this.mProduto = mProduto;
+        this.precoVenda = precoVenda;
+        this.dataUltAltPrecoVenda = dataUltAltPrecoVenda;
+    }
 }

@@ -9,6 +9,9 @@ target/**
 out/**
 .DS_Store
 
+### Visualizador de banco h2 ###
+h2/**
+
 ### .Jar da aplicacao ###
 !target/JMercado-*.jar
 
