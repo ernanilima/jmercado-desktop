@@ -1,5 +1,12 @@
 package br.com.ernanilima.jmercado.controller;
 
+import br.com.ernanilima.jmercado.model.Produto;
+import br.com.ernanilima.jmercado.service.ProdutoService;
+import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,6 +23,7 @@ import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Controller
@@ -23,6 +31,7 @@ public class ProdutoController implements Initializable {
 
     @Autowired private ApplicationContext springContext;
     @Autowired private InicioController cInicio;
+    @Autowired private ProdutoService sProduto;
 
     @Value("classpath:/fxml/cad_produto.fxml")
     private Resource R_FXML;
@@ -34,14 +43,14 @@ public class ProdutoController implements Initializable {
     @FXML private TabPane tab;
     @FXML private Tab tpListar;
     @FXML private TextField campoPesquisar;
-    @FXML private ComboBox<?> cbbxPesquisar;
+    @FXML private ComboBox<String> cbbxPesquisar;
     @FXML private Button btnPesquisar;
     @FXML private Button btnSelecionar;
     @FXML private Button btnCadastrar;
     @FXML private Button btnEditar;
     @FXML private Button btnExcluir;
     @FXML private AnchorPane boxLista;
-    @FXML private TableView<?> tabela;
+    @FXML private TableView<Produto> tabela;
     @FXML private Tab tpCadastrar;
     @FXML private AnchorPane box;
     @FXML private Label textoCampoCodigo;
@@ -73,6 +82,15 @@ public class ProdutoController implements Initializable {
     @FXML private Label textoCampoPrecoVenda;
     @FXML private TextField campoPrecoVenda;
 
+    private ObservableList<Produto> oListProduto;
+    private List<Produto> lsProduto;
+    private TableColumn<Produto, Integer> colunaCodigo;
+    private TableColumn<Produto, String> colunaDescricao;
+    private TableColumn<Produto, Long> colunaCodigiBarras;
+    private TableColumn<Produto, Integer> colunaCodigoSubgrupo;
+    private TableColumn<Produto, String> colunaDescricaoSubgrupo;
+    private TableColumn<Produto, String> colunaPrecoVenda;
+
     private Stage STAGE;
     private FXMLLoader LOADER;
     private Parent ROOT;
@@ -80,8 +98,79 @@ public class ProdutoController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         STAGE = new Stage();
+        oListProduto = FXCollections.observableArrayList();
+
+        carregarEstruturaTabela();
+        carregarOpcoesPesquisa();
     }
 
+    private void carregarEstruturaTabela() {
+        //Exibi texto na tabela caso ela esteja vazia
+        tabela.setPlaceholder(new Label(""));
+
+        colunaCodigo = new TableColumn<>(Coluna.Produto.CODIGO.getColuna());
+        colunaDescricao = new TableColumn<>(Coluna.Produto.DESCRICAO_PRODUTO.getColuna());
+        colunaCodigiBarras = new TableColumn<>(Coluna.Produto.CODIGO_BARRAS.getColuna());
+        colunaCodigoSubgrupo = new TableColumn<>(Coluna.Produto.CODIGO_SUBGRUPO.getColuna());
+        colunaDescricaoSubgrupo = new TableColumn<>(Coluna.Produto.DESCRICAO_SUBGRUPO.getColuna());
+        colunaPrecoVenda = new TableColumn<>(Coluna.Produto.PRECO_DE_VENDA.getColuna());
+
+        colunaCodigo.setMinWidth(85);
+        colunaCodigo.setMaxWidth(colunaCodigo.getMinWidth());
+        colunaCodigiBarras.setMinWidth(120);
+        colunaCodigiBarras.setMaxWidth(colunaCodigiBarras.getMinWidth());
+        colunaCodigoSubgrupo.setMinWidth(120);
+        colunaCodigoSubgrupo.setMaxWidth(colunaCodigoSubgrupo.getMinWidth());
+        colunaDescricaoSubgrupo.setMinWidth(200);
+        colunaDescricaoSubgrupo.setMaxWidth(colunaDescricaoSubgrupo.getMinWidth());
+        colunaPrecoVenda.setMinWidth(150);
+        colunaPrecoVenda.setMaxWidth(colunaPrecoVenda.getMinWidth());
+
+        tabela.getSelectionModel().setCellSelectionEnabled(true);
+        tabela.setTableMenuButtonVisible(true);
+
+        //AJUSTA DESCRICAO
+        tabela.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        tabela.getColumns().add(colunaCodigo);
+        tabela.getColumns().add(colunaDescricao);
+        tabela.getColumns().add(colunaCodigiBarras);
+        tabela.getColumns().add(colunaCodigoSubgrupo);
+        tabela.getColumns().add(colunaDescricaoSubgrupo);
+        tabela.getColumns().add(colunaPrecoVenda);
+
+        colunaCodigo.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCodigo()));
+        colunaDescricao.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDescricao()));
+        colunaCodigiBarras.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCodigoBarras()));
+        colunaCodigoSubgrupo.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getMSubgrupo().getCodigo()));
+        colunaDescricaoSubgrupo.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getMSubgrupo().getDescricao()));
+        colunaPrecoVenda.setCellValueFactory(cellData -> new SimpleObjectProperty<>(String.valueOf(cellData.getValue().getMPreco().getPrecoVenda())));
+    }
+
+    private void carregarConteudoTabela() {
+        oListProduto.clear();
+        sProduto.listarTudoAsinc().thenAccept(list -> Platform.runLater(()-> {
+            lsProduto = list;
+            tabela.getSortOrder().clear();
+            oListProduto.addAll(lsProduto);
+            tabela.getItems().setAll(oListProduto);
+            tabela.requestFocus();
+        }));
+    }
+
+    /** Carrega as opcoes para pesquisa no combobox */
+    private void carregarOpcoesPesquisa() {
+        ObservableList<String> oList = FXCollections.observableArrayList();
+        List<String> list = Coluna.Produto.getColunas();
+        oList.clear();
+
+        oList.add(Coluna.GERAL);
+        oList.addAll(list);
+
+        cbbxPesquisar.setItems(oList);
+        cbbxPesquisar.getSelectionModel().selectFirst();
+        cbbxPesquisar.setVisibleRowCount(9);
+    }
 
     /** Obtem o painel para ser usado internamente.
      * @return AnchorPane - painel para usar internamente */
@@ -104,6 +193,7 @@ public class ProdutoController implements Initializable {
                 STAGE.initModality(Modality.APPLICATION_MODAL);
                 LOADER.setControllerFactory(aClass -> springContext.getBean(aClass));
                 ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
+                carregarConteudoTabela();
             }
         } catch (IOException e) { e.printStackTrace(); }
     }

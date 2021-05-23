@@ -5,6 +5,7 @@ public class Mensagem {
 
     public static final String PESQUISA = "INFORME SUA PESQUISA E PRESSIONE ENTER.";
     public static final String LIBERACAO_GRUPUSUA  = "LIBERAÇÕES DE GRUPO/USUÁRIO";
+    public static final String PRECO_VENDA  = "PREÇO DE VENDA";
 
     /** Mensagens para cadastro de departamento
      * {@link br.com.ernanilima.jmercado.controller.DepartamentoController} */
@@ -25,6 +26,18 @@ public class Mensagem {
     public static class ProdSubgrupo {
         public static final String CODIGO = "CÓDIGO DO SUBGRUPO.";
         public static final String DESCRICAO = "DESCRIÇÃO DO SUBGRUPO.";
+    }
+
+    /** Mensagem para cadastro de produto
+     * {@link br.com.ernanilima.jmercado.controller.ProdutoController} */
+    public static class Produto {
+        public static final String CODIGO = "CÓDIGO DO PRODUTO.";
+        public static final String CODIGO_BARRAS = "CÓDIGO DE BARRAS DO PRODUTO.";
+        public static final String DESCRICAO_PRODUTO = "DESCRIÇÃO DO PRODUTO.";
+        public static final String DESCRICAO_CUPOM = "DESCRIÇÃO DO PRODUTO PARA O CUPOM.";
+        public static final String DESCRICAO_CLIENTE = "DESCRIÇÃO DO PRODUTO PARA O CLIENTE.";
+        public static final String COMPLEMENTO = "COMPLEMENTO DO PRODUTO.";
+        public static final String PRECO_VENDA = "PREÇO DE VENDA.";
     }
 
     /** Mensagens para cadastro de grupo de usuario

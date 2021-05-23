@@ -157,6 +157,57 @@ public class Coluna {
         }
     }
 
+    /** PRODUTO */
+    public enum Produto {
+
+        CODIGO("CÓDIGO", Mensagem.Produto.CODIGO),
+        DESCRICAO_PRODUTO("DESCRIÇÃO", Mensagem.Produto.DESCRICAO_PRODUTO),
+        CODIGO_BARRAS("CÓD. BARRAS", Mensagem.Produto.CODIGO_BARRAS),
+        CODIGO_SUBGRUPO("CÓD. SUBGRUPO", Mensagem.ProdSubgrupo.CODIGO),
+        DESCRICAO_SUBGRUPO("DESC. SUBGRUPO", Mensagem.ProdSubgrupo.DESCRICAO),
+        PRECO_DE_VENDA("PREÇO DE VENDA", Mensagem.PRECO_VENDA);
+
+        private final String coluna;
+        private final String legenda;
+        private static String[][] COLUNAS;
+
+        static {
+            // 6 linhas, 2 campos (descricao e mensagem)
+            COLUNAS = new String[6][2];
+            int i = 0;
+            for (Produto coluna : Produto.values()) {
+                // [numero da linha][numero do conteudo] = conteudo recebido
+                COLUNAS[i][0] = coluna.getColuna();
+                COLUNAS[i][1] = coluna.getLegenda();
+                i++;
+            }
+        }
+
+        Produto(String coluna, String legenda) {
+            this.coluna = coluna;
+            this.legenda = legenda;
+        }
+
+        public String getColuna() {
+            return coluna;
+        }
+
+        public String getLegenda() {
+            return legenda;
+        }
+
+        public static String[][] getColunasLegendas() {
+            return COLUNAS;
+        }
+
+        public static List<String> getColunas() {
+            List<String> colunas = new ArrayList<>();
+            for (String[] strings : getColunasLegendas())
+                colunas.add(strings[0]);
+            return colunas;
+        }
+    }
+
     /** GRUPOS USUARIOS */
     public enum GrupoUsuario {
 
