@@ -8,6 +8,7 @@ import br.com.ernanilima.jmercado.model.Preco;
 import br.com.ernanilima.jmercado.model.Produto;
 import br.com.ernanilima.jmercado.service.*;
 import br.com.ernanilima.jmercado.service.componente.Mascara;
+import br.com.ernanilima.jmercado.service.componente.Pesquisa;
 import br.com.ernanilima.jmercado.service.constante.Mensagem;
 import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
 import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
@@ -57,6 +58,8 @@ public class ProdutoController implements Initializable, ICadastro {
     @Autowired private Utils utils;
     @Autowired private ValidarCodigo vCodigo;
     @Autowired private ValidarCampo vCampo;
+
+    @Autowired private Pesquisa pesquisa;
 
     @Value("classpath:/fxml/cad_produto.fxml")
     private Resource R_FXML;
@@ -247,7 +250,13 @@ public class ProdutoController implements Initializable, ICadastro {
 
     @Override
     public void pesquisar() {
+        // atualiza a taleba com todos os itens ja carregados
+        // antes de realizar pesquisa
+        // OBS: nao realiza nova consulta no banco
+        tabela.getItems().setAll(oListProduto);
 
+        // realiza pesquisa
+        pesquisa.pesquisaProduto(cbbxPesquisar, tabela, campoPesquisar);
     }
 
     @Override

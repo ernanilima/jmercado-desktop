@@ -141,6 +141,56 @@ public class Pesquisa {
 
     /** Realiza pesquisa na tabela
      * @param cbbxPesquisar ComboBox<String> - combobox da pesquisa
+     * @param tabela TableView<Produto> - tabela para pesquisa
+     * @param campoPesquisar TextField - campo com texto para pesquisa */
+    public void pesquisaProduto(ComboBox<String> cbbxPesquisar, TableView<Produto> tabela, TextField campoPesquisar) {
+        if (!campoPesquisar.isFocused()) {campoPesquisar.requestFocus(); return;}
+        FilteredList<Produto> lista = new FilteredList<>(tabela.getItems(), p -> true);
+
+        String colunaParaPesquisar = cbbxPesquisar.getSelectionModel().getSelectedItem();
+        tabela.getSortOrder().clear();
+        String pesquisa = campoPesquisar.getText();
+
+        if (!pesquisa.equals("")) {
+            lista.setPredicate(model -> {
+                if (Coluna.Produto.CODIGO.getColuna().equals(colunaParaPesquisar)) {
+                    return String.valueOf(model.getCodigo()).contains(pesquisa);
+
+                } else if (Coluna.Produto.DESCRICAO_PRODUTO.getColuna().equals(colunaParaPesquisar)) {
+                    return model.getDescricao().contains(pesquisa);
+
+                } else if (Coluna.Produto.CODIGO_BARRAS.getColuna().equals(colunaParaPesquisar)) {
+                    return String.valueOf(model.getCodigoBarras()).contains(pesquisa);
+
+                } else if (Coluna.Produto.CODIGO_SUBGRUPO.getColuna().equals(colunaParaPesquisar)) {
+                    return String.valueOf(model.getMSubgrupo().getCodigo()).contains(pesquisa);
+
+                } else if (Coluna.Produto.DESCRICAO_SUBGRUPO.getColuna().equals(colunaParaPesquisar)) {
+                    return model.getMSubgrupo().getDescricao().contains(pesquisa);
+
+                } else if (Coluna.Produto.PRECO_DE_VENDA.getColuna().equals(colunaParaPesquisar)) {
+                    return String.valueOf(model.getMPreco().getPrecoVenda()).contains(pesquisa);
+
+                } else if (Coluna.GERAL.equals(colunaParaPesquisar)) {
+                    return String.valueOf(model.getCodigo()).contains(pesquisa) ||
+                            model.getDescricao().contains(pesquisa) ||
+                            String.valueOf(model.getCodigoBarras()).contains(pesquisa) ||
+                            String.valueOf(model.getMSubgrupo().getCodigo()).contains(pesquisa) ||
+                            model.getMSubgrupo().getDescricao().contains(pesquisa) ||
+                            String.valueOf(model.getMPreco().getPrecoVenda()).contains(pesquisa);
+                } return false;
+            });
+        }
+
+        SortedList<Produto> listaFiltrada = new SortedList<>(lista);
+        listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
+
+        tabela.getItems().setAll(listaFiltrada);
+        tabela.getSelectionModel().selectFirst();
+    }
+
+    /** Realiza pesquisa na tabela
+     * @param cbbxPesquisar ComboBox<String> - combobox da pesquisa
      * @param tabela TableView<GrupoUsuario> - tabela para pesquisa
      * @param campoPesquisar TextField - campo com texto para pesquisa */
     public void pesquisaGrupoUsuario(ComboBox<String> cbbxPesquisar, TableView<GrupoUsuario> tabela, TextField campoPesquisar) {
