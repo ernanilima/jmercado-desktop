@@ -12,7 +12,7 @@
 
     <groupId>br.com.ernanilima</groupId>
     <artifactId>JMercado</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
     <name>JMercado</name>
     <packaging>jar</packaging>
     <description>Aplicacao basica de cadastros</description>

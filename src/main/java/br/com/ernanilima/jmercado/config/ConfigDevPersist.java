@@ -27,7 +27,7 @@ public class ConfigDevPersist {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(bancoDeDadoss());
+        em.setDataSource(bancoDeDados());
         em.setPackagesToScan(this.getModelsParaEscanear());
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -37,7 +37,7 @@ public class ConfigDevPersist {
     }
 
     @Bean
-    public DataSource bancoDeDadoss() {
+    public DataSource bancoDeDados() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://127.0.0.1:5432/jmercado");
