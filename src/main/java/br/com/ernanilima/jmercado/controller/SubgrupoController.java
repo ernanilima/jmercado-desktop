@@ -223,7 +223,7 @@ public class SubgrupoController implements Initializable, ICadastro {
     /** Verifica se foi realizado alguma gusca
      * @return CompletableFuture<List<Subgrupo>> */
     private CompletableFuture<List<Subgrupo>> tipoBuscaRealizada() {
-        if ((CODIGO_BUSCA == null || CODIGO_BUSCA.equals("")) && btnSelecionar.isVisible()) {
+        if (CODIGO_BUSCA != null && CODIGO_BUSCA.equals("") && btnSelecionar.isVisible()) {
             tabela.setPlaceholder(new Label("NENHUM SUBGRUPO PARA ESTE GRUPO"));
             return new CompletableFuture<>();
 
