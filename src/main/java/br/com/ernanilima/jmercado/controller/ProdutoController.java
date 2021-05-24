@@ -15,6 +15,7 @@ import br.com.ernanilima.jmercado.service.constante.enums.Coluna;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCampo;
 import br.com.ernanilima.jmercado.service.validacao.ValidarCodigo;
 import br.com.ernanilima.jmercado.utils.Filtro;
+import br.com.ernanilima.jmercado.utils.Formata;
 import br.com.ernanilima.jmercado.utils.Utils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -220,7 +221,7 @@ public class ProdutoController implements Initializable, ICadastro {
         colunaCodigiBarras.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCodigoBarras()));
         colunaCodigoSubgrupo.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getMSubgrupo().getCodigo()));
         colunaDescricaoSubgrupo.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getMSubgrupo().getDescricao()));
-        colunaPrecoVenda.setCellValueFactory(cellData -> new SimpleObjectProperty<>(String.valueOf(cellData.getValue().getMPreco().getPrecoVenda())));
+        colunaPrecoVenda.setCellValueFactory(cellData -> new SimpleObjectProperty<>(Formata.VALOR_RS.format(cellData.getValue().getMPreco().getPrecoVenda())));
     }
 
     private void carregarConteudoTabela() {
@@ -284,7 +285,7 @@ public class ProdutoController implements Initializable, ICadastro {
             campoDescricaoGrupo.setText(mProduto.getMGrupo().getDescricao());
             campoCodigoSubgrupo.setText(String.valueOf(mProduto.getMSubgrupo().getCodigo()));
             campoDescricaoSubgrupo.setText(mProduto.getMSubgrupo().getDescricao());
-            campoPrecoVenda.setText(String.valueOf(mProduto.getMPreco().getPrecoVenda()));
+            campoPrecoVenda.setText(Formata.VALOR_RS.format(mProduto.getMPreco().getPrecoVenda()));
 
             cInicio.setTitulo(campoTitulo, "Editar Produto");
             utils.exibirAba(tab, tpCadastrar, tpListar);
