@@ -89,6 +89,10 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     @FXML private TextField campoDescricao;
     @FXML private TreeView<Liberacoes> treeLiberacao;
 
+    private final String TEXTO_LISTAR = "Lista De Grupos de Usuários";
+    private final String TEXTO_CADASTRAR = "Cadastrar Grupo De Usuários";
+    private final String TEXTO_EDITAR = "Editar Grupo De Usuários";
+
     private ObservableList<GrupoUsuario> oListGrupoUsuario;
     private List<GrupoUsuario> lsGrupoUsuario;
     private TableColumn<GrupoUsuario, Integer> colunaCodigo;
@@ -226,7 +230,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
         TREE_SELECIONADO = new HashSet<>();
         carregarEstruturaTreeLiberacao();
         campoCodigo.setDisable(true);
-        cInicio.setTitulo(campoTitulo, "Cadastrar Grupo De Usuário");
+        cInicio.setTitulo(campoTitulo, TEXTO_CADASTRAR);
         utils.exibirAba(tab, tpCadastrar, tpListar);
     }
 
@@ -246,7 +250,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
             carregarEstruturaTreeLiberacao();
 
             campoCodigo.setDisable(true);
-            cInicio.setTitulo(campoTitulo, "Editar Grupo De Usuário");
+            cInicio.setTitulo(campoTitulo, TEXTO_EDITAR);
             utils.exibirAba(tab, tpCadastrar, tpListar);
         }
     }
@@ -294,7 +298,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
             sGrupoUsuario.gravar(mGrupoUsuario);
             limpar();
             carregarConteudoTabela();
-            cInicio.setTitulo(campoTitulo, "Lista De Grupos de Usuários");
+            cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
             utils.exibirAba(tab, tpListar, tpCadastrar);
         }
     }
@@ -302,7 +306,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
     @Override
     public void cancelar() {
         limpar();
-        cInicio.setTitulo(campoTitulo, "Lista De Grupos de Usuários");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         utils.exibirAba(tab, tpListar, tpCadastrar);
     }
 
@@ -334,7 +338,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
         btnSelecionar.setVisible(false);
         campoTitulo.setVisible(false);
         campoTitulo.setPrefHeight(0);
-        cInicio.setTitulo(campoTitulo, "Lista De Grupos De Usuários");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         return painel;
     }
 
@@ -353,7 +357,7 @@ public class GrupoUsuarioController implements Initializable, ICadastro {
         btnSelecionar.setVisible(true);
         campoTitulo.setVisible(true);
         campoTitulo.setPrefHeight(campoTitulo.getMaxHeight());
-        cInicio.setTitulo(campoTitulo, "Lista De Grupos De Usuários");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         STAGE.showAndWait();
     }
 

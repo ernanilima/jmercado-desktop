@@ -114,6 +114,10 @@ public class ProdutoController implements Initializable, ICadastro {
     @FXML private Label textoCampoPrecoVenda;
     @FXML private TextField campoPrecoVenda;
 
+    private final String TEXTO_LISTAR = "Lista De Produtos";
+    private final String TEXTO_CADASTRAR = "Cadastrar Produto";
+    private final String TEXTO_EDITAR = "Editar Produto";
+
     private ObservableList<Produto> oListProduto;
     private List<Produto> lsProduto;
     private TableColumn<Produto, Integer> colunaCodigo;
@@ -273,7 +277,7 @@ public class ProdutoController implements Initializable, ICadastro {
 
     @Override
     public void cadastrar() {
-        cInicio.setTitulo(campoTitulo, "Cadastrar Produto");
+        cInicio.setTitulo(campoTitulo, TEXTO_CADASTRAR);
         utils.exibirAba(tab, tpCadastrar, tpListar);
         campoCodigo.requestFocus();
     }
@@ -298,7 +302,7 @@ public class ProdutoController implements Initializable, ICadastro {
             campoDescricaoSubgrupo.setText(mProduto.getMSubgrupo().getDescricao());
             campoPrecoVenda.setText(Formata.VALOR_RS.format(mProduto.getMPreco().getPrecoVenda()));
 
-            cInicio.setTitulo(campoTitulo, "Editar Produto");
+            cInicio.setTitulo(campoTitulo, TEXTO_EDITAR);
             utils.exibirAba(tab, tpCadastrar, tpListar);
             campoDescricaoProduto.requestFocus();
         }
@@ -342,7 +346,7 @@ public class ProdutoController implements Initializable, ICadastro {
             sProduto.gravar(mProduto);
             limpar();
             carregarConteudoTabela();
-            cInicio.setTitulo(campoTitulo, "Lista De Produtos");
+            cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
             utils.exibirAba(tab, tpListar, tpCadastrar);
         }
     }
@@ -351,7 +355,7 @@ public class ProdutoController implements Initializable, ICadastro {
     @Override
     public void cancelar() {
         limpar();
-        cInicio.setTitulo(campoTitulo, "Lista De Produtos");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         utils.exibirAba(tab, tpListar, tpCadastrar);
     }
 
@@ -412,7 +416,7 @@ public class ProdutoController implements Initializable, ICadastro {
         btnSelecionar.setVisible(false);
         campoTitulo.setVisible(false);
         campoTitulo.setPrefHeight(0);
-        cInicio.setTitulo(campoTitulo, "Lista De Produtos");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         return painel;
     }
 

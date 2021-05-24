@@ -186,7 +186,6 @@ public class LoginController implements Initializable {
         return (USUARIO_ATUAL == null || USUARIO_ATUAL.getSenha() == null ||
                 // se usuario nao for nulo e sua senha tambem nao for nula
                 vCampo.loginSenhaVaziaInvalida(campoSenhaAtual, campoSenhaAtual.getPromptText(), 3, erroSenhaAtual)) &&
-
                 vCampo.loginSenhaVaziaInvalida(campoNovaSenha1, campoNovaSenha1.getPromptText(), 3, erroNovaSenha1) &&
                 vCampo.loginSenhaVaziaInvalida(campoNovaSenha2, campoNovaSenha2.getPromptText(), 3, erroNovaSenha2) &&
                 vCampo.loginSenhasIguais(campoNovaSenha1, campoNovaSenha2, erroNovaSenha1, erroNovaSenha2);

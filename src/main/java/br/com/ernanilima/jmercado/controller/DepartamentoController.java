@@ -84,6 +84,10 @@ public class DepartamentoController implements Initializable, ICadastro {
     @FXML private Label textoCampoDescricao;
     @FXML private TextField campoDescricao;
 
+    private final String TEXTO_LISTAR = "Lista De Departamentos";
+    private final String TEXTO_CADASTRAR = "Cadastrar Departamento";
+    private final String TEXTO_EDITAR = "Editar Departamento";
+
     private ObservableList<Departamento> oListDepartamento;
     private List<Departamento> lsDepartamento;
     private TableColumn<Departamento, Integer> colunaCodigo;
@@ -211,7 +215,7 @@ public class DepartamentoController implements Initializable, ICadastro {
     /** Cadastrar novo */
     @Override
     public void cadastrar() {
-        cInicio.setTitulo(campoTitulo, "Cadastrar Departamento");
+        cInicio.setTitulo(campoTitulo, TEXTO_CADASTRAR);
         utils.exibirAba(tab, tpCadastrar, tpListar);
         campoCodigo.requestFocus();
     }
@@ -225,7 +229,7 @@ public class DepartamentoController implements Initializable, ICadastro {
             campoCodigo.setText(String.valueOf(mDepartamento.getCodigo()));
             campoDescricao.setText(mDepartamento.getDescricao());
 
-            cInicio.setTitulo(campoTitulo, "Editar Departamento");
+            cInicio.setTitulo(campoTitulo, TEXTO_EDITAR);
             utils.exibirAba(tab, tpCadastrar, tpListar);
             campoDescricao.requestFocus();
         }
@@ -256,7 +260,7 @@ public class DepartamentoController implements Initializable, ICadastro {
             sDepartamento.gravar(mDepartamento);
             limpar();
             carregarConteudoTabela();
-            cInicio.setTitulo(campoTitulo, "Lista De Departamentos");
+            cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
             utils.exibirAba(tab, tpListar, tpCadastrar);
         }
     }
@@ -264,7 +268,7 @@ public class DepartamentoController implements Initializable, ICadastro {
     @Override
     public void cancelar() {
         limpar();
-        cInicio.setTitulo(campoTitulo, "Lista De Departamentos");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         utils.exibirAba(tab, tpListar, tpCadastrar);
     }
 
@@ -296,7 +300,7 @@ public class DepartamentoController implements Initializable, ICadastro {
         btnSelecionar.setVisible(false);
         campoTitulo.setVisible(false);
         campoTitulo.setPrefHeight(0);
-        cInicio.setTitulo(campoTitulo, "Lista De Departamentos");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         return painel;
     }
 
@@ -315,7 +319,7 @@ public class DepartamentoController implements Initializable, ICadastro {
         btnSelecionar.setVisible(true);
         campoTitulo.setVisible(true);
         campoTitulo.setPrefHeight(campoTitulo.getMaxHeight());
-        cInicio.setTitulo(campoTitulo, "Lista De Grupos De Produtos");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         STAGE.showAndWait();
     }
 

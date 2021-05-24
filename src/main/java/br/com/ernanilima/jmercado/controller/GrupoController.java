@@ -93,6 +93,10 @@ public class GrupoController implements Initializable, ICadastro {
     @FXML private Button btnBuscar;
     @FXML private TextField campoDescricaoDepartamento;
 
+    private final String TEXTO_LISTAR = "Lista De Grupos De Produtos";
+    private final String TEXTO_CADASTRAR = "Cadastrar Grupo De Produtos";
+    private final String TEXTO_EDITAR = "Editar Grupo De Produtos";
+
     private ObservableList<Grupo> oListGrupo;
     private List<Grupo> lsGrupo;
     private TableColumn<Grupo, Integer> colunaCodigo;
@@ -257,7 +261,7 @@ public class GrupoController implements Initializable, ICadastro {
 
     @Override
     public void cadastrar() {
-        cInicio.setTitulo(campoTitulo, "Cadastrar Grupo De Produto");
+        cInicio.setTitulo(campoTitulo, TEXTO_CADASTRAR);
         utils.exibirAba(tab, tpCadastrar, tpListar);
         campoCodigo.requestFocus();
     }
@@ -273,7 +277,7 @@ public class GrupoController implements Initializable, ICadastro {
             campoCodDepartamento.setText(String.valueOf(mGrupo.getMDepartamento().getCodigo()));
             campoDescricaoDepartamento.setText(mGrupo.getMDepartamento().getDescricao());
 
-            cInicio.setTitulo(campoTitulo, "Editar Grupo De Produtos");
+            cInicio.setTitulo(campoTitulo, TEXTO_EDITAR);
             utils.exibirAba(tab, tpCadastrar, tpListar);
             campoDescricao.requestFocus();
         }
@@ -305,7 +309,7 @@ public class GrupoController implements Initializable, ICadastro {
             sGrupo.gravar(mGrupo);
             limpar();
             carregarConteudoTabela();
-            cInicio.setTitulo(campoTitulo, "Lista De Grupos De Produtos");
+            cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
             utils.exibirAba(tab, tpListar, tpCadastrar);
         }
     }
@@ -313,7 +317,7 @@ public class GrupoController implements Initializable, ICadastro {
     @Override
     public void cancelar() {
         limpar();
-        cInicio.setTitulo(campoTitulo, "Lista De Grupos De Produtos");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         utils.exibirAba(tab, tpListar, tpCadastrar);
     }
 
@@ -359,7 +363,7 @@ public class GrupoController implements Initializable, ICadastro {
         campoTitulo.setVisible(false);
         campoTitulo.setPrefHeight(0);
         carregarConteudoTabela();
-        cInicio.setTitulo(campoTitulo, "Lista De Grupos De Produtos");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         return painel;
     }
 
@@ -386,7 +390,7 @@ public class GrupoController implements Initializable, ICadastro {
         campoTitulo.setVisible(true);
         campoTitulo.setPrefHeight(campoTitulo.getMaxHeight());
         carregarConteudoTabela();
-        cInicio.setTitulo(campoTitulo, "Lista De Grupos De Produtos");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         STAGE.showAndWait();
     }
 

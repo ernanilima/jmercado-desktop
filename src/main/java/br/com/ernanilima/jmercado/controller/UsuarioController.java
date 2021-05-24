@@ -105,6 +105,10 @@ public class UsuarioController implements Initializable, ICadastro {
     @FXML private RadioButton btnRLiberacaoGrupo;
     @FXML private TreeView<Liberacoes> treeLiberacao;
 
+    private final String TEXTO_LISTAR = "Lista De Usuários";
+    private final String TEXTO_CADASTRAR = "Cadastrar Usuário";
+    private final String TEXTO_EDITAR = "Editar Usuário";
+
     private ObservableList<Usuario> oListUsuario;
     private List<Usuario> lsUsuario;
     private TableColumn<Usuario, Integer> colunaCodigo;
@@ -273,7 +277,7 @@ public class UsuarioController implements Initializable, ICadastro {
         campoCodigo.setDisable(true);
         btnRemoverSenha.setDisable(true);
         SENHA_USUARIO = null;
-        cInicio.setTitulo(campoTitulo, "Cadastrar Usuário");
+        cInicio.setTitulo(campoTitulo, TEXTO_CADASTRAR);
         utils.exibirAba(tab, tpCadastrar, tpListar);
     }
 
@@ -301,7 +305,7 @@ public class UsuarioController implements Initializable, ICadastro {
                 mUsuario.getMGrupoUsuario().getLiberacoes().stream().map(CheckBoxTreeItem::new).forEach(l -> TREE_SELECIONADO.add(l));
             }
             carregarEstruturaTreeLiberacao();
-            cInicio.setTitulo(campoTitulo, "Editar Usuário");
+            cInicio.setTitulo(campoTitulo, TEXTO_EDITAR);
             utils.exibirAba(tab, tpCadastrar, tpListar);
         }
     }
@@ -377,7 +381,7 @@ public class UsuarioController implements Initializable, ICadastro {
             sUsuario.gravar(mUsuario);
             limpar();
             carregarConteudoTabela();
-            cInicio.setTitulo(campoTitulo, "Lista De Usuários");
+            cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
             utils.exibirAba(tab, tpListar, tpCadastrar);
         }
     }
@@ -385,7 +389,7 @@ public class UsuarioController implements Initializable, ICadastro {
     @Override
     public void cancelar() {
         limpar();
-        cInicio.setTitulo(campoTitulo, "Lista De Usuários");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         utils.exibirAba(tab, tpListar, tpCadastrar);
     }
 
@@ -429,7 +433,7 @@ public class UsuarioController implements Initializable, ICadastro {
         btnSelecionar.setVisible(false);
         campoTitulo.setVisible(false);
         campoTitulo.setPrefHeight(0);
-        cInicio.setTitulo(campoTitulo, "Lista De Usuários");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         return painel;
     }
 

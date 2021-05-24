@@ -6,7 +6,6 @@ import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.validacao.ValidarLiberacao;
-import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.model.Grupo;
 import br.com.ernanilima.jmercado.model.Subgrupo;
 import br.com.ernanilima.jmercado.service.GrupoService;
@@ -96,6 +95,10 @@ public class SubgrupoController implements Initializable, ICadastro {
     @FXML private Label textoCampoDepartamento;
     @FXML private TextField campoCodDepartamento;
     @FXML private TextField campoDescricaoDepartamento;
+
+    private final String TEXTO_LISTAR = "Lista De Subgrupos De Produtos";
+    private final String TEXTO_CADASTRAR = "Cadastrar Subgrupo De Produtos";
+    private final String TEXTO_EDITAR = "Editar Subgrupo De Produtos";
 
     private ObservableList<Subgrupo> oListSubgrupo;
     private List<Subgrupo> lsSubgrupo;
@@ -268,7 +271,7 @@ public class SubgrupoController implements Initializable, ICadastro {
 
     @Override
     public void cadastrar() {
-        cInicio.setTitulo(campoTitulo, "Cadastrar Subgrupo De Produtos");
+        cInicio.setTitulo(campoTitulo, TEXTO_CADASTRAR);
         utils.exibirAba(tab, tpCadastrar, tpListar);
         campoCodigo.requestFocus();
     }
@@ -286,7 +289,7 @@ public class SubgrupoController implements Initializable, ICadastro {
             campoCodDepartamento.setText(String.valueOf(mSubgrupo.getMDepartamento().getCodigo()));
             campoDescricaoDepartamento.setText(mSubgrupo.getMDepartamento().getDescricao());
 
-            cInicio.setTitulo(campoTitulo, "Editar Subgrupo De Produtos");
+            cInicio.setTitulo(campoTitulo, TEXTO_EDITAR);
             utils.exibirAba(tab, tpCadastrar, tpListar);
             campoDescricao.requestFocus();
         }
@@ -319,7 +322,7 @@ public class SubgrupoController implements Initializable, ICadastro {
             sSubgrupo.gravar(mSubgrupo);
             limpar();
             carregarConteudoTabela();
-            cInicio.setTitulo(campoTitulo, "Lista De Subgrupos De Produtos");
+            cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
             utils.exibirAba(tab, tpListar, tpCadastrar);
         }
     }
@@ -327,7 +330,7 @@ public class SubgrupoController implements Initializable, ICadastro {
     @Override
     public void cancelar() {
         limpar();
-        cInicio.setTitulo(campoTitulo, "Lista De Subgrupos De Produtos");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         utils.exibirAba(tab, tpListar, tpCadastrar);
     }
 
@@ -372,7 +375,7 @@ public class SubgrupoController implements Initializable, ICadastro {
         campoTitulo.setVisible(false);
         campoTitulo.setPrefHeight(0);
         carregarConteudoTabela();
-        cInicio.setTitulo(campoTitulo, "Lista De Subgrupos De Produtos");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         return painel;
     }
 
@@ -399,7 +402,7 @@ public class SubgrupoController implements Initializable, ICadastro {
         campoTitulo.setVisible(true);
         campoTitulo.setPrefHeight(campoTitulo.getMaxHeight());
         carregarConteudoTabela();
-        cInicio.setTitulo(campoTitulo, "Lista De Subgrupos De Produtos");
+        cInicio.setTitulo(campoTitulo, TEXTO_LISTAR);
         STAGE.showAndWait();
     }
 
