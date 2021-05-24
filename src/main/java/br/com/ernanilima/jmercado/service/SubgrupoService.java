@@ -6,9 +6,10 @@ import br.com.ernanilima.jmercado.model.Subgrupo;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public interface SubgrupoService extends IService {
+public interface SubgrupoService extends IService, IServiceAssociado {
     Subgrupo gravar(Subgrupo subgrupo);
     Subgrupo getPorId(int codigo);
+    Subgrupo getAssociadoPorId(int codigoPrincipal, int codigoAssociado);
     void remover(int codigo);
     void remover(Subgrupo subgrupo);
     List<Subgrupo> listarTudo();

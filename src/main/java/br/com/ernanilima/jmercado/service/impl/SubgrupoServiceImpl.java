@@ -30,6 +30,12 @@ public class SubgrupoServiceImpl implements SubgrupoService {
     }
 
     @Override
+    public Subgrupo getAssociadoPorId(int codigoPrincipal, int codigoAssociado) {
+        Optional<Subgrupo> model = rSubgrupo.findByCodigoAndMGrupo(codigoPrincipal, codigoAssociado);
+        return model.orElse(null);
+    }
+
+    @Override
     public void remover(int codigo) {
         try {
             getPorId(codigo);

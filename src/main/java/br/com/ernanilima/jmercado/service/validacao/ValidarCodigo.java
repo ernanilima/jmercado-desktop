@@ -1,7 +1,9 @@
 package br.com.ernanilima.jmercado.service.validacao;
 
+import br.com.ernanilima.jmercado.model.IModel;
 import br.com.ernanilima.jmercado.service.IService;
 
+import br.com.ernanilima.jmercado.service.IServiceAssociado;
 import br.com.ernanilima.jmercado.service.ProdutoService;
 import br.com.ernanilima.jmercado.service.componente.Legenda;
 import br.com.ernanilima.jmercado.service.constante.MensagemAlerta;
@@ -67,6 +69,37 @@ public class ValidarCodigo {
         } else {
             // nada informado, eh validado em campo vazio
             campoDescricao.setText("");
+            return false;
+        }
+    }
+
+
+    /** Verifica se o cadastro principal tem o cadastro de associado junto
+     * Ex: verificar se grupo(principal) tem o departamento(associado)
+     * @param campoCodigoPrincipal TextField - campo do codigo do cadastro principal
+     * @param campoCodigoAssociado TextField - campo do codigo do cadastro associado
+     * @param campoDescricaoPrincipal TextField - campo de descricao principal
+     * @param iServiceAssociado IService - servico para buscar com de associado
+     * @param nomeCampoPrincipal Label - campo do campo principal
+     * @return boolean - true se for localizado (tudo ok) */
+    public boolean buscarAssociadoExistente(TextField campoCodigoPrincipal, TextField campoCodigoAssociado, TextField campoDescricaoPrincipal, IServiceAssociado iServiceAssociado, Label nomeCampoPrincipal) {
+        if (!campoCodigoPrincipal.getText().equals("") && // existe codigo para buscar
+                Integer.parseInt(campoCodigoPrincipal.getText()) > 0) { // codigo maior que zero
+
+            IModel iModel = iServiceAssociado.getAssociadoPorId(Filtro.pInt(campoCodigoPrincipal.getText()), Filtro.pInt(campoCodigoAssociado.getText()));
+            if (iModel != null) {
+                // cadastro localizado
+                return true;
+
+            } else {
+                // cadastro nao localizado
+                campoDescricaoPrincipal.setText("");
+                legenda.exibirAlerta(MensagemAlerta.naoLocalizado(nomeCampoPrincipal.getText()), campoCodigoPrincipal);
+                return false;
+            }
+        } else {
+            // nada informado, eh validado em campo vazio
+            campoDescricaoPrincipal.setText("");
             return false;
         }
     }

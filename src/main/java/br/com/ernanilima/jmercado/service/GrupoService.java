@@ -6,9 +6,10 @@ import br.com.ernanilima.jmercado.model.Grupo;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public interface GrupoService extends IService {
+public interface GrupoService extends IService, IServiceAssociado {
     Grupo gravar(Grupo grupo);
     Grupo getPorId(int codigo);
+    Grupo getAssociadoPorId(int codigoPrincipal, int codigoAssociado);
     void remover(int codigo);
     void remover(Grupo grupo);
     List<Grupo> listarTudo();

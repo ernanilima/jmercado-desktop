@@ -30,6 +30,12 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @Override
+    public Grupo getAssociadoPorId(int codigoPrincipal, int codigoAssociado) {
+        Optional<Grupo> model = rGrupo.findByCodigoAndMDepartamento(codigoPrincipal, codigoAssociado);
+        return model.orElse(null);
+    }
+
+    @Override
     public void remover(int codigo) {
         try {
             getPorId(codigo);
