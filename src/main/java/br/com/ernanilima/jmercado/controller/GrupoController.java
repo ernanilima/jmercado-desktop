@@ -208,7 +208,7 @@ public class GrupoController implements Initializable, ICadastro {
     /** Verifica se foi realizado alguma gusca
      * @return CompletableFuture<List<Grupo>> */
     private CompletableFuture<List<Grupo>> tipoBuscaRealizada() {
-        if (CODIGO_BUSCA == null || CODIGO_BUSCA.equals("") && btnSelecionar.isVisible()) {
+        if ((CODIGO_BUSCA == null || CODIGO_BUSCA.equals("")) && btnSelecionar.isVisible()) {
             tabela.setPlaceholder(new Label("NENHUM GRUPO PARA ESTE DEPARTAMENTO"));
             return new CompletableFuture<>();
 

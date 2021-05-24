@@ -4,7 +4,6 @@ import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.model.Grupo;
 import br.com.ernanilima.jmercado.repository.GrupoRepository;
 import br.com.ernanilima.jmercado.service.GrupoService;
-import br.com.ernanilima.jmercado.utils.Filtro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Async;

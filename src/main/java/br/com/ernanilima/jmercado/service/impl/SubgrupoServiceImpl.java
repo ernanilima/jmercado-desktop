@@ -1,5 +1,6 @@
 package br.com.ernanilima.jmercado.service.impl;
 
+import br.com.ernanilima.jmercado.model.Grupo;
 import br.com.ernanilima.jmercado.model.Subgrupo;
 import br.com.ernanilima.jmercado.repository.SubgrupoRepository;
 import br.com.ernanilima.jmercado.service.SubgrupoService;
@@ -50,6 +51,12 @@ public class SubgrupoServiceImpl implements SubgrupoService {
     @Override
     public List<Subgrupo> listarTudo() {
         return rSubgrupo.findAll();
+    }
+
+    @Override
+    public CompletableFuture<List<Subgrupo>> listarPorGrupoAsinc(Grupo mGrupo) {
+        final List<Subgrupo> list = rSubgrupo.findAllBymGrupo(mGrupo);
+        return CompletableFuture.completedFuture(list);
     }
 
     @Async
