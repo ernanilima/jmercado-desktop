@@ -4,6 +4,8 @@ import br.com.ernanilima.jmercado.controller.listener.FocusListener;
 import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
+import br.com.ernanilima.jmercado.liberacao.Liberacoes;
+import br.com.ernanilima.jmercado.liberacao.validacao.ValidarLiberacao;
 import br.com.ernanilima.jmercado.model.Preco;
 import br.com.ernanilima.jmercado.model.Produto;
 import br.com.ernanilima.jmercado.service.*;
@@ -57,6 +59,7 @@ public class ProdutoController implements Initializable, ICadastro {
     @Autowired private GrupoService sGrupo;
     @Autowired private SubgrupoService sSubgrupo;
     @Autowired private Utils utils;
+    @Autowired private ValidarLiberacao vLiberacao;
     @Autowired private ValidarCodigo vCodigo;
     @Autowired private ValidarCampo vCampo;
 
@@ -179,6 +182,14 @@ public class ProdutoController implements Initializable, ICadastro {
 
         carregarEstruturaTabela();
         carregarOpcoesPesquisa();
+    }
+
+    /** Liberacoes solicitadas deve ser executada sempre que o controller for exibido */
+    private void liberacoesSolicitadas() {
+        // VALIDACAO DE LIBERACOES DE USUARIO
+        vLiberacao.liberacaoUsuario(btnCadastrar, Liberacoes.CADASTROS_PRODUTOS_PRODUTOS_CADASTRAR);
+        vLiberacao.liberacaoUsuario(btnEditar, Liberacoes.CADASTROS_PRODUTOS_PRODUTOS_EDITAR);
+        vLiberacao.liberacaoUsuario(btnExcluir, Liberacoes.CADASTROS_PRODUTOS_PRODUTOS_EXCLUIR);
     }
 
     private void carregarEstruturaTabela() {
@@ -417,6 +428,7 @@ public class ProdutoController implements Initializable, ICadastro {
                 ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
                 carregarConteudoTabela();
             }
+            liberacoesSolicitadas();
         } catch (IOException e) { e.printStackTrace(); }
     }
 }
