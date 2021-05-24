@@ -1,8 +1,10 @@
 package br.com.ernanilima.jmercado.service.impl;
 
+import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.model.Grupo;
 import br.com.ernanilima.jmercado.repository.GrupoRepository;
 import br.com.ernanilima.jmercado.service.GrupoService;
+import br.com.ernanilima.jmercado.utils.Filtro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Async;
@@ -50,6 +52,13 @@ public class GrupoServiceImpl implements GrupoService {
     @Override
     public List<Grupo> listarTudo() {
         return rGrupo.findAll();
+    }
+
+    @Async
+    @Override
+    public CompletableFuture<List<Grupo>> listarPorDepartamentoAsinc(Departamento mDepartamento) {
+        final List<Grupo> list = rGrupo.findAllBymDepartamento(mDepartamento);
+        return CompletableFuture.completedFuture(list);
     }
 
     @Async

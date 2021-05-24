@@ -6,6 +6,7 @@ import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.validacao.ValidarLiberacao;
+import br.com.ernanilima.jmercado.model.Departamento;
 import br.com.ernanilima.jmercado.model.Grupo;
 import br.com.ernanilima.jmercado.service.DepartamentoService;
 import br.com.ernanilima.jmercado.service.GrupoService;
@@ -41,6 +42,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
 
 @Controller
 public class GrupoController implements Initializable, ICadastro {
@@ -103,6 +105,7 @@ public class GrupoController implements Initializable, ICadastro {
     private Parent ROOT;
     private Scene SCENE;
     private boolean LINHA_SELECIONADA;
+    private String CODIGO_BUSCA;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -191,13 +194,33 @@ public class GrupoController implements Initializable, ICadastro {
 
     private void carregarConteudoTabela() {
         oListGrupo.clear();
-        sGrupo.listarTudoAsinc().thenAccept(list -> Platform.runLater(()-> {
+        tabela.getSortOrder().clear();
+        tabela.getItems().clear();
+        tipoBuscaRealizada().thenAccept(list -> Platform.runLater(()-> {
             lsGrupo = list;
             tabela.getSortOrder().clear();
             oListGrupo.addAll(lsGrupo);
             tabela.getItems().setAll(oListGrupo);
             tabela.requestFocus();
         }));
+    }
+
+    /** Verifica se foi realizado alguma gusca
+     * @return CompletableFuture<List<Grupo>> */
+    private CompletableFuture<List<Grupo>> tipoBuscaRealizada() {
+        if (CODIGO_BUSCA == null || CODIGO_BUSCA.equals("") && btnSelecionar.isVisible()) {
+            tabela.setPlaceholder(new Label("NENHUM GRUPO PARA ESTE DEPARTAMENTO"));
+            return new CompletableFuture<>();
+
+        } else if (CODIGO_BUSCA != null && !CODIGO_BUSCA.equals("") && btnSelecionar.isVisible()) {
+            Departamento mDepartamento = sDepartamento.getPorId(Filtro.pInt(CODIGO_BUSCA));
+            if (mDepartamento == null) {
+                tabela.setPlaceholder(new Label("NENHUM GRUPO PARA O DEPARTAMENTO : " + CODIGO_BUSCA));
+                return new CompletableFuture<>();
+            } else {
+                return sGrupo.listarPorDepartamentoAsinc(mDepartamento);
+            }
+        } return sGrupo.listarTudoAsinc();
     }
 
     /** Carrega as opcoes para pesquisa no combobox */
@@ -335,16 +358,24 @@ public class GrupoController implements Initializable, ICadastro {
         btnSelecionar.setVisible(false);
         campoTitulo.setVisible(false);
         campoTitulo.setPrefHeight(0);
+        carregarConteudoTabela();
         cInicio.setTitulo(campoTitulo, "Lista De Grupos De Produtos");
         return painel;
     }
 
     /** Exibe o painel em forma de dialog */
     public void exibirModal() {
+        exibirModal(null);
+    }
+
+    /** Exibe dados com base no parametro passado
+     * @param codigoParaBuscar String - codigo para realizar busca */
+    public void exibirModal(String codigoParaBuscar) {
         STAGE = null;
         construirPainel();
 
         LINHA_SELECIONADA = false;
+        CODIGO_BUSCA = codigoParaBuscar;
         STAGE.setResizable(false);
         if (ROOT.getScene() == null) {
             SCENE = new Scene(ROOT);
@@ -354,6 +385,7 @@ public class GrupoController implements Initializable, ICadastro {
         btnSelecionar.setVisible(true);
         campoTitulo.setVisible(true);
         campoTitulo.setPrefHeight(campoTitulo.getMaxHeight());
+        carregarConteudoTabela();
         cInicio.setTitulo(campoTitulo, "Lista De Grupos De Produtos");
         STAGE.showAndWait();
     }
@@ -368,7 +400,6 @@ public class GrupoController implements Initializable, ICadastro {
                 STAGE.initModality(Modality.APPLICATION_MODAL);
                 LOADER.setControllerFactory(aClass -> springContext.getBean(aClass));
                 ROOT.getStylesheets().add(R_CSS.getURL().toExternalForm());
-                carregarConteudoTabela();
             }
             liberacoesSolicitadas();
         } catch (IOException e) { e.printStackTrace(); }

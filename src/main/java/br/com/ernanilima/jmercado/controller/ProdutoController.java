@@ -365,7 +365,7 @@ public class ProdutoController implements Initializable, ICadastro {
     }
 
     private void buscarGrupo() {
-        cGrupo.exibirModal();
+        cGrupo.exibirModal(campoCodigoDepartamento.getText());
         campoCodigoGrupo.requestFocus();
         if (cGrupo.getGrupo() != null) {
             campoCodigoGrupo.setText(String.valueOf(cGrupo.getGrupo().getCodigo()));
