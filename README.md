@@ -1,6 +1,17 @@
 # jMercado
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/ernanilima/jmercado-desktop/blob/main/LICENSE)
 
+# Imagens do projeto
+Tela de login | Tela de lista de produtos
+--------------|--------------------------
+![Tela de login](https://github.com/ernanilima/ernanilima/blob/main/imagens/jmercado-desktop/tela_login.png) | ![Tela de lista de produtos](https://github.com/ernanilima/ernanilima/blob/main/imagens/jmercado-desktop/tela_principal-produtos.png)
+
+Tela de editar produto | Tela de editar/excluir senha de usuário
+-----------------------|----------------------------------------
+![Tela de editar produto](https://github.com/ernanilima/ernanilima/blob/main/imagens/jmercado-desktop/tela_principal-editar_produto.png) | ![Tela de editar/excluir senha de usuário](https://github.com/ernanilima/ernanilima/blob/main/imagens/jmercado-desktop/tela_principal-editar_usuario-excluir_senha.png)
+
+[Mais imagens](https://github.com/ernanilima/ernanilima/tree/main/imagens/jmercado-desktop)
+
 # Sobre o projeto
 Aplicação desktop desenvolvida com a linguagem Java.
 
