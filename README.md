@@ -61,8 +61,8 @@ Alguns dados são gerados automaticamente e podem ser facilmente utilizados no b
         - Possível igualar grupos e suas liberações.
     - **Usuário**
         - Possível remover senha.
-        - Possível igualar usuário e suas liberacoes.
-        - possível escolher o tipo de liberação que vai usar, se é por usuário ou por grupo de usuário.
+        - Possível igualar usuário e suas liberações.
+        - Possível escolher o tipo de liberação que vai usar, se é por usuário ou por grupo de usuário.
         - **IMPORTANTE**
             - Ao cadastrar um novo usuário, o mesmo é gravado sem senha, para que uma senha seja atribuida a esse usuário que foi cadastrado, a solicitação deve ser feita na tela de login/mudar a senha, a tela de mudar a senha não exibe nada indicando que esse usuário existe, isso evita que alguém tente usar usuário sem senha.
     
