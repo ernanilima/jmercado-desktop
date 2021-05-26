@@ -46,10 +46,11 @@
                                                    <children>
                                                       <TextField fx:id="campoCodigo" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" promptText="Código" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                                          <padding>
-                                                            <Insets left="40.0" />
+                                                            <Insets left="40.0" right="40.0" />
                                                          </padding>
                                                       </TextField>
                                                       <Label id="iconeUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="2.0" />
+                                                      <Button fx:id="btnAjudaCodigo" focusTraversable="false" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="?" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" />
                                                       <Label fx:id="erroCodigo" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="erro-login" text="ERRO CÓDIGO" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="35.0">
                                                          <font>
                                                             <Font size="10.0" />
@@ -57,10 +58,11 @@
                                                       </Label>
                                                       <PasswordField fx:id="campoSenha" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" promptText="Senha" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
                                                          <padding>
-                                                            <Insets left="40.0" />
+                                                            <Insets left="40.0" right="40.0" />
                                                          </padding>
                                                       </PasswordField>
-                                                      <Label id="iconeSenha" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="52.0" />
+                                                      <Label id="iconeSenha" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="57.0" />
+                                                      <Button fx:id="btnAjudaSenha" focusTraversable="false" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="?" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="57.0" />
                                                       <Label fx:id="erroSenha" layoutX="20.0" layoutY="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="erro-login" text="ERRO SENHA" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="90.0">
                                                          <font>
                                                             <Font size="10.0" />

@@ -1,5 +1,6 @@
 package br.com.ernanilima.jmercado.controller;
 
+import br.com.ernanilima.jmercado.controller.popup.PopUpMensagemController;
 import br.com.ernanilima.jmercado.model.Usuario;
 import br.com.ernanilima.jmercado.service.UsuarioService;
 import br.com.ernanilima.jmercado.service.componente.Legenda;
@@ -38,6 +39,7 @@ public class LoginController implements Initializable {
     @Autowired private ApplicationContext springContext;
     @Autowired private BCryptPasswordEncoder passwdEncoder;
     @Autowired private InicioController cInicio;
+    @Autowired private PopUpMensagemController ppMensagem;
     @Autowired private UsuarioService sUsuario;
     @Autowired private Utils utils;
     @Autowired private ValidarCampo vCampo;
@@ -51,7 +53,9 @@ public class LoginController implements Initializable {
     @FXML private TabPane tab;
     @FXML private Tab tpLogin;
     @FXML private TextField campoCodigo;
+    @FXML private Button btnAjudaCodigo;
     @FXML private PasswordField campoSenha;
+    @FXML private Button btnAjudaSenha;
     @FXML private Button btnEntrar;
     @FXML private Button btnSair;
     @FXML private Button btnMudarSenha;
@@ -84,6 +88,8 @@ public class LoginController implements Initializable {
         erroNovaSenha2.setVisible(false);
 
         // ACOES EM BOTOES
+        btnAjudaCodigo.setOnAction(e -> ajudaCodigo());
+        btnAjudaSenha.setOnAction(e -> ajudaSenha());
         btnEntrar.setOnAction(e -> verificarLoginRealizado());
         btnSair.setOnAction(e -> finalizar());
         btnMudarSenha.setOnAction(e -> abrirMudarSenha());
@@ -167,6 +173,18 @@ public class LoginController implements Initializable {
     private void loginRealizado() {
         limpar();
         cInicio.exibir(STAGE);
+    }
+
+    /** Exibe popup de ajuda para usar usuario de suporte */
+    private void ajudaCodigo() {
+        ppMensagem.exibirPopUp("INFORME O CÓDIGO 9999 PARA USUÁRIO DE SUPORTE.");
+    }
+
+    /** Exibe popup de ajuda com a forma de calcular a senha de suporte */
+    private void ajudaSenha() {
+        ppMensagem.exibirPopUp("SENHA DE SUPORTE É UM CÁLCULO, DIA * MÊS * ANO.\n" +
+                "EX: DIGAMOS QUE SEJA FIM DE ANO DE 2021, CÁLCULO 31 * 12 * 2021\n" +
+                "NESSE EXEMPLO A SENHA SERIA 751812");
     }
 
     private void limpar() {

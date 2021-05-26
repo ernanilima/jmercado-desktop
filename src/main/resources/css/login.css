@@ -75,7 +75,16 @@
     -fx-background-color: green;
     -fx-text-fill: white;
 }
+#btnAjudaCodigo,
+#btnAjudaSenha {
+    -fx-background-color: transparent;
+    -fx-text-fill: silver;
+}
 /*PASSAR O MAUSE*/
+#btnAjudaCodigo:hover,
+#btnAjudaSenha:hover {
+    -fx-text-fill: black;
+}
 #btnSair:hover {
     -fx-background-color: #e6e6ff;
 }
