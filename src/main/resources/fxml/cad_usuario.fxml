@@ -126,6 +126,11 @@
                                                 <Insets left="10.0" />
                                              </HBox.margin>
                                           </TextField>
+                                          <Button fx:id="btnAjudaUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="?">
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Button>
                                        </children>
                                        <HBox.margin>
                                           <Insets right="10.0" />

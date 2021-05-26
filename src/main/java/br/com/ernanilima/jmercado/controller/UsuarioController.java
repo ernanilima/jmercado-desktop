@@ -5,6 +5,7 @@ import br.com.ernanilima.jmercado.controller.listener.KeyListener;
 import br.com.ernanilima.jmercado.controller.popup.CoresPopUpConfirmacao;
 import br.com.ernanilima.jmercado.controller.popup.PopUpBuscaController;
 import br.com.ernanilima.jmercado.controller.popup.PopUpConfirmacaoController;
+import br.com.ernanilima.jmercado.controller.popup.PopUpMensagemController;
 import br.com.ernanilima.jmercado.liberacao.Liberacoes;
 import br.com.ernanilima.jmercado.liberacao.MontarLiberacoes;
 import br.com.ernanilima.jmercado.liberacao.TipoLiberacao;
@@ -52,6 +53,7 @@ public class UsuarioController implements Initializable, ICadastro {
     @Autowired private InicioController cInicio;
     @Autowired private GrupoUsuarioController cGrupoUsuario;
     @Autowired private PopUpConfirmacaoController ppConfirmacao;
+    @Autowired private PopUpMensagemController ppMensagem;
     @Autowired private PopUpBuscaController ppBusca;
     @Autowired private FocusListener lFocus;
     @Autowired private KeyListener lKey;
@@ -87,6 +89,7 @@ public class UsuarioController implements Initializable, ICadastro {
     @FXML private AnchorPane box;
     @FXML private Label textoCampoCodigo1;
     @FXML private TextField campoCodigo;
+    @FXML private Button btnAjudaUsuario;
     @FXML private Button btnGravar;
     @FXML private Button btnCancelar;
     @FXML private Button btnIgualar;
@@ -134,6 +137,7 @@ public class UsuarioController implements Initializable, ICadastro {
         btnCadastrar.setOnAction(e -> cadastrar());
         btnEditar.setOnAction(e -> editar());
         btnExcluir.setOnAction(e -> excluir());
+        btnAjudaUsuario.setOnAction(e -> ajudaUsuario());
         btnRemoverSenha.setOnAction(e -> removerSenha());
         btnIgualar.setOnAction(e -> igualarUsuario());
         btnGravar.setOnAction(e -> gravar());
@@ -401,6 +405,18 @@ public class UsuarioController implements Initializable, ICadastro {
             campoCodGrupoUsuario.setText(String.valueOf(cGrupoUsuario.getGrupoUsuario().getCodigo()));
             campoDescricaoGrupoUsuario.setText(cGrupoUsuario.getGrupoUsuario().getDescricao());
         }
+    }
+
+    /** Exibe popup de ajuda na criacao de usuario novo
+     * Opcao poderia ser apenas para cadastrar novo usuario, mas optei
+     * por exibir esta opcao para cadastrar e editar usuario */
+    private void ajudaUsuario() {
+        ppMensagem.exibirPopUp("IMPORTANTE: O CADASTRO DE UM USUÁRIO NOVO É GERADO SEM SENHA.\n" +
+                "PARA QUE O USUÁRIO OBTENHA UMA SENHA, DEVE-SE UTILIZAR\n" +
+                "A OPÇÃO DE MUDAR A SENHA DISPONÍVEL NA TELA DE LOGIN.\n\n" +
+                "A OPÇÃO DE MUDAR A SENHA NÃO EXIBE NENHUMA INFORMAÇÃO DE\n" +
+                "QUE O USUÁRIO EXISTE, ISSO EVITA QUE SEJA ALTERADO A\n" +
+                "SENHA DE UM USUÁRIO QUALQUER.");
     }
 
     private void limpar() {
