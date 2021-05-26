@@ -55,7 +55,7 @@ public class InicioController implements Initializable {
         btnUsuario.getItems().add(itemTrocarUsuario);
 
         //ACOES EM BOTOES
-        itemTrocarUsuario.setOnAction(e -> {cMenu.minimizaTodos(); cLogin.exibir(STAGE);});
+        itemTrocarUsuario.setOnAction(e -> {cMenu.minimizaTodos(); cLogin.exibir(new Stage()); STAGE.close();});
     }
 
     public void setTitulo(Label tituloModal, String tituloSistema) {

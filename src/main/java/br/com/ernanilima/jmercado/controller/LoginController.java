@@ -172,7 +172,8 @@ public class LoginController implements Initializable {
     /** Exibe a tela do sistema para login realizado */
     private void loginRealizado() {
         limpar();
-        cInicio.exibir(STAGE);
+        cInicio.exibir(new Stage());
+        STAGE.close();
     }
 
     /** Exibe popup de ajuda para usar usuario de suporte */
