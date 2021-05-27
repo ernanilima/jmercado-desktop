@@ -19,7 +19,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <javafx.version>11.0.1</javafx.version>
+        <javafx.version>14</javafx.version>
     </properties>
 
     <dependencies>
@@ -87,6 +87,11 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
             <version>${javafx.version}</version>
         </dependency>
     </dependencies>
